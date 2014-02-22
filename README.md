@@ -1,4 +1,5 @@
-e-scolarite
-===========
+E-Scolarite Web-application
+===========================
 
-Ce projet a pour but a realise une complete gestion pour les universites marocain
+E-Scolarite web application is .......
+
