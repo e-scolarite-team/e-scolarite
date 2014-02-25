@@ -1,0 +1,4 @@
+app_back_office:
+    resource: "@AppBackOfficeBundle/Resources/config/routing.yml"
+    prefix:   /
+
