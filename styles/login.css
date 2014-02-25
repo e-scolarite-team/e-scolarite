@@ -1,0 +1,55 @@
+a, abbr, acronym, address, button, canvas, caption, div, form, h1, h2, h3, h4, h5, h6, hr, html,iframe, img,
+label, li, menu, object, ol, p, pre,span, strike, strong,table, tbody,
+td, tfoot, th, thead, tr, ul, body {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    background-color: lightblue;
+    font-family: verdana ;
+}
+
+.login
+{
+    background-color: rgba(255,255,255,0.6);
+    width: 600px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 10%;
+    border-radius: 8px;
+    border: 8px azure solid;
+}
+
+.titre
+{
+    text-align:center;
+    margin-bottom: 20px;
+    font-size: xx-large;
+}
+
+.formulaire
+{
+    width: 90%;
+    margin: 10px auto;
+    padding: 0 0 20px 10px;
+}
+
+.champ
+{
+    width: 300px;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+
+.champ input
+{
+    float:right;
+    margin-left: 10px;
+    clear: both;
+}

@@ -1,0 +1,17 @@
+.champ
+{
+    margin:10px 0;
+}
+
+.champ label
+{
+    text-align: right;
+    float:left;
+    padding-right: 10px;
+    width:200px;
+}
+
+.champ input,.champ select
+{
+    width: 10em;
+}

@@ -1,0 +1,162 @@
+a, abbr, acronym, address, button, canvas, caption, div, form, h1, h2, h3, h4, h5, h6, hr, html,iframe, img,
+label, li, menu, object, ol, p, pre,span, strike, strong, tfoot,ul, body {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+	padding:0;
+	margin:0;
+	background:url("../img/main-bg.jpg");
+    font-family: verdana;
+}
+
+#header
+{
+	background-color:rgba(255,255,255,0.7);
+    background: linear-gradient(#676767, #1D1D1D) repeat;
+    
+	text-align:center;
+}
+
+#conteneur
+{
+	width:1024px;
+	margin:0 auto;
+}
+
+#contenu-g
+{
+	float:left;
+	width:250px;
+	margin:20px 5px 10px 10px;
+}
+
+#contenu-d
+{
+	width:720px;
+	float:right;
+	margin:10px 10px 10px 0;
+}
+
+.ombre
+{
+	box-shadow:#999 5px 5px 5px;
+	background-color:white;
+	border-radius:8px 5px;
+	padding:10px 10px;
+}
+
+.ombre ul
+{
+    /*list-style:none;*/
+	margin:0;
+    list-style-type: none;
+    font-size: 0.7em;
+    border-radius: 8px 5px;
+}
+
+.ombre>ul>li
+{
+    background: linear-gradient(#F3F3F3,#FFFFFF);
+    background-repeat: repeat;
+    border-bottom: 1px solid silver;
+    padding-left: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-decoration: none;
+}
+
+.ombre>ul>li:hover
+{
+    border-left: 3px solid #75B239;
+}
+
+.ombre>ul>li>a:hover:before
+{
+    content: '»';
+}
+
+.ombre>ul>li>a
+{
+    color: black;
+    display: block;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+.ombre .titre
+{
+   /* background-color: #DE661A;*/
+    /*background: linear-gradient(#FF7A2D, #AD432A);*/
+    background: linear-gradient(#FB812F, #CE5504);
+    /*background: linear-gradient(#0985BC, #1A3393);*/
+    /*background: linear-gradient(#3A2BC2, #030866);*/
+    
+    color:white;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    font-weight: bolder;
+}
+
+.detail-contenu
+{
+    margin: 10px auto;
+    width: 85%;
+    font-size: 0.85em;
+}
+
+.detail-contenu p
+{
+    margin-bottom: 10px;
+    text-indent: 5%;
+}
+
+.fix
+{
+	clear:both;
+}
+
+.erreur
+{
+    background: linear-gradient(#EC5555,#EFEFEF);
+    
+    padding: 5px 30px;
+    margin: 10px 20px;
+    border: #922222 solid 2px;
+    color: white;
+    font-weight: bold;
+    font-family: helvetica;
+}
+
+.info
+{
+    background: linear-gradient(#11F111,#A2FEA2);
+    
+    padding: 5px 30px;
+    margin: 10px 20px;
+    border: #44CC33 solid 2px;
+    color: white;
+    font-weight: bold;
+    font-family: helvetica;
+}
+
+/*
+table td,th
+{
+    border:1px solid black;
+}
+*/
+
+
+
+
+
+
