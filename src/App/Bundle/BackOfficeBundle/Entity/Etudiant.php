@@ -3,6 +3,7 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collection\ArrayCollection as ArrayCollection;
 
 /**
  * Etudiant
@@ -12,116 +13,109 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Etudiant
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
-     *
+     * @ORM\Id
      * @ORM\Column(name="code_apogee", type="string", length=255)
      */
-    private $codeApogee;
+    protected $codeApogee;
 
     /**
      * @var string
      *
      * @ORM\Column(name="cne", type="string", length=255)
      */
-    private $cne;
+    protected $cne;
 
     /**
      * @var string
      *
      * @ORM\Column(name="cin", type="string", length=255)
      */
-    private $cin;
+    protected $cin;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_naissance", type="datetime")
      */
-    private $dateNaissance;
+    protected $dateNaissance;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ville_naissance", type="string", length=255)
      */
-    private $villeNaissance;
+    protected $villeNaissance;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
      */
-    private $nom;
+    protected $nom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=255)
      */
-    private $prenom;
+    protected $prenom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nom_ar", type="string", length=255)
      */
-    private $nomAr;
+    protected $nomAr;
 
     /**
      * @var string
      *
      * @ORM\Column(name="prenom_ar", type="string", length=255)
      */
-    private $prenomAr;
+    protected $prenomAr;
 
     /**
      * @var string
      *
      * @ORM\Column(name="sexe", type="string", length=255)
      */
-    private $sexe;
+    protected $sexe;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="annee_inscription", type="integer")
      */
-    private $anneeInscription;
+    protected $anneeInscription;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="annee_depart", type="integer")
      */
-    private $anneeDepart;
+    protected $anneeDepart;
 
     /**
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255)
      */
-    private $adresse;
-
+    protected $adresse;
 
     /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
+    * @var Demande
+    *
+    * @ORM\OneToMany(targetEntity="Demande", mappedBy="etudiant")
+    */
+    protected $demandes;
+
+    public function __construct(){
+        $this->demandes =  new ArrayCollection();
     }
+
 
     /**
      * Set codeApogee
