@@ -19,49 +19,61 @@ class Demande
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
      * @var string
      *
      * @ORM\Column(name="remarque", type="string", length=255)
      */
-    private $remarque;
+    protected $remarque;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="status", type="boolean")
      */
-    private $status;
+    protected $status;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_reponce", type="date")
      */
-    private $dateReponce;
+    protected $dateReponce;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="notified", type="boolean")
      */
-    private $notified;
+    protected $notified;
+
+    /**
+     * @var Etudiant
+     *
+     * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="reclamations")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
+     */
+    protected $etudiant;
+
+    public function __construct(){
+        $this->createdAt = new \DateTime();
+    }
 
 
     /**
@@ -211,4 +223,28 @@ class Demande
     {
         return $this->notified;
     }
+
+    /**
+     * Set etudiant
+     *
+     * @param Etudiant $etudiant
+     * @return Demande
+     */
+    public function setEtudiant($etudiant)
+    {
+        $this->etudiant = $etudiant;
+
+        return $this;
+    }
+
+    /**
+     * Get etudiant
+     *
+     * @return boolean 
+     */
+    public function getEtudiant()
+    {
+        return $this->etudiant;
+    }
+
 }

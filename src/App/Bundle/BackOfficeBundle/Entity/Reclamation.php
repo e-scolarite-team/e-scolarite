@@ -19,50 +19,61 @@ class Reclamation
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="objet", type="string", length=255)
      */
-    private $objet;
+    protected $objet;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text")
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="reponce", type="text")
      */
-    private $reponce;
+    protected $reponce;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="consulted_at", type="datetime")
      */
-    private $consultedAt;
+    protected $consultedAt;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="status", type="integer")
      */
-    private $status;
+    protected $status;
 
+    /**
+     * @var Etudiant
+     *
+     * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="reclamations")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
+     */
+    protected $etudiant;
+
+    public function __construct(){
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * Get id
@@ -210,5 +221,28 @@ class Reclamation
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set etudiant
+     *
+     * @param Etudiant $etudiant
+     * @return Reclamation
+     */
+    public function setEtudiant($etudiant)
+    {
+        $this->etudiant = $etudiant;
+
+        return $this;
+    }
+
+    /**
+     * Get etudiant
+     *
+     * @return boolean 
+     */
+    public function getEtudiant()
+    {
+        return $this->etudiant;
     }
 }

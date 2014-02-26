@@ -3,12 +3,12 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collection\ArrayCollection as ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Etudiant
  *
- * @ORM\Table()
+ * @ORM\Table(name="etudiants")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\EtudiantRepository")
  */
 class Etudiant
@@ -17,9 +17,9 @@ class Etudiant
     /**
      * @var string
      * @ORM\Id
-     * @ORM\Column(name="code_apogee", type="string", length=255)
+     * @ORM\Column(name="id", type="string", length=255)
      */
-    protected $codeApogee;
+    protected $id;
 
     /**
      * @var string
@@ -108,36 +108,53 @@ class Etudiant
     /**
     * @var Demande
     *
-    * @ORM\OneToMany(targetEntity="Demande", mappedBy="etudiant")
+    * @ORM\OneToMany(targetEntity="Demande", mappedBy="etudiant", cascade={"persist"})
     */
     protected $demandes;
 
+    /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Reclamation", mappedBy="etudiant", cascade={"persist"})
+    */
+    protected $reclamations;
+
     public function __construct(){
         $this->demandes =  new ArrayCollection();
+        $this->reclamations =  new ArrayCollection();
     }
 
+    /**
+     * Get id
+     *
+     * @return string 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
-     * Set codeApogee
+     * Set id
      *
      * @param string $codeApogee
      * @return Etudiant
      */
     public function setCodeApogee($codeApogee)
     {
-        $this->codeApogee = $codeApogee;
+        $this->id = $codeApogee;
 
         return $this;
     }
 
     /**
-     * Get codeApogee
+     * Get id
      *
      * @return string 
      */
     public function getCodeApogee()
     {
-        return $this->codeApogee;
+        return $this->id;
     }
 
     /**
@@ -414,5 +431,45 @@ class Etudiant
     public function getAdresse()
     {
         return $this->adresse;
+    }
+
+    /**
+    * Add demande
+    * @param Demande $demande
+    * @return Etudiant
+    */
+    public function addDemande($demande){
+        $this->demandes[] = $demande;
+        $demande->setEtudiant($this);
+        return $this;
+    }
+
+    /**
+    * Get demandes
+    * 
+    * @return array
+    */
+    public function getDemandes(){
+        return $this->demandes->toArray();
+    }
+
+    /**
+    * Add reclamation
+    * @param Reclamation $reclamation
+    * @return Etudiant
+    */
+    public function addReclamation($reclamation){
+        $this->reclamations[] = $reclamation;
+        $reclamation->setEtudiant($this);
+        return $this;
+    }
+
+    /**
+    * Get reclamations
+    * 
+    * @return array
+    */
+    public function getReclamations(){
+        return $this->reclamations->toArray();
     }
 }
