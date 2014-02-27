@@ -3,11 +3,12 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * TypeReclamation
  *
- * @ORM\Table()
+ * @ORM\Table(name="type_reclamations")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\TypeReclamationRepository")
  */
 class TypeReclamation
@@ -41,6 +42,18 @@ class TypeReclamation
      * @ORM\Column(name="max_autorise", type="integer")
      */
     private $maxAutorise;
+
+    /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Reclamation", mappedBy="typeReclamation", cascade={"persist"})
+    */
+    protected $reclamations;
+
+
+    public function __construct(){
+        $this->reclamations =  new ArrayCollection();
+    }
 
 
     /**
@@ -120,5 +133,25 @@ class TypeReclamation
     public function getMaxAutorise()
     {
         return $this->maxAutorise;
+    }
+
+    /**
+    * Add reclamation
+    * @param Demande $reclamation
+    * @return TypeReclamation
+    */
+    public function addReclamation($reclamation){
+        $this->reclamations[] = $reclamation;
+        $reclamation->setTypeReclamation($this);
+        return $this;
+    }
+
+    /**
+    * Get reclamations
+    * 
+    * @return array
+    */
+    public function getReclamations(){
+        return $this->reclamations->toArray();
     }
 }

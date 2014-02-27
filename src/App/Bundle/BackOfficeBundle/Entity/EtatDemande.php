@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * EtatDemande
  *
- * @ORM\Table()
+ * @ORM\Table(name="etat_demandes")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\EtatDemandeRepository")
  */
 class EtatDemande
@@ -41,6 +41,26 @@ class EtatDemande
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @var Demande
+     *
+     * @ORM\ManyToOne(targetEntity="Demande", inversedBy="etatDemandes")
+     * @ORM\JoinColumn(name="demande_id", referencedColumnName="id")
+     */
+    protected $demande;
+
+    /**
+     * @var Admin
+     *
+     * @ORM\ManyToOne(targetEntity="Admin", inversedBy="etatDemandes")
+     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     */
+    protected $admin;
+
+    public function __construct(){
+        $this->createdAt = new \DateTime();
+    }
 
 
     /**
@@ -121,4 +141,51 @@ class EtatDemande
     {
         return $this->createdAt;
     }
+
+    /**
+     * Set demande
+     *
+     * @param Demande $demande
+     * @return EtatDemande
+     */
+    public function setDemande($demande)
+    {
+        $this->demande = $demande;
+
+        return $this;
+    }
+
+    /**
+     * Get demande
+     *
+     * @return EtatDemande 
+     */
+    public function getDemande()
+    {
+        return $this->demande;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param Admin $admin
+     * @return EtatDemande
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return Demande 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+    
 }

@@ -3,6 +3,7 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Admin
@@ -70,9 +71,16 @@ class Admin
      */
     protected $expired;
 
+    /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="EtatDemande", mappedBy="demande", cascade={"persist"})
+    */
+    protected $etatDemandes;
 
     public function __construct(){
         $this->createdAt = new \DateTime();
+        $this->etatDemandes = new ArrayCollection();
     }
 
     /**
@@ -244,5 +252,25 @@ class Admin
     public function getExpired()
     {
         return $this->expired;
+    }
+
+    /**
+    * Add etatDemande
+    * @param EtatDemande $etatDemande
+    * @return Demande
+    */
+    public function addEtatDemande($etatDemande){
+        $this->etatDemandes[] = $etatDemande;
+        $etatDemande->setDemande($this);
+        return $this;
+    }
+
+    /**
+    * Get etatDemandes
+    * 
+    * @return array
+    */
+    public function getEtatDemandes(){
+        return $this->etatDemandes->toArray();
     }
 }

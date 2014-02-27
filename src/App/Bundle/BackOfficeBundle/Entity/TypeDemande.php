@@ -3,11 +3,12 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * TypeDemande
  *
- * @ORM\Table()
+ * @ORM\Table(name="type_demandes")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\TypeDemandeRepository")
  */
 class TypeDemande
@@ -41,6 +42,18 @@ class TypeDemande
      * @ORM\Column(name="max_autorise", type="integer")
      */
     private $maxAutorise;
+
+    /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Demande", mappedBy="typeDemande", cascade={"persist"})
+    */
+    protected $demandes;
+
+
+    public function __construct(){
+        $this->demandes =  new ArrayCollection();
+    }
 
 
     /**
@@ -120,5 +133,25 @@ class TypeDemande
     public function getMaxAutorise()
     {
         return $this->maxAutorise;
+    }
+
+    /**
+    * Add demande
+    * @param Demande $demande
+    * @return TypeDemande
+    */
+    public function addDemande($demande){
+        $this->demandes[] = $demande;
+        $demande->setTypeDemande($this);
+        return $this;
+    }
+
+    /**
+    * Get demandes
+    * 
+    * @return array
+    */
+    public function getDemandes(){
+        return $this->demandes->toArray();
     }
 }
