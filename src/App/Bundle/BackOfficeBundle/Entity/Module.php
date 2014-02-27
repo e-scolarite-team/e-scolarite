@@ -143,18 +143,7 @@ class Module
         return $this->filiere;
     }
 
-    /**
-     * Set semestre
-     *
-     * @param Semestre $semestre
-     * @return Module
-     */
-    public function setFiliere($semestre)
-    {
-        $this->semestre = $semestre;
-
-        return $this;
-    }
+    
 
     /**
      * Get semestre

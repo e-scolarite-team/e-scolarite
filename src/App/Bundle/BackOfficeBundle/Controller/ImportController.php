@@ -9,6 +9,7 @@ class ImportController extends Controller
     public function updateAction()
     {
     	//abdelatif karoum todo here
+        return $this->render('AppBackOfficeBundle:Import:update.html.twig', array());
     }
 
     private function importEtudiants(){
