@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Bundle\BackOfficeBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,21 +20,32 @@ class Semestre
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255)
      */
-    private $libelle;
+    protected $libelle;
+
+    /**
+    * @var Module
+    *
+    * @ORM\OneToMany(targetEntity="Module", mappedBy="semestre", cascade={"persist"})
+    */
+    protected $modules;
+
+    public function __construct(){
+        $this->modules =  new ArrayCollection();        
+    }
 
 
     /**
@@ -90,5 +102,25 @@ class Semestre
     public function getLibelle()
     {
         return $this->libelle;
+    }
+
+     /**
+    * Add module
+    * @param module $module
+    * @return Semestre
+    */
+    public function addModule($module){
+        $this->modules[] = $module;
+        $note->setSemestre($this);
+        return $this;
+    }
+
+    /**
+    * Get modules
+    * 
+    * @return array
+    */
+    public function getModules(){
+        return $this->modules->toArray();
     }
 }

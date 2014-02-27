@@ -3,11 +3,12 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Filiere
  *
- * @ORM\Table()
+ * @ORM\Table(name="filieres")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\FiliereRepository")
  */
 class Filiere
@@ -19,37 +20,59 @@ class Filiere
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255)
      */
-    private $libelle;
+    protected $libelle;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="effective", type="integer")
      */
-    private $effective;
+    protected $effective;
 
+     /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Etudiant", mappedBy="filiere", cascade={"persist"})
+    */
 
+     protected $etudiants;
+
+      /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Module", mappedBy="filiere", cascade={"persist"})
+    */
+
+     protected $modules;
+
+     public function __construct(){
+        $this->createdAt = new \DateTime();
+        $this->etudiants =  new ArrayCollection();
+        $this->modules =  new ArrayCollection();
+    }
+
+     
     /**
      * Get id
      *
@@ -150,5 +173,45 @@ class Filiere
     public function getEffective()
     {
         return $this->effective;
+    }
+
+    /**
+    * Add etudiant
+    * @param Etudiant $etudiant
+    * @return Filiere
+    */
+    public function addEtudiant($etudiant){
+        $this->etudiants[] = $etudiant;
+        $etudiant->setFiliere($this);
+        return $this;
+    }
+
+    /**
+    * Get etudiants
+    * 
+    * @return array
+    */
+    public function getEtudiants(){
+        return $this->etudiants->toArray();
+    }
+
+    /**
+    * Add module
+    * @param Module $module
+    * @return Filiere
+    */
+    public function addModule($module){
+        $this->modules[] = $module;
+        $module->setFiliere($this);
+        return $this;
+    }
+
+    /**
+    * Get modules
+    * 
+    * @return array
+    */
+    public function getModules(){
+        return $this->modules->toArray();
     }
 }

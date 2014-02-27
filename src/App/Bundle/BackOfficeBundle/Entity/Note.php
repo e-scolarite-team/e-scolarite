@@ -49,6 +49,22 @@ class Note
      */
     private $annee;
 
+    /**
+     * @var Etudiant
+     *
+     * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="notes")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
+     */
+    protected $etudiant;
+
+    /**
+     * @var Element
+     *
+     * @ORM\ManyToOne(targetEntity="Element", inversedBy="elements")
+     * @ORM\JoinColumn(name="element_id", referencedColumnName="id")
+     */
+    protected $element;
+
 
     /**
      * Get id
@@ -151,4 +167,54 @@ class Note
     {
         return $this->annee;
     }
+
+    /**
+     * Set etudiant
+     *
+     * @param Etudiant $etudiant
+     * @return Note
+     */
+
+    public function setEtudiant($etudiant)
+    {
+        $this->etudiant = $etudiant;
+
+        return $this;
+    }
+
+    /**
+     * Get etudiant
+     *
+     * @return etudiant 
+     */
+    public function getEtudiant()
+    {
+        return $this->etudiant;
+    }
+
+    /**
+     * Set element
+     *
+     * @param Element $element
+     * @return Note
+     */
+
+    public function setElement($element)
+    {
+        $this->element = $element;
+
+        return $this;
+    }
+
+    /**
+     * Get element
+     *
+     * @return Element 
+     */
+    public function getElement()
+    {
+        return $this->element;
+    }
+
+
 }

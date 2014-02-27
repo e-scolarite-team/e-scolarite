@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Bundle\BackOfficeBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,21 +20,40 @@ class Element
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255)
      */
-    private $libelle;
+    protected $libelle;
+
+    /**
+     * @var Module
+     *
+     * @ORM\ManyToOne(targetEntity="Module", inversedBy="elements")
+     * @ORM\JoinColumn(name="module_id", referencedColumnName="id")
+     */
+    protected $module;
+
+    /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Note", mappedBy="element", cascade={"persist"})
+    */
+    protected $notes;
+
+    public function __construct(){
+        $this->notes =  new ArrayCollection();    
+    }
 
 
     /**
@@ -90,5 +110,48 @@ class Element
     public function getLibelle()
     {
         return $this->libelle;
+    }
+
+    /**
+     * Set module
+     *
+     * @param Module $module
+     * @return Element
+     */
+    public function setModule($module)
+    {
+        $this->module = $module;
+
+        return $this;
+    }
+
+    /**
+     * Get module
+     *
+     * @return Module 
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+    * Add note
+    * @param Note $note
+    * @return Element
+    */
+    public function addNote($note){
+        $this->notes[] = $note;
+        $note->setElement($this);
+        return $this;
+    }
+
+    /**
+    * Get notes
+    * 
+    * @return array
+    */
+    public function getNotes(){
+        return $this->notes->toArray();
     }
 }

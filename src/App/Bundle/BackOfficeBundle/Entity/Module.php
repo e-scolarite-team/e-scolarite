@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Bundle\BackOfficeBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Module
  *
- * @ORM\Table()
+ * @ORM\Table(name="modules")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\ModuleRepository")
  */
 class Module
@@ -19,21 +20,48 @@ class Module
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255)
      */
-    private $libelle;
+    protected $libelle;
+
+    /**
+     * @var Filiere
+     *
+     * @ORM\ManyToOne(targetEntity="Filiere", inversedBy="filieres")
+     * @ORM\JoinColumn(name="filiere_id", referencedColumnName="id")
+     */
+    protected $filiere;
+
+    /**
+     * @var Semestre
+     *
+     * @ORM\ManyToOne(targetEntity="Semestre", inversedBy="semestres")
+     * @ORM\JoinColumn(name="semestre_id", referencedColumnName="id")
+     */
+    protected $semestre;
+
+    /**
+    * @var Element
+    *
+    * @ORM\OneToMany(targetEntity="Element", mappedBy="module", cascade={"persist"})
+    */
+    protected $elements;
+
+    public function __construct(){
+        $this->elements =  new ArrayCollection();        
+    }
 
 
     /**
@@ -90,5 +118,71 @@ class Module
     public function getLibelle()
     {
         return $this->libelle;
+    }
+
+    /**
+     * Set filiere
+     *
+     * @param Filiere $filiere
+     * @return Module
+     */
+    public function setFiliere($filiere)
+    {
+        $this->filiere = $filiere;
+
+        return $this;
+    }
+
+    /**
+     * Get filiere
+     *
+     * @return Filiere 
+     */
+    public function getFiliere()
+    {
+        return $this->filiere;
+    }
+
+    /**
+     * Set semestre
+     *
+     * @param Semestre $semestre
+     * @return Module
+     */
+    public function setFiliere($semestre)
+    {
+        $this->semestre = $semestre;
+
+        return $this;
+    }
+
+    /**
+     * Get semestre
+     *
+     * @return Semestre 
+     */
+    public function getSemestre()
+    {
+        return $this->semestre;
+    }
+
+     /**
+    * Add Element
+    * @param element $element
+    * @return Module
+    */
+    public function addElement($element){
+        $this->elements[] = $element;
+        $element->setModule($this);
+        return $this;
+    }
+
+    /**
+    * Get elements
+    * 
+    * @return array
+    */
+    public function getElements(){
+        return $this->elements->toArray();
     }
 }

@@ -119,9 +119,25 @@ class Etudiant
     */
     protected $reclamations;
 
+    /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Note", mappedBy="etudiant", cascade={"persist"})
+    */
+    protected $notes;
+
+    /**
+     * @var Filiere
+     *
+     * @ORM\ManyToOne(targetEntity="Filiere", inversedBy="filieres")
+     * @ORM\JoinColumn(name="filiere_id", referencedColumnName="id")
+     */
+    protected $filiere;
+
     public function __construct(){
         $this->demandes =  new ArrayCollection();
         $this->reclamations =  new ArrayCollection();
+        $this->notes =  new ArrayCollection();
     }
 
     /**
@@ -434,6 +450,29 @@ class Etudiant
     }
 
     /**
+     * Set filiere
+     *
+     * @param Filiere $filiere
+     * @return Etudiant
+     */
+    public function setFiliere($filiere)
+    {
+        $this->filiere = $filiere;
+
+        return $this;
+    }
+
+    /**
+     * Get filiere
+     *
+     * @return Filiere 
+     */
+    public function getFiliere()
+    {
+        return $this->filiere;
+    }
+
+    /**
     * Add demande
     * @param Demande $demande
     * @return Etudiant
@@ -471,5 +510,25 @@ class Etudiant
     */
     public function getReclamations(){
         return $this->reclamations->toArray();
+    }
+
+    /**
+    * Add note
+    * @param note $note
+    * @return Etudiant
+    */
+    public function addNote($note){
+        $this->notes[] = $note;
+        $note->setEtudiant($this);
+        return $this;
+    }
+
+    /**
+    * Get notes
+    * 
+    * @return array
+    */
+    public function getNotes(){
+        return $this->notes->toArray();
     }
 }

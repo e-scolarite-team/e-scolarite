@@ -240,7 +240,7 @@ class Demande
     /**
      * Get etudiant
      *
-     * @return boolean 
+     * @return Etudiant 
      */
     public function getEtudiant()
     {
