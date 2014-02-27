@@ -3,6 +3,7 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Reclamation
@@ -70,6 +71,15 @@ class Reclamation
      * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
      */
     protected $etudiant;
+
+    /**
+     * @var TypeReclamation
+     *
+     * @ORM\ManyToOne(targetEntity="TypeReclamation", inversedBy="reclamations")
+     * @ORM\JoinColumn(name="type_reclamation_id", referencedColumnName="id")
+     */
+    protected $typeReclamation;
+
 
     public function __construct(){
         $this->createdAt = new \DateTime();
@@ -239,10 +249,34 @@ class Reclamation
     /**
      * Get etudiant
      *
-     * @return boolean 
+     * @return Etudiant 
      */
     public function getEtudiant()
     {
         return $this->etudiant;
     }
+
+    /**
+     * Set typeReclamation
+     *
+     * @param TypeReclamation $typeReclamation
+     * @return Reclamation
+     */
+    public function setTypeReclamation($typeReclamation)
+    {
+        $this->typeReclamation = $typeReclamation;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeReclamation
+     *
+     * @return TypeReclamation 
+     */
+    public function getTypeReclamation()
+    {
+        return $this->typeReclamation;
+    }
+    
 }

@@ -3,11 +3,12 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Demande
  *
- * @ORM\Table()
+ * @ORM\Table(name="demandes")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\DemandeRepository")
  */
 class Demande
@@ -71,8 +72,24 @@ class Demande
      */
     protected $etudiant;
 
+    /**
+     * @var TypeDemande
+     *
+     * @ORM\ManyToOne(targetEntity="TypeDemande", inversedBy="demandes")
+     * @ORM\JoinColumn(name="type_demande_id", referencedColumnName="id")
+     */
+    protected $typeDemande;
+
+    /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="EtatDemande", mappedBy="demande", cascade={"persist"})
+    */
+    protected $etatDemandes;
+
     public function __construct(){
         $this->createdAt = new \DateTime();
+        $this->etatDemandes = new ArrayCollection();
     }
 
 
@@ -240,11 +257,54 @@ class Demande
     /**
      * Get etudiant
      *
-     * @return boolean 
+     * @return Etudiant 
      */
     public function getEtudiant()
     {
         return $this->etudiant;
     }
 
+
+    /**
+     * Set typeDemande
+     *
+     * @param TypeDemande $typeDemande
+     * @return Demande
+     */
+    public function setTypeDemande($typeDemande)
+    {
+        $this->typeDemande = $typeDemande;
+
+        return $this;
+    }
+
+    /**
+     * Get typeDemande
+     *
+     * @return TypeDemande 
+     */
+    public function getTypeDemande()
+    {
+        return $this->typeDemande;
+    }
+
+    /**
+    * Add etatDemande
+    * @param EtatDemande $etatDemande
+    * @return Demande
+    */
+    public function addEtatDemande($etatDemande){
+        $this->etatDemandes[] = $etatDemande;
+        $etatDemande->setDemande($this);
+        return $this;
+    }
+
+    /**
+    * Get etatDemandes
+    * 
+    * @return array
+    */
+    public function getEtatDemandes(){
+        return $this->etatDemandes->toArray();
+    }
 }
