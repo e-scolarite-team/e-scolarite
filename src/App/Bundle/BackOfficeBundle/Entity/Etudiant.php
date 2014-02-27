@@ -94,7 +94,7 @@ class Etudiant
     /**
      * @var integer
      *
-     * @ORM\Column(name="annee_depart", type="integer")
+     * @ORM\Column(name="annee_depart", type="integer", nullable=true)
      */
     protected $anneeDepart;
 

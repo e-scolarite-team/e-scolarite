@@ -32,14 +32,14 @@ class TypeDemande
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle", type="string", length=255)
+     * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
      */
     private $libelle;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="max_autorise", type="integer")
+     * @ORM\Column(name="max_autorise", type="integer", nullable=true)
      */
     private $maxAutorise;
 

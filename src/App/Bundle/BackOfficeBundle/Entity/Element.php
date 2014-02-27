@@ -32,7 +32,7 @@ class Element
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle", type="string", length=255)
+     * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
      */
     protected $libelle;
 

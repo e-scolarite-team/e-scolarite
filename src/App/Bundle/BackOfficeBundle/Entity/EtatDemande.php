@@ -24,14 +24,14 @@ class EtatDemande
     /**
      * @var string
      *
-     * @ORM\Column(name="etat", type="string", length=255)
+     * @ORM\Column(name="etat", type="string", length=255, nullable=true)
      */
     private $etat;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="justification", type="string", length=255)
+     * @ORM\Column(name="justification", type="string", length=255, nullable=true)
      */
     private $justification;
 

@@ -25,23 +25,23 @@ class Reclamation
     /**
      * @var string
      *
-     * @ORM\Column(name="objet", type="string", length=255)
+     * @ORM\Column(name="objet", type="string", length=255, nullable=true)
      */
     protected $objet;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     protected $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="reponce", type="text")
+     * @ORM\Column(name="reponse", type="text", nullable=true)
      */
-    protected $reponce;
+    protected $reponse;
 
     /**
      * @var \DateTime
@@ -53,14 +53,14 @@ class Reclamation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="consulted_at", type="datetime")
+     * @ORM\Column(name="consulted_at", type="datetime", nullable=true)
      */
     protected $consultedAt;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer")
+     * @ORM\Column(name="status", type="integer", nullable=true)
      */
     protected $status;
 
@@ -142,26 +142,26 @@ class Reclamation
     }
 
     /**
-     * Set reponce
+     * Set reponse
      *
-     * @param string $reponce
+     * @param string $reponse
      * @return Reclamation
      */
-    public function setReponce($reponce)
+    public function setreponse($reponse)
     {
-        $this->reponce = $reponce;
+        $this->reponse = $reponse;
 
         return $this;
     }
 
     /**
-     * Get reponce
+     * Get reponse
      *
      * @return string 
      */
-    public function getReponce()
+    public function getreponse()
     {
-        return $this->reponce;
+        return $this->reponse;
     }
 
     /**

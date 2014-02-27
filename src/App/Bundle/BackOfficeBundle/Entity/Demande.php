@@ -25,42 +25,42 @@ class Demande
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     protected $updatedAt;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="remarque", type="string", length=255)
+     * @ORM\Column(name="remarque", type="string", length=255, nullable=true)
      */
     protected $remarque;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="status", type="boolean")
+     * @ORM\Column(name="status", type="boolean", nullable=true)
      */
     protected $status;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_reponce", type="date")
+     * @ORM\Column(name="date_reponce", type="date", nullable=true)
      */
     protected $dateReponce;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="notified", type="boolean")
+     * @ORM\Column(name="notified", type="boolean", nullable=true)
      */
     protected $notified;
 

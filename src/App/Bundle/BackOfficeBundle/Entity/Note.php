@@ -31,21 +31,21 @@ class Note
     /**
      * @var string
      *
-     * @ORM\Column(name="remarques", type="string", length=255)
+     * @ORM\Column(name="remarques", type="string", length=255, nullable=true)
      */
     private $remarques;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="etat", type="string", length=255)
+     * @ORM\Column(name="etat", type="string", length=255, nullable=true)
      */
     private $etat;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="annee", type="integer")
+     * @ORM\Column(name="annee", type="integer", nullable=true)
      */
     private $annee;
 
