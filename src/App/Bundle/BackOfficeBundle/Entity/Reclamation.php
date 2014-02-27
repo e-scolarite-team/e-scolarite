@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 /**
  * Reclamation
  *
- * @ORM\Table()
+ * @ORM\Table(name="reclamations")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\ReclamationRepository")
  */
 class Reclamation

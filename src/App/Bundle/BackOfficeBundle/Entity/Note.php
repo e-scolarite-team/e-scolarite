@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Note
  *
- * @ORM\Table()
+ * @ORM\Table(name="notes")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\NoteRepository")
  */
 class Note
