@@ -1,0 +1,12 @@
+{
+    "name": "TONPC/e-scolarite",
+    "require": {
+        "phpoffice/phpexcel": "v1.7.9"
+    },
+    "authors": [
+        {
+            "name": "labiedYounes",
+            "email": "labied_youness@hotmail.fr"
+        }
+    ]
+}
