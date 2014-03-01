@@ -34,7 +34,7 @@ class ImportController extends Controller
                 $attachement = $data['attachement'];
                 $table = $data['table'];
                 $type = $attachement->guessExtension();
-                $nomFichier = uniqid().".".$type;
+                $nomFichier = $table.uniqid().".".$type;
                 $attachement->move($folder,$nomFichier);
                 $path = $folder.$nomFichier;
                 switch ($table) {
