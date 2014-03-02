@@ -18,7 +18,7 @@ class ImportFormType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options){
 
 		$builder->add("table","choice",array(
-										'empty_value' => 'chosir un la table charger',
+										'empty_value' => 'chosir la table a charger',
 										'multiple' => false,
 										'choices' => array('etudiant' => 'Etudiant', 'filiere' => 'Filiere', 'module' => 'Module', 'note' => 'Note', 'element' => 'Element'),
 										));
@@ -36,7 +36,7 @@ class ImportFormType extends AbstractType
 									),
 								new Choice(
 										array(
-											'choices' => array('etudiant','note','module','filiere'),
+											'choices' => array('etudiant','note','module','filiere','element'),
 											'message' => 'errors.import.table',
 											)
 										),

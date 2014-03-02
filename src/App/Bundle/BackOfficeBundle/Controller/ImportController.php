@@ -23,7 +23,7 @@ class ImportController extends Controller
 
     public function updateAction(Request $request)
     {
-    	//abdelatif karoum todo here
+    	//abdellatif karroum todo here
         $errors = array();
 
         $form  = $this->createForm(new ImportFormType());
@@ -31,13 +31,14 @@ class ImportController extends Controller
         $form->handleRequest($request);
 
         if ($request->isMethod('POST')){
-
-            
-            $translator  = $this->get('translator');
-
-            if(!$form->isValid()){
-                $errlist = $form->getErrors();
-                foreach ($errlist as $err) {
+            $validator = $this->get('validator');
+            $errorList = $validator->validate($form);
+            $translator  = $this->get('translator');            
+            //if(!$form->isValid()){
+            var_dump(count($errorList));
+            if(count($errorList)>0){
+                //$errlist = $form->getErrors();
+                foreach ($errList as $err) {
                    $errors =  $translator->trans($err);
                 }
                 
