@@ -4,6 +4,7 @@
 
 {% block content %}
 	<div class="panel panel-default">
+        <form class="form-horizontal form-bordered" action="{{ path('import_data') }}" method="post" enctype="multipart/form-data" novalidate="novalidate">
         <div class="panel-heading">
           <div class="panel-btns">
             <a href="#" class="panel-close">&times;</a>
@@ -12,9 +13,10 @@
           <h4 class="panel-title">remplire la base de donnee</h4>
           <p>Cette interface permet de remplire les tables <code>Etudiant</code>, <code>Filiere</code>, <code>Module</code>, <code>Element</code> et <code>Note</code> de la base de donnee local via des fichiers Excel/CSV</p>
         </div>
+
         <div class="panel-body panel-body-nopadding">
           
-          <form class="form-horizontal form-bordered" action="{{ path('import_data') }}" method="post" enctype="multipart/form-data">
+          
             {% if errors %}
             <div class="error" style="display:block;padding : 25px 50px;">
               {% for err in errors %}
@@ -30,23 +32,23 @@
             </div>
        
            	<div class="form-group">
-              <label class="col-sm-3 control-label" for="{{ form.table.vars.id }}">Fichier a telecharger</label>
+              <label class="col-sm-3 control-label" for="{{ form.attachement.vars.id }}">Fichier a telecharger</label>
               <div class="col-sm-6">
                 {{ form_widget(form.attachement)}}
               </div>
             </div>
-            
-          </form>
+            {{ form_rest(form)}}
+          
           
         </div><!-- panel-body -->
         
       <div class="panel-footer">
 			 <div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
-				  <center><button class="btn btn-primary">Submit</button></center>
+				  <center><button type="submit" class="btn btn-primary">Submit</button></center>
 				</div>
 			 </div>
 		  </div><!-- panel-footer -->
-        
+      </form>
       </div><!-- panel -->
 {% endblock %}

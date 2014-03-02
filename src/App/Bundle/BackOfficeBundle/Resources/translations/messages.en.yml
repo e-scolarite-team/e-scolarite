@@ -1,0 +1,5 @@
+errors.import.table: Veuillez choisir le nom de la table
+errors.import.attachment: Veuillez choisir un fichier
+errors.import.attachment.mimeTypes: Veuillez choisi un fichier xlsx/xls/csv
+errors.import.parse: Erreur de remplissage de la table
+data.fill.success: Donnee inserer avec succes

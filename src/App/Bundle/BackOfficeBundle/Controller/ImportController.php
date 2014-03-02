@@ -4,7 +4,7 @@ namespace App\Bundle\BackOfficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpFoundation\Request;
 use App\Bundle\BackOfficeBundle\Entity\Element;
 use App\Bundle\BackOfficeBundle\Entity\Note;
 use App\Bundle\BackOfficeBundle\Entity\Module;
@@ -12,24 +12,92 @@ use App\Bundle\BackOfficeBundle\Entity\Etudiant;
 
 use App\Bundle\BackOfficeBundle\Form\ImportFormType;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use PHPExcel\PHPExcel;
 
 
 
 class ImportController extends Controller
 {
-    public function updateAction()
+    private $folder = "uploads/exchange/";
+
+    public function updateAction(Request $request)
     {
     	//abdelatif karoum todo here
+        $errors = array();
+
         $form  = $this->createForm(new ImportFormType());
-        $status = $this->importElements('uploads/votre.xls');
 
-        /*if($status)
-            return new Response('table import!!');
+        $form->handleRequest($request);
 
-        return new Response('table error!!');*/
+        if ($request->isMethod('POST')){
 
-        return $this->render('AppBackOfficeBundle:Import:update.html.twig', array('form' => $form->createView()));
+            
+            $translator  = $this->get('translator');
+
+            if(!$form->isValid()){
+                $errlist = $form->getErrors();
+                foreach ($errlist as $err) {
+                   $errors =  $translator->trans($err);
+                }
+                
+            }else
+                $errors = $this->prepareData($form->getData());                         
+            
+        
+        }
+        
+
+
+
+        return $this->render('AppBackOfficeBundle:Import:update.html.twig', array('form' => $form->createView(), 'errors' => $errors));
+    }
+
+
+    /**
+    * @param mixed
+    * @return string error msg
+    */
+    private function prepareData($data){
+
+        $status = false;
+
+        $attachement = $data['attachement'];
+        $table = $data['table'];
+
+        $type = $attachement->guessExtension();
+        $filename = $table.uniqid().".".$type;
+
+        $attachement->move($this->folder,$filename);
+
+        $path = $this->folder.$filename;
+
+        switch ($table) {
+            case 'etudiant':
+                 $status = $this->importEtudiants($path);
+                 break;
+
+            case 'filiere':
+                 $status = $this->importFiliere($path);
+                 break;
+
+            case 'module':
+                 $status = $this->importModules($path);
+                 break;
+
+            case 'note':
+                 $status = $this->importNotes($path);
+                 break;
+
+            case 'element':
+                 $status = $this->importElements($path);
+                 break;                                               
+            
+        }
+        if(!$status)
+            return "errors.import.parse";
+
+        return "data.fill.success";
     }
 
     /**
@@ -100,6 +168,27 @@ class ImportController extends Controller
     */
     private function importElements($path){
     	//el mehdi el hajri todo here
+
+        $em = $this->get('doctrine')->getEntityManager();
+
+        //1er temps supression du content de la table etudiant
+
+        /** mettre ca dans la boucle d'insertion **/
+        //$element = new Element();
+        //$em->persist($element);
+        //$em->flush();
+
+
+        return true;
+    }
+
+    /**
+    * @param string
+    *
+    * @return boolean
+    */
+    private function importFiliere($path){
+        //hamid lmajid todo here
 
         $em = $this->get('doctrine')->getEntityManager();
 
