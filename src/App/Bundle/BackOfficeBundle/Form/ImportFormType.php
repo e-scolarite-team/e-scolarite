@@ -28,35 +28,12 @@ class ImportFormType extends AbstractType
 	}
 
 	public function setDefaultOptions(OptionsResolverInterface $resolver){
-		$collectionConstraints = new Collection(
-			array(
-				'table' => array(
-								new NotBlank(
-									array('message' => "errors.import.table")
-									),
-								new Choice(
-										array(
-											'choices' => array('etudiant','note','module','filiere'),
-											'message' => 'errors.import.table',
-											)
-										),
-								),
-				'attachment' => array(
-									new File(
-										array(
-											'uploadErrorMessage' => 'errors.import.attachment',
-											'mimeTypesMessage' => 'errors.import.attachment.mimeTypes',
-											'mimeTypes' => array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'text/csv'),
-										)
-									)
-								)
-				)
-			);
+		
 		$resolver->setDefaults(array(
+			'data_class' => 'App\Bundle\BackOfficeBundle\Form\Data\ImportData',
 			'csrf_protection' => true,
 			'csrf_field_name' => '_protection',
 			'intention' => 'data_exchange',
-			'validation_constraint' => $collectionConstraints,
 			));
 	}
 

@@ -9,6 +9,7 @@ use App\Bundle\BackOfficeBundle\Entity\Element;
 use App\Bundle\BackOfficeBundle\Entity\Note;
 use App\Bundle\BackOfficeBundle\Entity\Module;
 use App\Bundle\BackOfficeBundle\Entity\Etudiant;
+use App\Bundle\BackOfficeBundle\Form\Data\ImportData;
 
 use App\Bundle\BackOfficeBundle\Form\ImportFormType;
 
@@ -26,7 +27,7 @@ class ImportController extends Controller
     	//abdelatif karoum todo here
         $errors = array();
 
-        $form  = $this->createForm(new ImportFormType());
+        $form  = $this->createForm(new ImportFormType(),new ImportData());
 
         $form->handleRequest($request);
 
@@ -34,6 +35,8 @@ class ImportController extends Controller
 
             
             $translator  = $this->get('translator');
+            
+            
 
             if(!$form->isValid()){
                 $errlist = $form->getErrors();
