@@ -9,42 +9,30 @@
             <a href="#" class="panel-close">&times;</a>
             <a href="#" class="minimize">&minus;</a>
           </div>
-          <h4 class="panel-title">Fill Database</h4>
-          <p>Individual form controls automatically receive some global styling. All textual elements with <code>.form-control</code> are set to width: 100%; by default. Wrap labels and controls in <code>.form-group</code> for optimum spacing.</p>
+          <h4 class="panel-title">remplire la base de donnee</h4>
+          <p>Cette interface permet de remplire les tables <code>Etudiant</code>, <code>Filiere</code>, <code>Module</code>, <code>Element</code> et <code>Note</code> de la base de donnee local via des fichiers Excel/CSV</p>
         </div>
         <div class="panel-body panel-body-nopadding">
           
-          <form class="form-horizontal form-bordered">
-            
+          <form class="form-horizontal form-bordered" action="{{ path('import_data') }}" method="post" enctype="multipart/form-data">
+            {% if errors %}
+            <div class="error" style="display:block;padding : 25px 50px;">
+              {% for err in errors %}
+              <label class="error">{{ err | raw }}</label>
+              {% endfor %}
+            </div>
+            {% endif %}
             <div class="form-group">
-              <label class="col-sm-3 control-label">Table</label>
+              <label class="col-sm-3 control-label" for="{{ form.table.vars.id }}">Table</label>
               <div class="col-sm-6">
-                <select class="form-control">
-                  <option>Etudiant</option>
-                  <option>Module</option>
-                  <option>Element</option>
-                  <option>Note</option>
-                </select>
+                {{ form_widget(form.table,{'attr' : {'class' : 'form-control'}})}}
               </div>
             </div>
        
            	<div class="form-group">
-              <label class="col-sm-3 control-label">File Upload</label>
+              <label class="col-sm-3 control-label" for="{{ form.table.vars.id }}">Fichier a telecharger</label>
               <div class="col-sm-6">
-                <div class="fileupload fileupload-new" data-provides="fileupload">
-                  <div class="input-append">
-                    <div class="uneditable-input">
-                      <i class="glyphicon glyphicon-file fileupload-exists"></i>
-                      <span class="fileupload-preview"></span>
-                    </div>
-                    <span class="btn btn-default btn-file">
-                      <span class="fileupload-new">Select file</span>
-                      <span class="fileupload-exists">Change</span>
-                      <input type="file" />
-                    </span>
-                    <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
-                  </div>
-                </div>
+                {{ form_widget(form.attachement)}}
               </div>
             </div>
             
@@ -52,11 +40,10 @@
           
         </div><!-- panel-body -->
         
-        <div class="panel-footer">
+      <div class="panel-footer">
 			 <div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
-				  <button class="btn btn-primary">Submit</button>&nbsp;
-				  <button class="btn btn-default">Cancel</button>
+				  <center><button class="btn btn-primary">Submit</button></center>
 				</div>
 			 </div>
 		  </div><!-- panel-footer -->

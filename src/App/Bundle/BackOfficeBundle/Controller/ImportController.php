@@ -24,12 +24,12 @@ class ImportController extends Controller
         $form  = $this->createForm(new ImportFormType());
         $status = $this->importElements('uploads/votre.xls');
 
-        if($status)
+        /*if($status)
             return new Response('table import!!');
 
-        return new Response('table error!!');
+        return new Response('table error!!');*/
 
-        //return $this->render('AppBackOfficeBundle:Import:update.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBackOfficeBundle:Import:update.html.twig', array('form' => $form->createView()));
     }
 
     /**

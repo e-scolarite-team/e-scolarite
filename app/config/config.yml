@@ -33,7 +33,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ AppBackOfficeBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -45,20 +45,28 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%database_driver%"
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  UTF8
-        # if using pdo_sqlite as your database driver, add the path in parameters.yml
-        # e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        # path:     "%database_path%"
-
+        default_connection:   conescol
+        connections:
+            conescol:
+                dbname:               "%database_name%"
+                host:                 "%database_host%"
+                port:                 "%database_port%"
+                user:                 "%database_user%"
+                password:             "%database_port%"
+                driver:               pdo_pgsql
+                charset:              UTF8
+                logging:              %kernel.debug%
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
+        auto_generate_proxy_classes:    true
+        proxy_namespace:                Proxies
+        proxy_dir:                      %kernel.cache_dir%/doctrine/orm/Proxies
+        default_entity_manager:         escoorm
+        entity_managers:
+            escoorm:
+                # The name of a DBAL connection (the one marked as default is used if not set)
+                connection:         conescol
+                mappings: # Required
+                    AppBackOfficeBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:

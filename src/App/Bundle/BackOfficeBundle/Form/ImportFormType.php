@@ -1,10 +1,11 @@
 <?php
-
+namespace App\Bundle\BackOfficeBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface as FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface as OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Choice;
 
 /**
 * 
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints\File;
 class ImportFormType extends AbstractType
 {
 	
-	public function buildForm(FormBuilderInterface $builder, $options = array()){
+	public function buildForm(FormBuilderInterface $builder, array $options){
 
 		$builder->add("table","choice",array(
 										'empty_value' => 'chosir un la table charger',
@@ -36,8 +37,8 @@ class ImportFormType extends AbstractType
 											'constraints' => array(
 												new File(
 													array(
-														'uploadErrorMesssage' => 'errors.import.attachment',
-														'mimeTypesMesssage' => 'errors.import.attachment.mimeTypes',
+														'uploadErrorMessage' => 'errors.import.attachment',
+														'mimeTypesMessage' => 'errors.import.attachment.mimeTypes',
 														'mimeTypes' => array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'text/csv'),
 													)
 												)
@@ -48,9 +49,9 @@ class ImportFormType extends AbstractType
 
 	public function setDefaultOptions(OptionsResolverInterface $resolver){
 		$resolver->setDefaults(array(
-			'csrf_protection' => true;
-			'csrf_field_name' => '_protection';
-			'intention' => 'data_exchange';
+			'csrf_protection' => true,
+			'csrf_field_name' => '_protection',
+			'intention' => 'data_exchange',
 			));
 	}
 
