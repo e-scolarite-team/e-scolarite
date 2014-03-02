@@ -26,8 +26,7 @@ class ImportController extends Controller
         $form  = $this->createForm(new ImportFormType());
         $status = false;
         $form->handleRequest($request);
-        if ($request->isMethod('POST'))
-
+        if ($request->isMethod('POST')){
             if($form->isValid()){  
                 $folder = "upload/excel/";        
                 $data = $form->getData();              
@@ -61,14 +60,15 @@ class ImportController extends Controller
                 }
                 if(!$status)$message = "les donnees sont errones ";             
             }
-        }
         
-        return array('form' => $form->createView(), 'message' => $message);
+        }
+        //return array('form' => $form->createView(), 'message' => $message);
 
 
 
-        //return $this->render('AppBackOfficeBundle:Import:update.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBackOfficeBundle:Import:update.html.twig', array('form' => $form->createView(), 'message' => $message));
     }
+
 
     /**
     * @param string

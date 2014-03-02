@@ -48,9 +48,9 @@ class ImportFormType extends AbstractType
 
 	public function setDefaultOptions(OptionsResolverInterface $resolver){
 		$resolver->setDefaults(array(
-			'csrf_protection' => true;
-			'csrf_field_name' => '_protection';
-			'intention' => 'data_exchange';
+			'csrf_protection' => true,
+			'csrf_field_name' => '_protection',
+			'intention' => 'data_exchange',
 			));
 	}
 
