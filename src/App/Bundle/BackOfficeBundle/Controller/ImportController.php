@@ -9,6 +9,7 @@ use App\Bundle\BackOfficeBundle\Entity\Element;
 use App\Bundle\BackOfficeBundle\Entity\Note;
 use App\Bundle\BackOfficeBundle\Entity\Module;
 use App\Bundle\BackOfficeBundle\Entity\Etudiant;
+use App\Bundle\BackOfficeBundle\Form\Data\ImportData;
 
 use App\Bundle\BackOfficeBundle\Form\ImportFormType;
 
@@ -26,20 +27,24 @@ class ImportController extends Controller
     	//abdellatif karroum todo here
         $errors = array();
 
-        $form  = $this->createForm(new ImportFormType());
-
-        $form->handleRequest($request);
+        $form  = $this->createForm(new ImportFormType(),new ImportData());
 
         if ($request->isMethod('POST')){
-            $validator = $this->get('validator');
-            $errorList = $validator->validate($form);
-            $translator  = $this->get('translator');            
-            //if(!$form->isValid()){
-            var_dump(count($errorList));
-            if(count($errorList)>0){
-                //$errlist = $form->getErrors();
+
+            $form->handleRequest($request);
+
+            $validator = $this->get("validator");
+            
+            $translator  = $this->get('translator');
+
+            $errList = $validator->validate($form);        
+
+            if(count($errList) > 0){
+            
                 foreach ($errList as $err) {
-                   $errors =  $translator->trans($err);
+                   
+                   $errors[] =  $translator->trans($err->getMessage());
+                
                 }
                 
             }else
@@ -48,9 +53,6 @@ class ImportController extends Controller
         
         }
         
-
-
-
         return $this->render('AppBackOfficeBundle:Import:update.html.twig', array('form' => $form->createView(), 'errors' => $errors));
     }
 
@@ -63,8 +65,8 @@ class ImportController extends Controller
 
         $status = false;
 
-        $attachement = $data['attachement'];
-        $table = $data['table'];
+        $attachement = $data->getAttachement();
+        $table = $data->getTable();
 
         $type = $attachement->guessExtension();
         $filename = $table.uniqid().".".$type;
