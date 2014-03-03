@@ -14,17 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Module
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
      * @var string
-     *
+     * @ORM\Id
      * @ORM\Column(name="code", type="string", length=255)
      */
     protected $code;
@@ -40,7 +31,7 @@ class Module
      * @var Filiere
      *
      * @ORM\ManyToOne(targetEntity="Filiere", inversedBy="filieres")
-     * @ORM\JoinColumn(name="filiere_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="filiere_code", referencedColumnName="code")
      */
     protected $filiere;
 
@@ -48,7 +39,7 @@ class Module
      * @var Semestre
      *
      * @ORM\ManyToOne(targetEntity="Semestre", inversedBy="semestres")
-     * @ORM\JoinColumn(name="semestre_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="semestre_code", referencedColumnName="code")
      */
     protected $semestre;
 
@@ -64,15 +55,7 @@ class Module
     }
 
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    
 
     /**
      * Set code

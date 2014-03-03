@@ -48,12 +48,12 @@ doctrine:
         default_connection:   conescol
         connections:
             conescol:
-                dbname:               "%database_name%"
-                host:                 "%database_host%"
-                port:                 "%database_port%"
-                user:                 "%database_user%"
-                password:             "%database_port%"
-                driver:               pdo_pgsql
+                dbname:               %database_name%
+                host:                 %database_host%
+                port:                 %database_port%
+                user:                 %database_user%
+                password:             %database_password%
+                driver:               %database_driver%
                 charset:              UTF8
                 logging:              %kernel.debug%
     orm:

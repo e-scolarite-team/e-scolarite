@@ -13,18 +13,10 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  */
 class Filiere
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
     /**
      * @var string
-     *
+     * @ORM\Id
      * @ORM\Column(name="code", type="string", length=255)
      */
     protected $code;
@@ -72,16 +64,6 @@ class Filiere
         $this->modules =  new ArrayCollection();
     }
 
-     
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set code

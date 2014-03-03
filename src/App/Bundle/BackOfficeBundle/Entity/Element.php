@@ -14,17 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Element
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
      * @var string
-     *
+     * @ORM\Id
      * @ORM\Column(name="code", type="string", length=255)
      */
     protected $code;
@@ -40,7 +31,7 @@ class Element
      * @var Module
      *
      * @ORM\ManyToOne(targetEntity="Module", inversedBy="elements")
-     * @ORM\JoinColumn(name="module_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="module_code", referencedColumnName="code")
      */
     protected $module;
 
@@ -55,16 +46,6 @@ class Element
         $this->notes =  new ArrayCollection();    
     }
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set code

@@ -14,17 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Semestre
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
      * @var string
-     *
+     * @ORM\Id
      * @ORM\Column(name="code", type="string", length=255)
      */
     protected $code;

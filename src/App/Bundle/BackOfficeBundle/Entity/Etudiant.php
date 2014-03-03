@@ -130,7 +130,7 @@ class Etudiant
      * @var Filiere
      *
      * @ORM\ManyToOne(targetEntity="Filiere", inversedBy="filieres")
-     * @ORM\JoinColumn(name="filiere_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="filiere_code", referencedColumnName="code")
      */
     protected $filiere;
 

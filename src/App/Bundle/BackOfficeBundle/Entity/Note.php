@@ -61,7 +61,7 @@ class Note
      * @var Element
      *
      * @ORM\ManyToOne(targetEntity="Element", inversedBy="elements")
-     * @ORM\JoinColumn(name="element_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="element_code", referencedColumnName="code")
      */
     protected $element;
 
