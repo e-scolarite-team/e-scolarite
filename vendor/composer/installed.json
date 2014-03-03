@@ -1545,26 +1545,25 @@
     },
     {
         "name": "symfony/icu",
-        "version": "v1.2.0",
-        "version_normalized": "1.2.0.0",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
         "target-dir": "Symfony/Component/Icu",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Icu.git",
-            "reference": "7299cd3d8d6602103d1ebff5d0a9917b7bc6de72"
+            "reference": "cac3fdfb111adbe590155f491594636d45129783"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Icu/zipball/7299cd3d8d6602103d1ebff5d0a9917b7bc6de72",
-            "reference": "7299cd3d8d6602103d1ebff5d0a9917b7bc6de72",
+            "url": "https://api.github.com/repos/symfony/Icu/zipball/cac3fdfb111adbe590155f491594636d45129783",
+            "reference": "cac3fdfb111adbe590155f491594636d45129783",
             "shasum": ""
         },
         "require": {
-            "lib-icu": ">=4.4",
             "php": ">=5.3.3",
             "symfony/intl": "~2.3"
         },
-        "time": "2013-06-03 18:32:58",
+        "time": "2013-06-03 18:32:07",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1594,40 +1593,55 @@
         ]
     },
     {
-        "name": "phpexcel/phpexcel",
-        "version": "v1.7.7",
-        "version_normalized": "1.7.7.0",
+        "name": "codeplex/phpexcel",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/ddeboer/phpexcel.git",
-            "reference": "de9c8871a87ce9be354d35f5e966dd65a0c7c6d2"
+            "url": "https://github.com/markushausammann/PHPExcel.git",
+            "reference": "7f72be58b4f0a136a4ee9997318d717ecb18abc6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/ddeboer/phpexcel/zipball/de9c8871a87ce9be354d35f5e966dd65a0c7c6d2",
-            "reference": "de9c8871a87ce9be354d35f5e966dd65a0c7c6d2",
+            "url": "https://api.github.com/repos/markushausammann/PHPExcel/zipball/7f72be58b4f0a136a4ee9997318d717ecb18abc6",
+            "reference": "7f72be58b4f0a136a4ee9997318d717ecb18abc6",
             "shasum": ""
         },
         "require": {
-            "php": ">5.2.0"
+            "ext-xml": "*",
+            "php": ">=5.2.0"
         },
-        "time": "2012-09-04 18:29:37",
+        "time": "2013-06-13 17:41:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-0": {
-                "PHPExcel": "Classes"
+                "PHPExcel": ""
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "GNU"
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Maarten Balliauw",
+                "homepage": "http://blog.maartenballiauw.be"
+            },
+            {
+                "name": "Mark Baker"
+            },
+            {
+                "name": "Erit Tilt"
+            }
         ],
         "description": "PHPExcel - OpenXML - Create Excel2007 documents in PHP - Spreadsheet engine",
         "homepage": "http://phpexcel.codeplex.com",
         "keywords": [
+            "OpenXML",
             "excel",
-            "xls"
+            "php",
+            "spreadsheet"
         ]
     }
 ]
