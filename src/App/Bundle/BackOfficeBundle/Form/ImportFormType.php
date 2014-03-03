@@ -20,7 +20,7 @@ class ImportFormType extends AbstractType
 		$builder->add("table","choice",array(
 										'empty_value' => 'chosir la table a charger',
 										'multiple' => false,
-										'choices' => array('etudiant' => 'Etudiant', 'filiere' => 'Filiere', 'module' => 'Module', 'note' => 'Note', 'element' => 'Element'),
+										'choices' => array('etudiant' => 'Etudiant', 'note' => 'Note', 'element' => 'Element'),
 										));
 
 		$builder->add('attachement','file');

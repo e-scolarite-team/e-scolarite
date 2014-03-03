@@ -26,7 +26,7 @@ class ImportController extends Controller
     {
     	//abdellatif karroum todo here
         $errors = array();
-
+        
         $form  = $this->createForm(new ImportFormType(),new ImportData());
 
         if ($request->isMethod('POST')){

@@ -53,7 +53,7 @@ doctrine:
                 port:                 "%database_port%"
                 user:                 "%database_user%"
                 password:             "%database_port%"
-                driver:               pdo_pgsql
+                driver:               "%database_driver%"
                 charset:              UTF8
                 logging:              %kernel.debug%
     orm:
