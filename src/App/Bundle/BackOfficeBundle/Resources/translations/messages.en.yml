@@ -1,5 +1,0 @@
-errors.import.table: you must chose a table
-errors.import.attachment: you must chose a file
-errors.import.attachment.mimeTypes: type of file autorised are xsxl/csv
-errors.import.parse: 
-data.fill.success: Donnee inserer avec succes

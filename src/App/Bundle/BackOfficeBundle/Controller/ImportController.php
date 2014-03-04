@@ -42,8 +42,8 @@ class ImportController extends Controller
             if(count($errList) > 0){
             
                 foreach ($errList as $err) {
-                   
-                   $errors[] =  $translator->trans($err->getMessage());
+                   // trans($id, array $parameters = array(), $domain = null, $locale = null)
+                   $errors[] =  $translator->trans($err->getMessage(),array('table' => "abdo fayssal"), 'messages', 'fr_FR');
                 
                 }
                 
