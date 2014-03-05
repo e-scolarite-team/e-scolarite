@@ -1,0 +1,123 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %} Coté Admin {% endblock %}
+
+{% block content %}
+
+
+<div class="col-md-6">
+          <h5 class="subtitle mb5">Liste des demandes Reçus</h5>
+          <p class="mb20">Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!</p>
+          <div class="table-responsive">
+          <table class="table mb30">
+            <thead>
+              <tr>
+                <th>CNE</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Type de Pièce</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2927211944</td>
+                <td>Rachdi</td>
+                <td>Naser-eddine</td>
+                <td>Carte d'étudiant</td>
+                <td class="table-action">
+                  <a href="#" class="btn btn-primary mr5 mb10" id="growl-primary">Traiter</a>
+                  </td>
+              </tr>
+              <tr>
+                <td>2927211944</td>
+                <td>Rachdi</td>
+                <td>Naser-eddine</td>
+                <td>Relevé de notes</td>
+               <td class="table-action">
+                  <a href="#" class="btn btn-primary mr5 mb10" id="growl-primary">Traiter</a>
+                  </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          </div><!-- table-responsive -->
+        </div>
+
+<div class="col-md-6">
+          <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-btns">
+                  <a href="#" class="panel-close">×</a>
+                  <a href="#" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title">Traitement de la demande</h4>
+                <p>Vous pouvez fixer un Rendez-vous pour cette demande!</p>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"> CNE <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="text" name="cne" class="form-control"  required="">
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"> Nom <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="email" name="nom" class="form-control"  required="">
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <label class="col-sm-3 control-label"> Prénom <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="email" name="prenom" class="form-control"  required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"> Type de pièce <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="email" name="type" class="form-control"  required="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"> Rendez-vous <span class="asterisk">*</span></label>
+                 <div class="input-group">
+                <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+              </div>
+              
+                </div>
+               </div><!-- panel-body -->
+              
+              <div class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-9 col-sm-offset-3">
+                    <button class="btn btn-primary">Fixer</button>
+                    <button type="reset" class="btn btn-default">Rejeter</button>
+                  </div>
+                </div>
+              </div>
+            
+          </div><!-- panel -->
+          </form>
+          
+          
+        </div>
+
+        
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent()}}
+  <script>
+    jQuery(document).ready(function(){
+       
+      // Date Picker
+      jQuery('#datepicker').datepicker();
+      
+
+    });
+</script>
+{% endblock %}
