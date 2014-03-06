@@ -9,6 +9,6 @@ class DefaultController extends Controller
 {
     public function indexAction($name)
     {
-        return $this->render('AppBackOfficeBundle:Default:rec.html.twig', array('name' => $name));
+        return $this->render('AppBackOfficeBundle:Default:index.html.twig', array('name' => $name));
     }
 }

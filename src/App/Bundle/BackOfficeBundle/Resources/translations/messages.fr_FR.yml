@@ -3,3 +3,6 @@ errors.import.attachment: Veuillez choisir un fichier
 errors.import.attachment.mimeTypes: Veuillez choisi un fichier xlsx/xls/csv
 errors.import.parse: Erreur de remplissage de la table
 data.fill.success: Donnee inserer avec succes
+errors.typedemande.code: Veuillez saisir le code de la demande
+errors.typedemande.libelle: Veuillez saisir le libelle de la demande
+errors.typedemande.maxauto: Veuillez saisir le max autorise du demande annuel

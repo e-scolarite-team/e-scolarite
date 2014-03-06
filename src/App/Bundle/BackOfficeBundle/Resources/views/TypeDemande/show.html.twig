@@ -1,0 +1,112 @@
+{% extends '::layout.html.twig' %}
+
+
+
+
+{% block content %}
+
+<div class="row">
+        
+    <div class="col-md-4">
+      <div class="panel panel-default panel-alt widget-messaging">
+      <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="{{ path('type-demande_delete_get', { 'id': entity.id }) }}" class="panel-edit"><i class="fa fa-trash-o"></i></a>
+            <a href="{{ path('type-demande_edit', { 'id': entity.id }) }}" class="panel-edit"><i class="fa fa-edit"></i></a>
+          </div><!-- panel-btns -->
+          <h3 class="panel-title">{{entity.libelle}}</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>
+              <h4 class="sender">Code :</h4>
+              {{entity.code}}
+            </li>
+            <li>
+              <h4 class="sender">Max autorise :</h4>
+              {{entity.maxAutorise}}
+            </li>
+            <li>
+               <h4 class="sender">Nombre du demande :</h4>
+              {{entity.count()}}
+            </li>
+          </ul>
+        </div><!-- panel-body -->
+      </div><!-- panel -->
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-btns">
+                <a href="#" class="minimize">&minus;</a>
+              </div>
+              <h4 class="panel-title">Liste des demandes effectue</h4>
+              <p></p>
+            </div>
+
+            <div class="panel-body">
+              <table class="table  table-hidaction table-hover" id="list-demande">
+                  <thead>
+                     <tr>
+                        <th>Nom/Prenom</th>
+                        <th>Date</th>
+                        <th>Mise a jour</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     
+                     {% for demandes in entity.demandes %}
+                        <tr class="odd gradeX">
+                            <td>{{ demande.etudiant.nom }} {{ demande.etudiant.prenom }}</td>
+                            <td>{{ demande.createdAt }}</td>
+                            <td>{{ demande.updatedAt }}</td>
+                            <td>{{ demande.status }}</td>
+                            <td  class="table-action-hide">
+                                <a href="#"><i class="fa fa-list-alt" title="show"></i></a>
+                                <a href="#" title="repondre"><i class="fa fa-pencil"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+               </table>
+            </div><!-- panel-body -->
+            
+          <div class="panel-footer">
+           <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+            </div>
+           </div>
+          </div><!-- panel-footer -->
+
+        </div><!-- panel -->
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+   {{ parent() }}               
+  <script>
+    jQuery(document).ready(function() {
+      jQuery('#list-demande').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    
+        // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+    });
+  </script>          
+{% endblock %}

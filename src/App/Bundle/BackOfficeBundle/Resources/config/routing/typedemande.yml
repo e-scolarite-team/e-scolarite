@@ -1,0 +1,35 @@
+type-demande:
+    pattern:  /
+    defaults: { _controller: "AppBackOfficeBundle:TypeDemande:index" }
+
+type-demande_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AppBackOfficeBundle:TypeDemande:show" }
+
+type-demande_new:
+    pattern:  /new
+    defaults: { _controller: "AppBackOfficeBundle:TypeDemande:new" }
+
+type-demande_create:
+    pattern:  /create
+    defaults: { _controller: "AppBackOfficeBundle:TypeDemande:create" }
+    requirements: { _method: post }
+
+type-demande_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AppBackOfficeBundle:TypeDemande:edit" }
+
+type-demande_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AppBackOfficeBundle:TypeDemande:update" }
+    requirements: { _method: post|put }
+
+type-demande_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AppBackOfficeBundle:TypeDemande:delete" }
+    requirements: { _method: post|delete|get }
+
+type-demande_delete_get:
+    pattern:  /{id}/remove
+    defaults: { _controller: "AppBackOfficeBundle:TypeDemande:deleteGet" }
+    requirements: { _method: post|delete|get }
