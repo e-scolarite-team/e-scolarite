@@ -4,6 +4,7 @@ namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Symfony\Component\Validator\Constraints as Validator;
 
 /**
  * TypeDemande
@@ -26,6 +27,7 @@ class TypeDemande
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255)
+     * @Validator\NotBlank(message="errors.typedemande.code")
      */
     private $code;
 
@@ -33,6 +35,7 @@ class TypeDemande
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
+     * @Validator\NotBlank(message="errors.typedemande.libelle")
      */
     private $libelle;
 
@@ -40,6 +43,8 @@ class TypeDemande
      * @var integer
      *
      * @ORM\Column(name="max_autorise", type="integer", nullable=true)
+     * @Validator\NotBlank(message="errors.typedemande.maxauto")
+     * @Validator\Type(type="int", message="errors.typedemande.maxauto")
      */
     private $maxAutorise;
 
@@ -153,5 +158,9 @@ class TypeDemande
     */
     public function getDemandes(){
         return $this->demandes->toArray();
+    }
+
+    public function count(){
+        return $this->demandes->count();
     }
 }

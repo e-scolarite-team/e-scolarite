@@ -1,0 +1,91 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}Liste des types des demandes{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-btns">
+        <a href="#" class="minimize">&minus;</a>
+      </div>
+      <h4 class="panel-title">Liste des types des demandes</h4>
+      <p></p>
+    </div>
+
+    <div class="panel-body">
+      <table class="table  table-hidaction table-hover" id="list-type">
+          <thead>
+             <tr>
+                <th>Code</th>
+                <th>Libelle</th>
+                <th>Max autorise</th>
+                <th>Demande Inclut</th>
+                <th>Actions</th>
+             </tr>
+          </thead>
+          <tbody>
+             
+             {% for typeDemande in entities %}
+                <tr class="odd gradeX">
+                    <td>{{ typeDemande.code }}</td>
+                    <td>{{ typeDemande.libelle }}</td>
+                    <td>{{ typeDemande.maxAutorise }}</td>
+                    <td>{{ typeDemande.count() }}</td>
+                    <td  class="table-action-hide">
+                        <a href="{{ path('type-demande_show', { 'id': typeDemande.id }) }}"><i class="fa fa-list-alt" title="show"></i></a>
+                        <a href="{{ path('type-demande_edit', { 'id': typeDemande.id }) }}" class="delete-row" title="edit"><i class="fa fa-pencil"></i></a>
+                        <a href="{{ path('type-demande_delete_get', { 'id': typeDemande.id }) }}" class="delete-row" title="delete"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+          </tbody>
+       </table>
+    </div><!-- panel-body -->
+    
+  <div class="panel-footer">
+   <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <center><a href="{{ path('type-demande_new') }}" class="btn btn-primary">Ajouter un type de demande</a></center>
+    </div>
+   </div>
+  </div><!-- panel-footer -->
+
+</div><!-- panel -->
+{% endblock %}
+ 
+ {% block javascripts %}
+   {{ parent() }}               
+  <script>
+    jQuery(document).ready(function() {
+      jQuery('#list-type').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    
+        // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+    });
+  </script>          
+{% endblock %}
+
+
+
+
+
+
+
+
+        
+
+
+

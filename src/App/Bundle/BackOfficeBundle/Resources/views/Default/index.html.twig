@@ -1,9 +1,61 @@
-{% extends '::layout.html.twig' %}
+{% extends "::layout.html.twig" %}
 
-{% block breadcrumb %}
-<li class="active">Hello</li>
-{%endblock%}
+{% block title %}Liste des types des demandes{% endblock %}
 
 {% block content %}
-Hello {{ name }}!
+<div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="#" class="minimize">&minus;</a>
+          </div>
+          <h4 class="panel-title">Liste des types des demandes</h4>
+          <p></p>
+        </div>
+
+        <div class="panel-body panel-body-nopadding">
+          <table class="table" id="list-type">
+              <thead>
+                 <tr>
+                    <th>Rendering engine</th>
+                    <th>Browser</th>
+                    <th>Platform(s)</th>
+                    <th>Engine version</th>
+                    <th>CSS grade</th>
+                 </tr>
+              </thead>
+              <tbody>
+                 <tr class="odd gradeX">
+                    <td>Trident</td>
+                    <td>Internet
+                        Explorer 4.0</td>
+                    <td>Win 95+</td>
+                    <td class="center"> 4</td>
+                    <td class="center">X</td>
+                 </tr>
+              </tbody>
+           </table>
+        </div><!-- panel-body -->
+        
+      <div class="panel-footer">
+       <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <center><button type="submit" class="btn btn-primary">Ajouter</button></center>
+        </div>
+       </div>
+      </div><!-- panel-footer -->
+
+      </div><!-- panel -->
 {% endblock %}
+ 
+ {% block javascripts %}
+   {{ parent() }}               
+  <script>
+    jQuery(document).ready(function() {
+      jQuery('#list-type').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    
+    });
+  </script>          
+{% endblock %}
+
