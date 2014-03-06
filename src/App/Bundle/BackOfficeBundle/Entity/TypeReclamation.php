@@ -4,6 +4,7 @@ namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Symfony\Component\Validator\Constraints as Validator;
 
 /**
  * TypeReclamation
@@ -26,6 +27,7 @@ class TypeReclamation
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255)
+     * @Validator\NotBlank(message="Le champ code est obligatoire")
      */
     private $code;
 
@@ -33,6 +35,7 @@ class TypeReclamation
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
+     * @Validator\NotBlank(message="Le champ libelle est obligatoire")
      */
     private $libelle;
 
@@ -40,6 +43,7 @@ class TypeReclamation
      * @var integer
      *
      * @ORM\Column(name="max_autorise", type="integer", nullable=true)
+     * @Validator\NotBlank(message="Le champ max autorise est obligatoire")
      */
     private $maxAutorise;
 

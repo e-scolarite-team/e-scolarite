@@ -1,0 +1,54 @@
+
+
+
+
+
+{% extends "::layout.html.twig" %}
+
+{% block title %} import data{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="#" class="panel-close">&times;</a>
+            <a href="#" class="minimize">&minus;</a>
+          </div>
+          <h4 class="panel-title">Les types reclamations</h4>
+          
+       
+         <div class="tab-pane" id="tab2">
+                    <form class="form">
+                           <div class="table-responsive">
+                            <table class="table table-bordered mb30">
+                              <thead>
+                                <tr>
+                                  <th>code Reclamation</th>
+                                  <th>Type</th>
+                                  <th>MaxAutorise</th>
+                                  <th>Action</th>
+                                  
+                                  
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for entity in entities %}
+                                <tr>
+                                  <td>{{ entity.code }}</td>
+                                  <td>{{ entity.libelle }}</td>
+                                  <td>{{ entity.maxAutorise }}</td>
+                                  <td class="table-action">
+                                        <a href="{{path('type-reclamation_edit', {'id': entity.id})}}"><i class="glyphicon glyphicon-saved"></i></a>
+                                        <a href="{{path('type-reclamation_delete', {'id': entity.id})}}" class="delete-row"><i class="glyphicon glyphicon-remove"></i></a>
+                                  </td>                                  
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                            <a href="{{path('type-reclamation_new')}}"><button class="btn btn-primary">Ajouter un nouveau type de reclamation</button></a>
+                            </div>
+                      
+                    </form>
+                  </div>
+                   </div>
+{% endblock %}

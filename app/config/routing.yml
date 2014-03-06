@@ -2,3 +2,7 @@ app_back_office:
     resource: "@AppBackOfficeBundle/Resources/config/routing.yml"
     prefix:   /
 
+app_back_office:
+    resource: "@AppBackOfficeBundle/Resources/config/routing/typereclamation.yml"
+    prefix:   /type-reclamation
+

@@ -1,0 +1,30 @@
+type-reclamation:
+    pattern:  /
+    defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:index" }
+
+type-reclamation_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:show" }
+
+type-reclamation_new:
+    pattern:  /new
+    defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:new" }
+
+type-reclamation_create:
+    pattern:  /create
+    defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:create" }
+    requirements: { _method: post }
+
+type-reclamation_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:edit" }
+
+type-reclamation_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:update" }
+    requirements: { _method: post|put }
+
+type-reclamation_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:delete" }
+    requirements: { _method: post|delete|get }
