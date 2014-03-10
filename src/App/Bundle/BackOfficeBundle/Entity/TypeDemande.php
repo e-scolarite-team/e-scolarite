@@ -43,8 +43,8 @@ class TypeDemande
      * @var integer
      *
      * @ORM\Column(name="max_autorise", type="integer", nullable=true)
-     * @Validator\NotBlank(message="errors.typedemande.maxauto")
-     * @Validator\Type(type="int", message="errors.typedemande.maxauto")
+     * 
+     * @Validator\Type(type="int", message="errors.typedemande.maxautointint")
      */
     private $maxAutorise;
 

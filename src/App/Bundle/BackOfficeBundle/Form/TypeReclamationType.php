@@ -8,17 +8,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TypeReclamationType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', 'text')
-            ->add('libelle', 'text')
-            ->add('maxAutorise', 'text')
-            
+            ->add('code')
+            ->add('libelle')
+            ->add('maxAutorise')
         ;
     }
     
@@ -37,6 +36,6 @@ class TypeReclamationType extends AbstractType
      */
     public function getName()
     {
-        return 'app_bundle_backofficebundle_typereclamation';
+        return 'typereclamation';
     }
 }

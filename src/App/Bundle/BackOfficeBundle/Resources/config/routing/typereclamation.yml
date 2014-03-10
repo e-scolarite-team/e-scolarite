@@ -28,3 +28,8 @@ type-reclamation_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:delete" }
     requirements: { _method: post|delete|get }
+
+type-reclamation_delete_get:
+    pattern:  /{id}/remove
+    defaults: { _controller: "AppBackOfficeBundle:TypeReclamation:deleteGet" }
+    requirements: { _method: post|delete|get }

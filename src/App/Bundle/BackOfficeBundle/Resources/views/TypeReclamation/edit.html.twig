@@ -1,59 +1,62 @@
-{% extends "::layout.html.twig" %}
+{% extends '::layout.html.twig' %}
 
-{% block title %} import data{% endblock %}
+{% block title %}Ajouter un type de reclamation{% endblock %}
 
 {% block content %}
-	<div class="panel panel-default">
-        {{ form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+  <div class="panel panel-default">
+        {{ form_start(edit_form,{'attr' : {'class' : 'form-horizontal form-bordered', 'novalidate':'novalidate'}})}}
         <div class="panel-heading">
           <div class="panel-btns">
             <a href="#" class="panel-close">&times;</a>
             <a href="#" class="minimize">&minus;</a>
           </div>
-          <h4 class="panel-title">Ajouter un nouveau type de reclamation</h4>
-          
+          <h4 class="panel-title">Modification de type de reclamation</h4>
+          <p>Cette interface permet de modifier type de reclamation existant.</p>
         </div>
 
         <div class="panel-body panel-body-nopadding">
           
-          {% if errors %}
+          
+            {% if errors %}
             <div class="error" style="display:block;padding : 25px 50px;">
               {% for err in errors %}
               <label class="error">{{ err | raw }}</label>
               {% endfor %}
             </div>
             {% endif %}
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="{{ edit_form.code.vars.id }}">Code <span class="asterisk">*</span> :</label>
+              <div class="col-sm-6">
+                {{ form_widget(edit_form.code,{'attr' : {'class' : 'form-control'}})}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="{{ edit_form.libelle.vars.id }}">Libelle <span class="asterisk">*</span> :</label>
+              <div class="col-sm-6">
+                {{ form_widget(edit_form.libelle,{'attr' : {'class' : 'form-control'}})}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="{{ edit_form.maxAutorise.vars.id }}">Max autorise <span class="asterisk">*</span> :</label>
+              <div class="col-sm-6">
+                {{ form_widget(edit_form.maxAutorise,{'attr' : {'class' : 'form-control'}})}}
+              </div>
+            </div>
+            {{ form_rest(edit_form)}}
             
-            <div class="form-group">
-              <label class="col-sm-3 control-label" for="{{ form.code.vars.id }}">Code</label>
-              <div class="col-sm-6">
-                {{ form_widget(form.code,{'attr' : {'class' : 'form-control'}})}}
-              </div>
-            </div>
-       
-           	<div class="form-group">
-              <label class="col-sm-3 control-label" for="{{ form.libelle.vars.id }}">Libelle</label>
-              <div class="col-sm-6">
-                {{ form_widget(form.libelle,{'attr' : {'class' : 'form-control'}})}}
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label" for="{{ form.maxAutorise.vars.id }}">max autorise</label>
-              <div class="col-sm-6">
-                {{ form_widget(form.maxAutorise,{'attr' : {'class' : 'form-control'}})}}
-              </div>
-            </div>
-            {{form_rest(form)}}
+          
         </div><!-- panel-body -->
         
       <div class="panel-footer">
-			 <div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-				  <center><button type="submit" class="btn btn-primary">Modifier</button></center>
-				</div>
-			 </div>
-		  </div><!-- panel-footer -->
-      </form>
+       <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <center>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+          </center>
+        </div>
+       </div>
+      </div><!-- panel-footer -->
+      {{ form_end(edit_form)}}
       </div><!-- panel -->
 {% endblock %}
+

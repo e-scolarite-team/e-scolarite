@@ -164,7 +164,7 @@ class TypeReclamationController extends Controller
         
         return $this->render('AppBackOfficeBundle:TypeReclamation:edit.html.twig', array(
             'entity'      => $entity,
-            'form'   => $form->createView(),
+            'edit_form'   => $form->createView(),
             //'delete_form' => $deleteForm->createView(),
             'errors'      => $errors,
         ));
@@ -202,43 +202,38 @@ class TypeReclamationController extends Controller
             throw $this->createNotFoundException('Unable to find TypeReclamation entity.');
         }
 
-        //$deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
-       
+        $editForm->handleRequest($request);
+
         $errors = array();
-        if ($request->isMethod('POST')){
 
-            $editForm->handleRequest($request);
+        if ($request->isMethod('POST')) {
 
-            $validator = $this->get("validator");                        
+            $validator = $this->get("validator");
+            
+            $translator  = $this->get('translator');
 
             $errList = $validator->validate($editForm);        
 
             if(count($errList) > 0){
             
-                foreach ($errList as $err) {
-                   
-                   $errors[] = $err->getMessage();
-                
-                }
+                foreach ($errList as $err) 
+                   $errors[] =  $translator->trans($err->getMessage(),array(), 'messages', 'fr_FR');
                 
             }else{
-               
-                $em = $this->getDoctrine()->getManager();                
-
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
-                
                 $em->flush();
-                
+                return $this->redirect($this->generateUrl('type-reclamation_show', array('id' => $entity->getId())));
             }
         }
-        
 
         return $this->render('AppBackOfficeBundle:TypeReclamation:edit.html.twig', array(
             'entity'      => $entity,
-            'form'   => $editForm->createView(),
-            //'delete_form' => $deleteForm->createView(),
-            'errors'      => $errors,  
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'errors' => $errors ,
         ));
     }
     /**

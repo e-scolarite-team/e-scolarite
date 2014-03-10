@@ -27,7 +27,7 @@ class TypeReclamation
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255)
-     * @Validator\NotBlank(message="Le champ code est obligatoire")
+     * @Validator\NotBlank(message="errors.typereclamation.code")
      */
     private $code;
 
@@ -35,7 +35,7 @@ class TypeReclamation
      * @var string
      *
      * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
-     * @Validator\NotBlank(message="Le champ libelle est obligatoire")
+     * @Validator\NotBlank(message="errors.typereclamation.libelle")
      */
     private $libelle;
 
@@ -43,7 +43,8 @@ class TypeReclamation
      * @var integer
      *
      * @ORM\Column(name="max_autorise", type="integer", nullable=true)
-     * @Validator\NotBlank(message="Le champ max autorise est obligatoire")
+     * @Validator\NotBlank(message="errors.typereclamation.maxauto")
+     * @Validator\Type(type="int", message="errors.typereclamation.maxautoint")
      */
     private $maxAutorise;
 
@@ -157,5 +158,9 @@ class TypeReclamation
     */
     public function getReclamations(){
         return $this->reclamations->toArray();
+    }
+
+    public function count(){
+        return $this->reclamations->count();
     }
 }
