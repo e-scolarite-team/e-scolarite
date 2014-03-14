@@ -5,3 +5,15 @@ app_back_office_homepage:
 import_data:
     pattern: /import/data
     defaults: { _controller: AppBackOfficeBundle:Import:update }
+
+reclamation:
+    pattern: /reclamation
+    defaults: { _controller: AppBackOfficeBundle:Reclamation:envoyer }
+
+listerReclamation:
+    pattern: /listerReclamation
+    defaults: { _controller: AppBackOfficeBundle:Reclamation:index }
+
+showReclamation:
+    pattern: /{id}/showReclamation
+    defaults: { _controller: AppBackOfficeBundle:Reclamation:show }

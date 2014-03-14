@@ -36,6 +36,6 @@ class TypeReclamationType extends AbstractType
      */
     public function getName()
     {
-        return 'typereclamation';
+        return 'reclamation';
     }
 }

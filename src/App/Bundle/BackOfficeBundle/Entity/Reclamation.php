@@ -4,6 +4,7 @@ namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Symfony\Component\Validator\Constraints as Validator;
 
 /**
  * Reclamation
@@ -26,6 +27,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="objet", type="string", length=255, nullable=true)
+     * @Validator\NotBlank(message="veuiller saisir l'objet")
      */
     protected $objet;
 
@@ -33,6 +35,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+     * @Validator\NotBlank(message="veuiller saisir la description")
      */
     protected $description;
 
@@ -60,9 +63,9 @@ class Reclamation
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer", nullable=true)
+     * @ORM\Column(name="status", type="integer", nullable=true, options={"default":0})
      */
-    protected $status;
+    protected $status = 0;
 
     /**
      * @var Etudiant
@@ -77,6 +80,7 @@ class Reclamation
      *
      * @ORM\ManyToOne(targetEntity="TypeReclamation", inversedBy="reclamations")
      * @ORM\JoinColumn(name="type_reclamation_id", referencedColumnName="id")
+     * 
      */
     protected $typeReclamation;
 
