@@ -1,0 +1,7 @@
+parameters:
+#    app_front_office.example.class: App\Bundle\FrontOfficeBundle\Example
+
+services:
+#    app_front_office.example:
+#        class: %app_front_office.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

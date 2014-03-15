@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 /**
  * Etudiant
  *
- * @ORM\Table(name="etudiants")
+ * @ORM\Table(name="etudiants",uniqueConstraints={@ORM\UniqueConstraint(name="indx_code_apo",columns={"code_appog"})})
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\EtudiantRepository")
  */
 class Etudiant
@@ -20,6 +20,12 @@ class Etudiant
      * @ORM\Column(name="id", type="string", length=255)
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(name="code_appog", type="string", length=255)
+     */
+    protected $codeAppogee;
 
     /**
      * @var string
@@ -122,22 +128,14 @@ class Etudiant
     /**
     * @var ArrayCollection
     *
-    * @ORM\OneToMany(targetEntity="Note", mappedBy="etudiant", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="ResultatElp", mappedBy="etudiant", cascade={"persist"})
     */
-    protected $notes;
-
-    /**
-     * @var Filiere
-     *
-     * @ORM\ManyToOne(targetEntity="Filiere", inversedBy="filieres")
-     * @ORM\JoinColumn(name="filiere_code", referencedColumnName="code")
-     */
-    protected $filiere;
+    protected $resultats;
 
     public function __construct(){
         $this->demandes =  new ArrayCollection();
         $this->reclamations =  new ArrayCollection();
-        $this->notes =  new ArrayCollection();
+        $this->resultats =  new ArrayCollection();
     }
 
     /**
@@ -153,24 +151,38 @@ class Etudiant
     /**
      * Set id
      *
+     * @param string $id
+     * @return Etudiant
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+
+    /**
+     * Set codeAppogee
+     *
      * @param string $codeApogee
      * @return Etudiant
      */
-    public function setCodeApogee($codeApogee)
+    public function setCodeAppogee($codeAppogee)
     {
-        $this->id = $codeApogee;
+        $this->codeAppogee = $codeAppogee;
 
         return $this;
     }
 
     /**
-     * Get id
+     * Get codeAppogee
      *
      * @return string 
      */
-    public function getCodeApogee()
+    public function getCodeAppogee()
     {
-        return $this->id;
+        return $this->codeAppogee;
     }
 
     /**
@@ -450,29 +462,6 @@ class Etudiant
     }
 
     /**
-     * Set filiere
-     *
-     * @param Filiere $filiere
-     * @return Etudiant
-     */
-    public function setFiliere($filiere)
-    {
-        $this->filiere = $filiere;
-
-        return $this;
-    }
-
-    /**
-     * Get filiere
-     *
-     * @return Filiere 
-     */
-    public function getFiliere()
-    {
-        return $this->filiere;
-    }
-
-    /**
     * Add demande
     * @param Demande $demande
     * @return Etudiant
@@ -513,22 +502,22 @@ class Etudiant
     }
 
     /**
-    * Add note
-    * @param note $note
+    * Add resultat
+    * @param ResultatElp $resultat
     * @return Etudiant
     */
-    public function addNote($note){
-        $this->notes[] = $note;
+    public function addResultat($resultat){
+        $this->resultats[] = $resultat;
         $note->setEtudiant($this);
         return $this;
     }
 
     /**
-    * Get notes
+    * Get resultats
     * 
     * @return array
     */
-    public function getNotes(){
-        return $this->notes->toArray();
+    public function getResultats(){
+        return $this->resultats->toArray();
     }
 }

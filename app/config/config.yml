@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallback: en }
+    translator:      { fallback: fr }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -33,7 +33,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ AppBackOfficeBundle ]
+    bundles:        [ AppBackOfficeBundle, AppFrontOfficeBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
