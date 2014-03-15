@@ -74,7 +74,7 @@ class Admin
     /**
     * @var ArrayCollection
     *
-    * @ORM\OneToMany(targetEntity="EtatDemande", mappedBy="demande", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="EtatDemande", mappedBy="admin", cascade={"persist"})
     */
     protected $etatDemandes;
 

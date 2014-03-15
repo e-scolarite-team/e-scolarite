@@ -67,7 +67,7 @@ class Demande
     /**
      * @var Etudiant
      *
-     * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="reclamations")
+     * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="demandes")
      * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
      */
     protected $etudiant;
