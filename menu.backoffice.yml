@@ -1,4 +1,13 @@
 listerReclamation : Reclamations
 
 type-reclamation : les types de reclamations
-	type-reclamation_new : ajouter 
+	type-reclamation_new : ajouter
+  
+    
+demande:
+    traiter:traiterdemande
+     liste:listedemande
+
+////// ABD
+
+listedemande: Les demandes
