@@ -27,7 +27,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="objet", type="string", length=255, nullable=true)
-     * @Validator\NotBlank(message="veuiller saisir l'objet")
+     * @Validator\NotBlank(message="errors.reclamation.objet")
      */
     protected $objet;
 
@@ -35,7 +35,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Validator\NotBlank(message="veuiller saisir la description")
+     * @Validator\NotBlank(message="errors.reclamation.description")
      */
     protected $description;
 
@@ -43,6 +43,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="reponse", type="text", nullable=true)
+     * 
      */
     protected $reponse;
 

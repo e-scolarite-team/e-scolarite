@@ -8,12 +8,12 @@ import_data:
 
 reclamation:
     pattern: /reclamation
-    defaults: { _controller: AppBackOfficeBundle:Reclamation:envoyer }
+    defaults: { _controller: AppFrontOfficeBundle:Reclamation:envoyer }
 
 listerReclamation:
     pattern: /listerReclamation
     defaults: { _controller: AppBackOfficeBundle:Reclamation:index }
 
-showReclamation:
-    pattern: /{id}/showReclamation
-    defaults: { _controller: AppBackOfficeBundle:Reclamation:show }
+repondreReclamation:
+    pattern: /{id}/repondreReclamation
+    defaults: { _controller: AppBackOfficeBundle:Reclamation:repondre }
