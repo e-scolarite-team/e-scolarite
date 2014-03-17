@@ -13,3 +13,12 @@ listerReclamation:
 repondreReclamation:
     pattern: /{id}/repondreReclamation
     defaults: { _controller: AppBackOfficeBundle:Reclamation:repondre }
+admin_login:
+    pattern: /login
+    defaults: { _controller: AppBackOfficeBundle:SecurityPointAccess:login }
+
+admin_login_check:
+    pattern:   /login_check
+    
+admin_logout:
+    path:   /logout

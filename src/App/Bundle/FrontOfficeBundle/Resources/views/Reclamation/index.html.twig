@@ -28,7 +28,7 @@
                 <tr class="odd gradeX">
                     <td>{{ reclamation.objet }}</td>
                     <td>{{ reclamation.typeReclamation.libelle }}</td>
-                    <td>{{ reclamation.createdAt|date('Y-m-d') }}</td>
+                    <td>{{ reclamation.createdAt|date('d-m-Y h:m') }}</td>
                     <td>
                     <a href="{{ path('showReclamationEtud', { 'id': reclamation.id }) }}"><i class="fa fa-list-alt" title="visualiser"></i></a>
 
@@ -50,7 +50,7 @@
   <div class="panel-footer">
    <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-        <center><a href="{{ path('reclamation') }}" class="btn btn-primary">Envoyer une reclamation</a></center>
+        <center><a href="{{ path('reclamationEtud') }}" class="btn btn-primary">Envoyer une reclamation</a></center>
     </div>
    </div>
   </div><!-- panel-footer -->

@@ -12,3 +12,4 @@ errors.typereclamation.libelle: Veuillez saisir le libelle
 errors.typereclamation.maxauto: Veuillez saisir le max autorise
 errors.typereclamation.maxautoint: max autorise doit etre un entier
 errors.reclamation.reponse : Veuillez saisir la reponse
+errors.admin.nom: Veuillez remplire
