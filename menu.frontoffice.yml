@@ -1,8 +1,8 @@
 listerReclamationEtud : Reclamations
 	reclamationEtud : Envoyer une reclamation
-    demande:
-        rendezvous:rendezvous
-        pieces:demandepiece
+demande:
+    rendezvous:rendezvous
+    pieces:demandepiece
 
 
 ///////      
