@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use App\Bundle\BackOfficeBundle\Entity\Reclamation;
 use App\Bundle\BackOfficeBundle\Form\ReponseReclamationType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ReclamationController extends Controller
 {
@@ -39,8 +40,12 @@ class ReclamationController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Reclamation entity.');
         }
+            
+        $data = array("reponse"=>"");
         
-        $form = $this->createForm(new ReponseReclamationType(),$entity);
+        $form = $this->createFormBuilder($data)
+            ->add("reponse","textarea")
+            ->getForm();
         
         $errors = array();
 
@@ -49,7 +54,7 @@ class ReclamationController extends Controller
         if ($request->isMethod('POST')) {
         	
             $form->handleRequest($request);
-            //return new Response($this->getRequest()->request->get('status'));
+            
             if($this->getRequest()->request->get('status') == 'valider'){
                 $entity->setStatus(1);
             }
@@ -59,11 +64,17 @@ class ReclamationController extends Controller
 
             $entity->setConsultedAt(new \DateTime());
 
+            $notBlank = new Assert\NotBlank();
+
+            $notBlank->message = 'errors.reclamation.reponse';   
+
+            $reponse = $form->getData()["reponse"];            
+
             $validator = $this->get("validator");
             
             $translator  = $this->get('translator');
 
-            $errList = $validator->validate($form);        
+            $errList = $validator->validateValue($reponse, $notBlank);        
                        
             if(count($errList) > 0){
             
@@ -71,6 +82,8 @@ class ReclamationController extends Controller
                    $errors[] =  $translator->trans($err->getMessage(),array(),'messages','fr_FR');
                 
             }else{
+                $entity->setReponse($reponse);
+                $entity->setNotified(1);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();

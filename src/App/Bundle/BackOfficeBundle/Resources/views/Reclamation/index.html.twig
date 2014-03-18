@@ -40,16 +40,16 @@
                     <td class="center ">{{ reclamation.createdAt|date('d-m-Y h:m') }}</td>
                     <td class="center ">{{ reclamation.objet }}</td>
                     <td class="table-action">
-
+ 
 
                       {% if reclamation.status == 0 %}                        
                         <a href="{{ path('repondreReclamation', { 'id': reclamation.id }) }}">
-                          repondre                          
+                          <span class="fa fa-comment-o" title="repondre"></span>                          
                         </a>
                       {% elseif reclamation.status == 1 %}
-                        <span class="glyphicon glyphicon-thumbs-up" title="valide"></span>
+                        <span class="glyphicon glyphicon-ok" title="valide"></span>
                       {% elseif reclamation.status == -1 %}
-                        <span class="glyphicon glyphicon-thumbs-down" title="refuse"></span>
+                        <span class="glyphicon glyphicon-remove" title="refuse"></span>
                       {% else %}
                         
                       {% endif %}

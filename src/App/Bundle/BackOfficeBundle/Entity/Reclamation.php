@@ -69,6 +69,13 @@ class Reclamation
     protected $status = 0;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="notified", type="boolean", nullable=true, options={"default":0})
+     */
+    protected $notified = 0;
+
+    /**
      * @var Etudiant
      *
      * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="reclamations")
@@ -152,7 +159,7 @@ class Reclamation
      * @param string $reponse
      * @return Reclamation
      */
-    public function setreponse($reponse)
+    public function setReponse($reponse)
     {
         $this->reponse = $reponse;
 
@@ -164,7 +171,7 @@ class Reclamation
      *
      * @return string 
      */
-    public function getreponse()
+    public function getReponse()
     {
         return $this->reponse;
     }
@@ -237,6 +244,30 @@ class Reclamation
     {
         return $this->status;
     }
+
+    /**
+     * Set notified
+     *
+     * @param boolean $notified
+     * @return Demande
+     */
+    public function setNotified($notified)
+    {
+        $this->notified = $notified;
+
+        return $this;
+    }
+
+    /**
+     * Get notified
+     *
+     * @return boolean 
+     */
+    public function getNotified()
+    {
+        return $this->notified;
+    }
+
 
     /**
      * Set etudiant

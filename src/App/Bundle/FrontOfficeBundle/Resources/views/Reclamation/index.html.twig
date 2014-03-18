@@ -40,9 +40,9 @@
                       {% if reclamation.status == 0 %}                        
                         <span class="glyphicon glyphicon-time" title="En cours" data-toggle="tooltip" data-placement="left"></span>
                       {% elseif reclamation.status == 1 %}
-                        <span class="glyphicon glyphicon-thumbs-up" title="valide"></span>
+                        <span class="glyphicon glyphicon-ok" title="valide"></span>
                       {% else %}
-                        <span class="glyphicon glyphicon-thumbs-down" title="refuse"></span>
+                        <span class="glyphicon glyphicon-remove" title="refuse"></span>
                       {% endif %}
                     </td>
 
