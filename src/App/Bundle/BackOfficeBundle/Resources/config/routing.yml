@@ -6,6 +6,7 @@ import_data:
     pattern: /import/data
     defaults: { _controller: AppBackOfficeBundle:Import:update }
 
+<<<<<<< HEAD
 
     
 listedemande:
@@ -23,3 +24,21 @@ traiterdemande:
     
 
     
+=======
+listerReclamation:
+    pattern: /listerReclamation
+    defaults: { _controller: AppBackOfficeBundle:Reclamation:index }
+
+repondreReclamation:
+    pattern: /{id}/repondreReclamation
+    defaults: { _controller: AppBackOfficeBundle:Reclamation:repondre }
+admin_login:
+    pattern: /login
+    defaults: { _controller: AppBackOfficeBundle:SecurityPointAccess:login }
+
+admin_login_check:
+    pattern:   /login_check
+    
+admin_logout:
+    path:   /logout
+>>>>>>> c52a93f24e7f19978fcfa96fa53dc1eb9b23986e

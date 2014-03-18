@@ -1,0 +1,64 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Reclamation{% endblock %}
+
+{% block content %}
+	<div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-btns">
+                  <a href="#" class="panel-close">&times;</a>
+                  <a href="#" class="minimize">&minus;</a>
+                </div>
+                <h4 class="panel-title">reclamation</h4>
+                
+                
+                
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab1">
+                    <form class="form" action="data">
+                      <div class="form-group">
+                         <label class="col-sm-3 control-label">Objet :</label>
+                         <div class="col-sm-6">
+                         <LAbel class="form-control" >{{entity.objet}}</labael>
+                      </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Types :</label>
+                        <div class="col-sm-6">
+                        <LAbel class="form-control" >{{entity.typeReclamation.libelle}}</labael>
+                      </div>
+                      </div>
+                      
+                      <div class="form-group">
+                                 <label class="col-sm-3 control-label">Description :</label>
+                      <div class="col-sm-6">
+                         <LAbel class="form-control" >{{entity.description}}</labael>
+                         </br>
+                        
+                      </div>
+                      </div>
+                      {% if entity.reponse != null %}
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Reponse  :</label>
+                        <div class="col-sm-6">
+                        <LAbel class="form-control" >{{entity.reponse}}</labael>
+                      </div>
+                      </div>
+                      {% endif %}
+                    </form>
+                  </div>
+                  </div>
+                  </div>
+                  
+
+                  
+                  
+                  
+                </div><!-- tab-content -->
+             
+
+      
+      
+      
+{% endblock %}

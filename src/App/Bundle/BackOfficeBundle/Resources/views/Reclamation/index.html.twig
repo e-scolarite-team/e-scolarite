@@ -1,0 +1,79 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}  reclamation {% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-btns">
+        <a href="#" class="minimize">&minus;</a>
+      </div>
+      <h4 class="panel-title">Liste de reclamation</h4>
+      <p></p>
+    </div>
+
+    <div class="panel-body">
+              
+  
+        <table class="table table-striped mb30" id="tab-tab">
+            <thead>
+              <tr>
+                <th>CNE</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Date de reclamation</th>
+                <th>Objet de reclamation</th>
+                <th>Reponse</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for reclamation in entities %}
+             <tr class="gradeA odd">
+                    <td class=" sorting_1">{{ reclamation.etudiant.cne }}</td>
+                    <td class=" ">{{ reclamation.etudiant.nom }}</td>
+                    <td class=" ">{{ reclamation.etudiant.prenom }}</td>
+                    <td class="center ">{{ reclamation.createdAt|date('d-m-Y h:m') }}</td>
+                    <td class="center ">{{ reclamation.objet }}</td>
+                    <td class="table-action">
+
+
+                      {% if reclamation.status == 0 %}                        
+                        <a href="{{ path('repondreReclamation', { 'id': reclamation.id }) }}">
+                          repondre                          
+                        </a>
+                      {% elseif reclamation.status == 1 %}
+                        <span class="glyphicon glyphicon-thumbs-up" title="valide"></span>
+                      {% elseif reclamation.status == -1 %}
+                        <span class="glyphicon glyphicon-thumbs-down" title="refuse"></span>
+                      {% else %}
+                        
+                      {% endif %}
+                    </td>
+                  
+                
+             </tr>
+             {% endfor %}
+             
+            </tbody>
+          </table>
+          </div>
+                {% endblock %}
+ {% block javascripts %}
+
+    {{parent()}}
+<script>
+    jQuery(document).ready(function() {
+    
+       
+      jQuery('#tab-tab').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    
+   jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+   });
+</script>    
+{% endblock %}

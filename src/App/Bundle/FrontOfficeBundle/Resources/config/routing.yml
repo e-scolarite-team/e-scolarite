@@ -1,6 +1,7 @@
 app_front_office_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: AppFrontOfficeBundle:Default:index }
+<<<<<<< HEAD
     
     
 rendezvous:
@@ -11,3 +12,17 @@ rendezvous:
 demandepiece:
     pattern:  /demande/demandepiece
     defaults: { _controller: AppFrontOfficeBundle:Demande:demandepiece }
+=======
+
+reclamationEtud:
+    pattern: /reclamation
+    defaults: { _controller: AppFrontOfficeBundle:Reclamation:envoyer }
+
+listerReclamationEtud:
+    pattern: /listerReclamation
+    defaults: { _controller: AppFrontOfficeBundle:Reclamation:index }
+
+showReclamationEtud:
+    pattern: /{id}/showReclamation
+    defaults: { _controller: AppFrontOfficeBundle:Reclamation:show }
+>>>>>>> c52a93f24e7f19978fcfa96fa53dc1eb9b23986e
