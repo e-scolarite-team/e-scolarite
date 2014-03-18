@@ -83,7 +83,7 @@ class ReclamationController extends Controller
                 
             }else{
                 $entity->setReponse($reponse);
-                $entity->setNotified(1);
+                $entity->setNotified(0);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
