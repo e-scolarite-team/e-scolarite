@@ -1,5 +1,10 @@
 {% extends '::layout.html.twig' %}
+{% block breadcrumb %}
+  <li><a href="{{ path('listerReclamationEtud') }}">Reclamation</a></li>
+          <li class="active">consulter</li>
 
+
+{% endblock %}
 {% block title %}Reclamation{% endblock %}
 
 {% block content %}
@@ -33,7 +38,7 @@
                       <div class="form-group">
                                  <label class="col-sm-3 control-label">Description :</label>
                       <div class="col-sm-6">
-                         <LAbel class="form-control" >{{entity.description}}</labael>
+                         <textarea readonly="readonly" class="form-control" >{{entity.description}}</textarea>
                          </br>
                         
                       </div>
@@ -42,7 +47,7 @@
                       <div class="form-group">
                         <label class="col-sm-3 control-label">Reponse  :</label>
                         <div class="col-sm-6">
-                        <LAbel class="form-control" >{{entity.reponse}}</labael>
+                        <textarea readonly="readonly" class="form-control" >{{entity.reponse}}</textarea>
                       </div>
                       </div>
                       {% endif %}

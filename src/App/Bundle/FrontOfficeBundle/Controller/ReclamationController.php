@@ -29,13 +29,10 @@ class ReclamationController extends Controller
     public function envoyerAction(Request $request){
     
     	$entity = new Reclamation();
-    	$types = array();
+    	
     	$errors = array();
     	$em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('AppBackOfficeBundle:TypeReclamation')->findAll();
-        foreach ($entities as $type) {
-        	$types[] = $type->getLibelle();
-        }
+        
         
         $form = $this->createForm(new ReclamationFormType(),$entity);
         
@@ -55,7 +52,7 @@ class ReclamationController extends Controller
                    $errors[] =  $translator->trans($err->getMessage(), array(), 'messages', 'fr_FR');
                 
             }else{
-                $em = $this->getDoctrine()->getManager();
+                
                 $em->persist($entity);
                 $em->flush();
                 return $this->redirect($this->generateUrl('listerReclamationEtud'));
