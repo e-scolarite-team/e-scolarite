@@ -17,7 +17,7 @@ security:
         spa_provider:
             memory:
                 users:
-                    sadmin: { password: 'P6vQUkTFOmKbuGBGGdU1cPaDz11llM/201rXUi/8fCGFk5rtYnhve1nbT7YxXBOTo7dKxxHU1417KFLOeADVTg==' , roles: [ 'ROLE_SUPER_ADMIN' ] }
+                    sadmin: { password: %admin_pass% , roles: [ 'ROLE_SUPER_ADMIN' ] }
         admin_provider:
             entity: { class: AppBackOfficeBundle:Admin, property: email }
         admin_chain_provider:
