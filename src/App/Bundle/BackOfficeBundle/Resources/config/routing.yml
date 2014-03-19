@@ -5,7 +5,3 @@ app_back_office_homepage:
 import_data:
     pattern: /import/data
     defaults: { _controller: AppBackOfficeBundle:Import:update }
-
-admin_all:
-    pattern: /admin/all
-    defaults: { _controller: AppBackOfficeBundle:Admin:index }

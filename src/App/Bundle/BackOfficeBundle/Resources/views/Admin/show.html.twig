@@ -1,0 +1,212 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %} Admin{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+        
+    <div class="col-md-4">
+      <div class="panel panel-default panel-alt widget-messaging">
+      <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="{{ path('admin_edit', { 'id': entity.id }) }}" class="panel-edit"><i class="fa fa-edit"></i></a>
+          </div><!-- panel-btns -->
+          <h3>Admin N°: *</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>
+              <h4>Nom et Prenom :</h4>
+                 {{entity.prenom}}&nbsp;
+                  {{entity.nom}}
+            </li>
+            <li>
+              <h4>Email :</h4>
+              {{entity.email}}
+            </li>
+
+          </ul>
+        </div><!-- panel-body -->
+      </div><!-- panel -->
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-btns">
+                <a href="#" class="minimize">&minus;</a>
+              </div>
+              <h4 class="panel-title">Liste des actions effectuées</h4>
+              <p></p>
+            </div>
+
+            <div class="panel-body panel-body-nopadding">
+              
+              <!-- BASIC WIZARD -->
+              <div id="basicWizard" class="basic-wizard">
+                
+                <ul class="nav nav-pills nav-justified">
+                  <li class="active"><a href="#tab1" data-toggle="tab"><span>Demande de pièces:</span></a></li>
+                  <li class=""><a href="#tab2" data-toggle="tab"><span>Element à refaire:</span></a></li>
+                  <li class=""><a href="#tab3" data-toggle="tab"><span>Module libre:</span></a></li>
+                  <li class=""><a href="#tab4" data-toggle="tab"><span>Réclamations:</span></a></li>
+                </ul>
+                
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab1">
+                    <table class="table  table-hidaction table-hover" id="list-demande">
+                  <thead>
+                     <tr>
+                        <th>Nom/Prenom</th>
+                        <th>Date de la demande</th>
+                        <th>Mise a jour</th>
+                        <th>Statut</th>
+                        
+                     </tr>
+                  </thead>
+                  <tbody>
+                     
+
+                        <tr class="odd gradeX">
+                            <td>houda tad</td>
+                            <td>12/12/2013</td>
+                            <td>20/12/2013</td>
+                            <td>validé</td>
+                            
+                        </tr>
+                  </tbody>
+               </table>
+                  </div>
+                  <div class="tab-pane" id="tab2">
+                    <table class="table  table-hidaction table-hover" id="list-demande2">
+                  <thead>
+                     <tr>
+                        <th>Nom/Prenom</th>
+                        <th>Date de la demande</th>
+                        <th>Mise a jour</th>
+                        <th>Statut</th>
+                        
+                     </tr>
+                  </thead>
+                  <tbody>
+                     
+
+                        <tr class="odd gradeX">
+                            <td>maria badaoui</td>
+                            <td>12/01/2014</td>
+                            <td>20/01/2014</td>
+                            <td>validé</td>
+                            
+                        </tr>
+                       
+                  </tbody>
+               </table>
+                  </div>
+                  <div class="tab-pane" id="tab3">
+                    <table class="table  table-hidaction table-hover" id="list-demande3">
+                  <thead>
+                     <tr>
+                        <th>Nom/Prenom</th>
+                        <th>Date de la demande</th>
+                        <th>Mise a jour</th>
+                        <th>Statut</th>
+                        
+                     </tr>
+                  </thead>
+                  <tbody>
+                     
+
+                        <tr class="odd gradeX">
+                            <td>dalal tad</td>
+                            <td>19/01/2014</td>
+                            <td>22/01/2014</td>
+                            <td>validé</td>
+                            
+                        </tr>
+
+                  </tbody>
+               </table>
+                  </div>
+                 
+                <div class="tab-pane" id="tab4">
+                    <table class="table  table-hidaction table-hover" id="list-demande4">
+                  <thead>
+                     <tr>
+                        <th>Nom/Prenom</th>
+                        <th>Date de la demande</th>
+                        <th>Mise a jour</th>
+                        <th>Statut</th>
+                        
+                     </tr>
+                  </thead>
+                  <tbody>
+                     
+
+                        <tr class="odd gradeX">
+                            <td>rayan bassoul</td>
+                            <td>19/01/2014</td>
+                            <td>22/01/2014</td>
+                            <td>validé</td>
+                            
+                        </tr>
+                       
+                  </tbody>
+               </table>
+                  </div> 
+                  
+                </div><!-- tab-content -->
+                
+
+              </div><!-- #basicWizard -->
+              
+            
+
+            </div><!-- panel-body -->
+            
+          <div class="panel-footer">
+           <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+            </div>
+           </div>
+          </div><!-- panel-footer -->
+
+        </div><!-- panel -->
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+   {{ parent() }}               
+  <script>
+    jQuery(document).ready(function() {
+      jQuery('#list-demande').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+      jQuery('#list-demande2').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+      jQuery('#list-demande3').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+      jQuery('#list-demande4').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    
+        // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+    });
+  </script>          
+{% endblock %}
