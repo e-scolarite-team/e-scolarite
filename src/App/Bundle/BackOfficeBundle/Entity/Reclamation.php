@@ -92,6 +92,14 @@ class Reclamation
      */
     protected $typeReclamation;
 
+    /**
+     * @var Admin
+     *
+     * @ORM\ManyToOne(targetEntity="Admin", inversedBy="reclamations")
+     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     */
+    protected $admin;
+
 
     public function __construct(){
         $this->createdAt = new \DateTime();
@@ -313,6 +321,29 @@ class Reclamation
     public function getTypeReclamation()
     {
         return $this->typeReclamation;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param Admin $admin
+     * @return Reclamation
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return Admin 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
     
 }
