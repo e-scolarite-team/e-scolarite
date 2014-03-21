@@ -91,6 +91,13 @@ class Admin implements AdvancedUserInterface,EquatableInterface
     protected $etatDemandes;
 
     /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Reclamation", mappedBy="admin", cascade={"persist"})
+    */
+    protected $reclamations;
+
+    /**
     * @var array $roles
     * @ORM\Column(name="roles", type="array", nullable=true)
     */
@@ -100,6 +107,7 @@ class Admin implements AdvancedUserInterface,EquatableInterface
         $this->createdAt = new \DateTime();
         $this->last_visite_at = new \DateTime();
         $this->etatDemandes = new ArrayCollection();
+        $this->reclamations = new ArrayCollection();
         $this->salt = sha1(uniqid(mt_rand(), true));
         $this->roles = array();
         $this->expired = false;
@@ -327,7 +335,7 @@ class Admin implements AdvancedUserInterface,EquatableInterface
     */
     public function addEtatDemande($etatDemande){
         $this->etatDemandes[] = $etatDemande;
-        $etatDemande->setDemande($this);
+        $etatDemande->setAdmin($this);
         return $this;
     }
 
@@ -338,6 +346,26 @@ class Admin implements AdvancedUserInterface,EquatableInterface
     */
     public function getEtatDemandes(){
         return $this->etatDemandes->toArray();
+    }
+
+    /**
+    * Add reclamation
+    * @param Reclamation $reclamation
+    * @return Admin
+    */
+    public function addReclamation($reclamation){
+        $this->reclamations[] = $reclamation;
+        $reclamation->setAdmin($this);
+        return $this;
+    }
+
+    /**
+    * Get reclamations
+    * 
+    * @return array
+    */
+    public function getReclamations(){
+        return $this->reclamations->toArray();
     }
 
     /**
