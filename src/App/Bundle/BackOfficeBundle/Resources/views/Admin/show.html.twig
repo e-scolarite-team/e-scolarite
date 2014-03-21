@@ -56,7 +56,7 @@
                     <table class="table  table-hidaction table-hover" id="list-demande">
                   <thead>
                      <tr>
-                        <th>Nom/Prenom</th>
+                        <th>Nom  &nbsp; etudiant</th>
                         <th>Type demande</th>
                         <th>Date de demande</th>
                         <th>Date de réponse</th>
@@ -86,7 +86,7 @@
                   
                   <thead>
                      <tr>
-                        <th>Nom-Prenom</th>
+                        <th>Nom  &nbsp; etudiant</th>
                         <th>Date de Création</th>
                         <th>Date de Consultation</th>
                         <th>Reponse</th>
@@ -94,19 +94,17 @@
                      </tr>
                   </thead>
                   <tbody>
-                      {% for V_etatdmd in entity.etatDemandes %}
+                    {% for reclamation in entity.reclamations %}
                         <tr class="odd gradeX">
-                            <td>{{ V_etatdmd.demande.etudiant.nom }}&nbsp;{{V_etatdmd.demande.etudiant.prenom }}</td>
-                            {% for reclamat in V_etatdmd.demande.etudiant.reclamations %}
-                            <td>{{ reclamat.createdAt|date('d/m/Y') }}</td>
-                            <td>{{ reclamat.consultedAt|date('d/m/Y') }}</td>
-                            <td>{{ reclamat.reponse }}</td>
-                            {% endfor %}
-                            
+                            <td>{{ reclamation.etudiant.nom }}&nbsp;{{reclamation.etudiant.prenom }}</td>          
+                            <td>{{ reclamation.createdAt|date('d/m/Y') }}</td>
+                            <td>{{ reclamation.consultedAt|date('d/m/Y') }}</td>
+                            <td>{{ reclamation.reponse }}</td>
+
                         </tr>
                        {% endfor %}
                   </tbody>
-                   
+                    
                </table>
                
                   </div>
