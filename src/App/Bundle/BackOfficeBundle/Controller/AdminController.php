@@ -56,11 +56,28 @@ class AdminController extends Controller
             }
             else
             {
+                
+                $enFactory = $this->get('security.encoder_factory');
+        
+                $entity->addRole('SOUS_ADMIN');
+        
+                $encoder = $enFactory->getEncoder($entity);
+        
+                 $entity->setPassword($encoder->encodePassword($request->get('password'),$entity->getSalt()));
+        
+                 $em = $this->get("doctrine")->getEntityManager();
+        
+                 $em->persist($entity);
+        
+                 $em->flush();
+
+                /*
                 $em = $this->getDoctrine()->getManager();
                 $entity->setCreatedAt(new \DateTime());
                 $entity->setSalt("");
                 $em->persist($entity);
                 $em->flush();
+                */
                 return $this->redirect($this->generateUrl('admin', array('id' => $entity->getId())));
             }
         }
@@ -204,9 +221,19 @@ class AdminController extends Controller
                    $errors[] =  $translator->trans($err->getMessage(),array(), 'messages', 'fr_FR');
                 
             }else{
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($entity);
-                $em->flush();
+
+                $enFactory = $this->get('security.encoder_factory');
+        
+                $encoder = $enFactory->getEncoder($entity);
+        
+                 $entity->setPassword($encoder->encodePassword($request->get('password'),$entity->getSalt()));
+        
+                 $em = $this->get("doctrine")->getEntityManager();
+        
+                 $em->persist($entity);
+        
+                 $em->flush();
+
                 return $this->redirect($this->generateUrl('admin', array('id' => $id)));
             }
         }

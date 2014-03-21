@@ -13,7 +13,7 @@
           <div class="panel-btns">
             <a href="{{ path('admin_edit', { 'id': entity.id }) }}" class="panel-edit"><i class="fa fa-edit"></i></a>
           </div><!-- panel-btns -->
-          <h3>Admin N°: *</h3>
+          <h3>Admin N°: {{entity.id}}</h3>
         </div>
         <div class="panel-body">
           <ul>
@@ -47,10 +47,8 @@
               <div id="basicWizard" class="basic-wizard">
                 
                 <ul class="nav nav-pills nav-justified">
-                  <li class="active"><a href="#tab1" data-toggle="tab"><span>Demande de pièces:</span></a></li>
-                  <li class=""><a href="#tab2" data-toggle="tab"><span>Element à refaire:</span></a></li>
-                  <li class=""><a href="#tab3" data-toggle="tab"><span>Module libre:</span></a></li>
-                  <li class=""><a href="#tab4" data-toggle="tab"><span>Réclamations:</span></a></li>
+                  <li class="active"><a href="#tab1" data-toggle="tab"><span>Demandes:</span></a></li>
+                  <li class=""><a href="#tab2" data-toggle="tab"><span>Réclamations:</span></a></li>
                 </ul>
                 
                 <div class="tab-content">
@@ -59,101 +57,62 @@
                   <thead>
                      <tr>
                         <th>Nom/Prenom</th>
-                        <th>Date de la demande</th>
-                        <th>Mise a jour</th>
+                        <th>Type demande</th>
+                        <th>Date de demande</th>
+                        <th>Date de réponse</th>
                         <th>Statut</th>
                         
                      </tr>
                   </thead>
                   <tbody>
-                     
+                     {% for etatdmd in entity.etatDemandes %}
 
                         <tr class="odd gradeX">
-                            <td>houda tad</td>
-                            <td>12/12/2013</td>
-                            <td>20/12/2013</td>
-                            <td>validé</td>
+                            <td>{{ etatdmd.demande.etudiant.nom }}&nbsp;{{ etatdmd.demande.etudiant.prenom }}</td>
+                            <td>{{ etatdmd.demande.typeDemande.libelle }}</td>
+                            <td>{{ etatdmd.demande.createdAt|date('d/m/Y') }}</td>
+                            <td>{{ etatdmd.demande.dateReponce|date('d/m/Y') }}</td>
+                            <td>{{ etatdmd.demande.status }}</td>
                             
                         </tr>
+                      {% endfor %}
                   </tbody>
                </table>
                   </div>
+
                   <div class="tab-pane" id="tab2">
+                  
                     <table class="table  table-hidaction table-hover" id="list-demande2">
+                  
                   <thead>
                      <tr>
-                        <th>Nom/Prenom</th>
-                        <th>Date de la demande</th>
-                        <th>Mise a jour</th>
-                        <th>Statut</th>
+                        <th>Nom-Prenom</th>
+                        <th>Date de Création</th>
+                        <th>Date de Consultation</th>
+                        <th>Reponse</th>
                         
                      </tr>
                   </thead>
                   <tbody>
-                     
-
+                      {% for V_etatdmd in entity.etatDemandes %}
                         <tr class="odd gradeX">
-                            <td>maria badaoui</td>
-                            <td>12/01/2014</td>
-                            <td>20/01/2014</td>
-                            <td>validé</td>
+                            <td>{{ V_etatdmd.demande.etudiant.nom }}&nbsp;{{V_etatdmd.demande.etudiant.prenom }}</td>
+                            {% for reclamat in V_etatdmd.demande.etudiant.reclamations %}
+                            <td>{{ reclamat.createdAt|date('d/m/Y') }}</td>
+                            <td>{{ reclamat.consultedAt|date('d/m/Y') }}</td>
+                            <td>{{ reclamat.reponse }}</td>
+                            {% endfor %}
                             
                         </tr>
-                       
+                       {% endfor %}
                   </tbody>
+                   
                </table>
+               
                   </div>
-                  <div class="tab-pane" id="tab3">
-                    <table class="table  table-hidaction table-hover" id="list-demande3">
-                  <thead>
-                     <tr>
-                        <th>Nom/Prenom</th>
-                        <th>Date de la demande</th>
-                        <th>Mise a jour</th>
-                        <th>Statut</th>
-                        
-                     </tr>
-                  </thead>
-                  <tbody>
-                     
-
-                        <tr class="odd gradeX">
-                            <td>dalal tad</td>
-                            <td>19/01/2014</td>
-                            <td>22/01/2014</td>
-                            <td>validé</td>
-                            
-                        </tr>
-
-                  </tbody>
-               </table>
-                  </div>
+              
                  
-                <div class="tab-pane" id="tab4">
-                    <table class="table  table-hidaction table-hover" id="list-demande4">
-                  <thead>
-                     <tr>
-                        <th>Nom/Prenom</th>
-                        <th>Date de la demande</th>
-                        <th>Mise a jour</th>
-                        <th>Statut</th>
-                        
-                     </tr>
-                  </thead>
-                  <tbody>
-                     
-
-                        <tr class="odd gradeX">
-                            <td>rayan bassoul</td>
-                            <td>19/01/2014</td>
-                            <td>22/01/2014</td>
-                            <td>validé</td>
-                            
-                        </tr>
-                       
-                  </tbody>
-               </table>
-                  </div> 
+               
                   
                 </div><!-- tab-content -->
                 
@@ -187,12 +146,7 @@
       jQuery('#list-demande2').dataTable({
         "sPaginationType": "full_numbers"
       });
-      jQuery('#list-demande3').dataTable({
-        "sPaginationType": "full_numbers"
-      });
-      jQuery('#list-demande4').dataTable({
-        "sPaginationType": "full_numbers"
-      });
+
     
         // Chosen Select
     jQuery("select").chosen({

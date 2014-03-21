@@ -58,7 +58,7 @@ class ResultatElp
 
     /**
      * @var float
-     * @ORM\Id
+     * 
      * 
      * @ORM\Column(name="note", type="float")
      */
@@ -66,7 +66,7 @@ class ResultatElp
 
     /**
      * @var string
-     * @ORM\Id
+     * 
      * 
      * @ORM\Column(name="status", type="string", length=255)
      */

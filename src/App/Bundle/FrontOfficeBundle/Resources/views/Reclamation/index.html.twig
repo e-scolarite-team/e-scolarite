@@ -1,6 +1,11 @@
 {% extends "::layout.html.twig" %}
+{% block breadcrumb %}
+  
+          <li class="active">Reclamation</li>
 
-{% block title %}Admin{% endblock %}
+
+{% endblock %}
+{% block title %}Liste de reclamation{% endblock %}
 
 {% block content %}
 <div class="panel panel-default">
@@ -8,7 +13,7 @@
       <div class="panel-btns">
         <a href="#" class="minimize">&minus;</a>
       </div>
-      <h4 class="panel-title">Liste des administrateurs</h4>
+      <h4 class="panel-title">Liste des reclamations</h4>
       <p></p>
     </div>
 
@@ -16,34 +21,31 @@
       <table class="table  table-hidaction table-hover" id="list-type">
           <thead>
              <tr>
-                <th>N° Admin</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>E-mail</th>
-                <th>Date de création</th>
-                <th>Etat</th>
-                <th>Actions</th>
+                <th>Objet</th>
+                <th>Type</th>
+                <th>date d'envoie</th>
+                <th>status</th>                
              </tr>
           </thead>
           <tbody>
              
-             {% for Admin in entities %}
+             {% for reclamation in entities %}
                 <tr class="odd gradeX">
-                    <td>{{ Admin.id }}</td>
-                    <td>{{ Admin.nom }}</td>
-                    <td>{{ Admin.prenom }}</td>
-                    <td>{{ Admin.email }}</td>
-                    <td>{{ Admin.createdAt|date('d/m/Y') }}</td>
-                    {% if ( Admin.expired)%}
-                    <td>Activé</td>
-                    {% else %}
-                    <td>desactivé</td>
-                    {% endif %}
-                    <td  class="table-action-hide">
-                        <a href="{{ path('admin_show', { 'id': Admin.id }) }}"><i class="fa fa-list-alt" title="show"></i></a>
-                        <a href="{{ path('admin_edit', { 'id': Admin.id }) }}" class="delete-row" title="edit"><i class="fa fa-pencil"></i></a>
-                        
+                    <td>{{ reclamation.objet }}</td>
+                    <td>{{ reclamation.typeReclamation.libelle }}</td>
+                    <td>{{ reclamation.createdAt|date('d-m-Y h:m') }}</td>
+                    <td>
+                    <a href="{{ path('showReclamationEtud', { 'id': reclamation.id }) }}"><i class="fa fa-list-alt" title="visualiser"></i></a>
+
+                      {% if reclamation.status == 0 %}                        
+                        <span class="glyphicon glyphicon-time" title="En cours" data-toggle="tooltip" data-placement="left"></span>
+                      {% elseif reclamation.status == 1 %}
+                        <span class="glyphicon glyphicon-ok" title="valide"></span>
+                      {% else %}
+                        <span class="glyphicon glyphicon-remove" title="refuse"></span>
+                      {% endif %}
                     </td>
+
                 </tr>
             {% endfor %}
           </tbody>
@@ -53,7 +55,7 @@
   <div class="panel-footer">
    <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-        <center><a href="{{ path('admin_new') }}" class="btn btn-primary">Ajouter un administrateur</a></center>
+        <center><a href="{{ path('reclamationEtud') }}" class="btn btn-primary">Envoyer une reclamation</a></center>
     </div>
    </div>
   </div><!-- panel-footer -->
@@ -85,15 +87,3 @@
     });
   </script>          
 {% endblock %}
-
-
-
-
-
-
-
-
-        
-
-
-

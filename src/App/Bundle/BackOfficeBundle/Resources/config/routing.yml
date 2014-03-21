@@ -5,3 +5,37 @@ app_back_office_homepage:
 import_data:
     pattern: /import/data
     defaults: { _controller: AppBackOfficeBundle:Import:update }
+
+
+    
+listedemande:
+    pattern:  /demande/listedemande
+    defaults: { _controller: AppBackOfficeBundle:Demande:listedemande }
+    
+
+    
+
+traiterdemande:
+    pattern:  /demande/traiterdemande/{id}
+    defaults: { _controller: AppBackOfficeBundle:Demande:traiterdemande }
+    requirements:
+          id: \d+
+    
+
+    
+listerReclamation:
+    pattern: /listerReclamation
+    defaults: { _controller: AppBackOfficeBundle:Reclamation:index }
+
+repondreReclamation:
+    pattern: /{id}/repondreReclamation
+    defaults: { _controller: AppBackOfficeBundle:Reclamation:repondre }
+admin_login:
+    pattern: /login
+    defaults: { _controller: AppBackOfficeBundle:SecurityPointAccess:login }
+
+admin_login_check:
+    pattern:   /login_check
+    
+admin_logout:
+    path:   /logout

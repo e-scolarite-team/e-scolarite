@@ -7,8 +7,8 @@ app_back_office:
     prefix:   /back-office
 
 AppBackOfficeBundle_type-demande:
-    resource: "@AppBackOfficeBundle/Resources/config/routing/typedemande.yml"
-    prefix:   /back-office/type-demande
+   resource: "@AppBackOfficeBundle/Resources/config/routing/typedemande.yml"
+   prefix:   /back-office/configuration/type-demande
 
 AppBackOfficeBundle_type-reclamation:
     resource: "@AppBackOfficeBundle/Resources/config/routing/typereclamation.yml"
@@ -17,3 +17,4 @@ AppBackOfficeBundle_type-reclamation:
 AppBackOfficeBundle_admin:
     resource: "@AppBackOfficeBundle/Resources/config/routing/admin.yml"
     prefix:   /back-office/admin
+
