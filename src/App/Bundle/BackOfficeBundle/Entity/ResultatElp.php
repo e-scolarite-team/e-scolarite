@@ -72,17 +72,15 @@ class ResultatElp
      */
     protected $status;
 
-    /*public function __construct($etudiant,$element,$annee,$session,$admissibilite){
+    public function __construct($etudiant = null,$element=null,$annee=null,$session=null,$admissibilite=null){
         $this->element = $element;
         $this->etudiant = $etudiant;
         $this->annee = $annee;
         $this->admissibilite = $admissibilite;
         $this->session = $session;
-    }*/
-
-    public function __construct(){
-        
     }
+
+    
 
 
     /**
