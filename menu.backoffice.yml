@@ -1,13 +1,18 @@
-listerReclamation : Reclamations
+Configuration:
+    Reclamations:
+        Ajouter un type: type-reclamation_new
+        Listes des types: type-reclamation
+    Demandes:
+        Ajouter un type: type-demande_new
+    Importation: import_data
+    Administrateur:
+        Listes des administrateurs: admin
+        Creer un Administrateur: admin_new  
 
-type-reclamation : les types de reclamations
-	type-reclamation_new : ajouter
-  
+Reclamations:
+    Liste reclamation : listerReclamation 
     
-demande:
-    traiter:traiterdemande
-     liste:listedemande
+Demandes:
+    Traiter les demandes: traiterdemande
+    Liste des demandes: listedemande
 
-////// ABD
-
-listedemande: Les demandes

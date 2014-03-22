@@ -1,5 +1,5 @@
 app_back_office_homepage:
-    pattern:  /hello/{name}
+    pattern: /hello/{name}
     defaults: { _controller: AppBackOfficeBundle:Default:index }
 
 import_data:
