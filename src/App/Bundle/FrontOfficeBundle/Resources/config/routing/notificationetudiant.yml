@@ -1,0 +1,24 @@
+notification-etudiant:
+    pattern:  /
+    defaults: { _controller: "AppFrontOfficeBundle:Notification:notificationetudiant" }
+
+notification-etudiant-vu-reclamation:
+    pattern:  /voirrec/{id}
+    defaults: { _controller: "AppFrontOfficeBundle:Notification:vureclamation" }
+
+notification-etudiant-vu-demande:
+    pattern:  /voirdem/{id}
+    defaults: { _controller: "AppFrontOfficeBundle:Notification:vudemande" }
+
+notification-etudiant-vu-notif:
+    pattern:  /notif/
+    defaults: { _controller: "AppFrontOfficeBundle:Notification:vunotification" }
+
+notification-etudiant-to-demande:
+    pattern:  /todem/{id}
+    defaults: { _controller: "AppFrontOfficeBundle:Notification:todemande" }
+
+notification-etudiant-to-reclamation:
+    pattern:  /torec/{id}
+    defaults: { _controller: "AppFrontOfficeBundle:Notification:toreclamation" }
+
