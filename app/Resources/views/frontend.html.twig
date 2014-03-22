@@ -59,48 +59,56 @@
       <h5 class="sidebartitle">Navigation</h5>
       <ul class="nav nav-pills nav-stacked nav-bracket">
         {% block mainMenu %}
-        <li class="nav-parent active">
-          <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
+        <li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+        <li class="nav-parent"><a href="#"><i class="fa fa-edit"></i> <span>Forms</span></a>
           <ul class="children">
-            <li>
-              <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
-            </li>
-            <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
-            <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
-            <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
-            <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
-            <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
-            <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
-          </ul>
-        </li>
-        <li class="nav-parent">
-          <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
-          <ul class="children">
-            <li>
-              <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-parent">
-          <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
-          <ul class="children">
-            <li>
-              <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
-            </li>
+            <li><a href="general-forms.html"><i class="fa fa-caret-right"></i> General Forms</a></li>
+            <li><a href="form-layouts.html"><i class="fa fa-caret-right"></i> Form Layouts</a></li>
+            <li><a href="form-validation.html"><i class="fa fa-caret-right"></i> Form Validation</a></li>
+            <li><a href="form-wizards.html"><i class="fa fa-caret-right"></i> Form Wizards</a></li>
+            <li><a href="wysiwyg.html"><i class="fa fa-caret-right"></i> WYSIWYG</a></li>
           </ul>
         </li>
         {% endblock %}
       </ul>
       
       <div class="infosummary">
-        <h5 class="sidebartitle">Information sur le Compte</h5>    
+        <h5 class="sidebartitle">Information Summary</h5>    
         <ul>
             <li>
                 <div class="datainfo">
-                    <span class="text-muted">Dernier  Connection</span>
-                    <h4>{{ app.user.lastVisiteAt | date("Y/m/d H:i") }}</h4>
+                    <span class="text-muted">Daily Traffic</span>
+                    <h4>630, 201</h4>
                 </div>
                 <div id="sidebar-chart" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Average Users</span>
+                    <h4>1, 332, 801</h4>
+                </div>
+                <div id="sidebar-chart2" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Disk Usage</span>
+                    <h4>82.2%</h4>
+                </div>
+                <div id="sidebar-chart3" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">CPU Usage</span>
+                    <h4>140.05 - 32</h4>
+                </div>
+                <div id="sidebar-chart4" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Memory Usage</span>
+                    <h4>32.2%</h4>
+                </div>
+                <div id="sidebar-chart5" class="chart"></div>   
             </li>
         </ul>
       </div><!-- infosummary -->
