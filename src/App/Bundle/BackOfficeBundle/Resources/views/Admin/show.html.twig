@@ -1,0 +1,164 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %} Admin{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+        
+    <div class="col-md-4">
+      <div class="panel panel-default panel-alt widget-messaging">
+      <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="{{ path('admin_edit', { 'id': entity.id }) }}" class="panel-edit"><i class="fa fa-edit"></i></a>
+          </div><!-- panel-btns -->
+          <h3>Admin N°: {{entity.id}}</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>
+              <h4>Nom et Prenom :</h4>
+                 {{entity.prenom}}&nbsp;
+                  {{entity.nom}}
+            </li>
+            <li>
+              <h4>Email :</h4>
+              {{entity.email}}
+            </li>
+
+          </ul>
+        </div><!-- panel-body -->
+      </div><!-- panel -->
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-btns">
+                <a href="#" class="minimize">&minus;</a>
+              </div>
+              <h4 class="panel-title">Liste des actions effectuées</h4>
+              <p></p>
+            </div>
+
+            <div class="panel-body panel-body-nopadding">
+              
+              <!-- BASIC WIZARD -->
+              <div id="basicWizard" class="basic-wizard">
+                
+                <ul class="nav nav-pills nav-justified">
+                  <li class="active"><a href="#tab1" data-toggle="tab"><span>Demandes:</span></a></li>
+                  <li class=""><a href="#tab2" data-toggle="tab"><span>Réclamations:</span></a></li>
+                </ul>
+                
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab1">
+                    <table class="table  table-hidaction table-hover" id="list-demande">
+                  <thead>
+                     <tr>
+                        <th>Nom  &nbsp; etudiant</th>
+                        <th>Type demande</th>
+                        <th>Date de demande</th>
+                        <th>Date de réponse</th>
+                        <th>Statut</th>
+                        
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% for etatdmd in entity.etatDemandes %}
+
+                        <tr class="odd gradeX">
+                            <td>{{ etatdmd.demande.etudiant.nom }}&nbsp;{{ etatdmd.demande.etudiant.prenom }}</td>
+                            <td>{{ etatdmd.demande.typeDemande.libelle }}</td>
+                            <td>{{ etatdmd.demande.createdAt|date('d/m/Y') }}</td>
+                            <td>{{ etatdmd.demande.dateReponce|date('d/m/Y') }}</td>
+                            <td>{{ etatdmd.demande.status }}</td>
+                            
+                        </tr>
+                      {% endfor %}
+                  </tbody>
+               </table>
+                  </div>
+
+                  <div class="tab-pane" id="tab2">
+                  
+                    <table class="table  table-hidaction table-hover" id="list-demande2">
+                  
+                  <thead>
+                     <tr>
+                        <th>Nom  &nbsp; etudiant</th>
+                        <th>Date de Création</th>
+                        <th>Date de Consultation</th>
+                        <th>Reponse</th>
+                        
+                     </tr>
+                  </thead>
+                  <tbody>
+                    {% for reclamation in entity.reclamations %}
+                        <tr class="odd gradeX">
+                            <td>{{ reclamation.etudiant.nom }}&nbsp;{{reclamation.etudiant.prenom }}</td>          
+                            <td>{{ reclamation.createdAt|date('d/m/Y') }}</td>
+                            <td>{{ reclamation.consultedAt|date('d/m/Y') }}</td>
+                            <td>{{ reclamation.reponse }}</td>
+
+                        </tr>
+                       {% endfor %}
+                  </tbody>
+                    
+               </table>
+               
+                  </div>
+              
+                 
+               
+                  
+                </div><!-- tab-content -->
+                
+
+              </div><!-- #basicWizard -->
+              
+            
+
+            </div><!-- panel-body -->
+            
+          <div class="panel-footer">
+           <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+            </div>
+           </div>
+          </div><!-- panel-footer -->
+
+        </div><!-- panel -->
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+   {{ parent() }}               
+  <script>
+    jQuery(document).ready(function() {
+      jQuery('#list-demande').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+      jQuery('#list-demande2').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+
+    
+        // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+    });
+  </script>          
+{% endblock %}

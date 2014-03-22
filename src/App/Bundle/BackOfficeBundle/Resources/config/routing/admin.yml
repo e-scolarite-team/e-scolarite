@@ -1,0 +1,36 @@
+admin:
+    pattern:  /
+    defaults: { _controller: "AppBackOfficeBundle:Admin:index" }
+
+admin_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AppBackOfficeBundle:Admin:show" }
+
+admin_new:
+    pattern:  /new
+    defaults: { _controller: "AppBackOfficeBundle:Admin:new" }
+
+admin_create:
+    pattern:  /create
+    defaults: { _controller: "AppBackOfficeBundle:Admin:create" }
+    requirements: { _method: post }
+
+admin_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AppBackOfficeBundle:Admin:edit" }
+
+admin_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AppBackOfficeBundle:Admin:update" }
+    requirements: { _method: post|put }
+
+admin_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AppBackOfficeBundle:Admin:delete" }
+    requirements: { _method: post|delete }
+
+admin_delete_get:
+    pattern:  /{id}/remove
+    defaults: { _controller: "AppBackOfficeBundle:Admin:deleteGet" }
+    requirements: { _method: post|delete|get }
+

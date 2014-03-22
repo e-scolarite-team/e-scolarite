@@ -11,3 +11,10 @@ demande:
 ////// ABD
 
 listedemande: Les demandes
+
+///Paul
+
+ActionSurAdmin:
+    admin: listes des administrateur
+    admin_new: creer un Administrateur
+

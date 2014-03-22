@@ -64,6 +64,10 @@ class ReclamationController extends Controller
 
             $entity->setConsultedAt(new \DateTime());
 
+            $em = $this->getDoctrine()->getManager();
+
+            $entity->setAdmin($em->getRepository("AppBackOfficeBundle:Admin")->find($this->getUser()->getId()));
+            
             $notBlank = new Assert\NotBlank();
 
             $notBlank->message = 'errors.reclamation.reponse';   
@@ -84,7 +88,7 @@ class ReclamationController extends Controller
             }else{
                 $entity->setReponse($reponse);
                 $entity->setNotified(0);
-                $em = $this->getDoctrine()->getManager();
+                
                 $em->persist($entity);
                 $em->flush();
                 return $this->redirect($this->generateUrl('listerReclamation'));

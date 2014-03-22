@@ -58,7 +58,7 @@ class ResultatElp
 
     /**
      * @var float
-     * @ORM\Id
+     * 
      * 
      * @ORM\Column(name="note", type="float")
      */
@@ -66,18 +66,22 @@ class ResultatElp
 
     /**
      * @var string
-     * @ORM\Id
+     * 
      * 
      * @ORM\Column(name="status", type="string", length=255)
      */
     protected $status;
 
-    public function __construct($etudiant,$element,$annee,$session,$admissibilite){
+    /*public function __construct($etudiant,$element,$annee,$session,$admissibilite){
         $this->element = $element;
         $this->etudiant = $etudiant;
         $this->annee = $annee;
         $this->admissibilite = $admissibilite;
         $this->session = $session;
+    }*/
+
+    public function __construct(){
+        
     }
 
 

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Bundle\BackOfficeBundle\Entity\ElementPedagogi;
+use App\Bundle\BackOfficeBundle\Entity\ResultatElp;
 use App\Bundle\BackOfficeBundle\Entity\Etudiant;
 use App\Bundle\BackOfficeBundle\Form\Data\ImportData;
 
@@ -144,21 +145,22 @@ class ImportController extends Controller
         $em = $this->get('doctrine')->getManager();        
         $em->getRepository("AppBackOfficeBundle:ResultatElp")->deleteAll();
         $sheet = $this->getWorkSheet($path,0);
-        $metaData = $this->getMetaData($etudiantExel);
+        $metaData = $this->getMetaData($sheet);
         
-        $highestRow = $etudiantExel->getHighestRow();       
+        $highestRow = $sheet->getHighestRow();       
         
         for ($i=2; $i <= $highestRow; $i++) { 
-            $entity = new Etudiant($this->container);
+            $entity = new ResultatElp();
             $etudiant = $em->getRepository("AppBackOfficeBundle:Etudiant")->find($sheet->getCellByColumnAndRow($metaData["COD_IND"], $i)->getValue());
             $element = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());
+            
             $entity->setEtudiant($etudiant);            
             $entity->setElement($element);            
             $entity->setAnnee($sheet->getCellByColumnAndRow($metaData["COD_ANU"], $i)->getValue());
             $entity->setSession($sheet->getCellByColumnAndRow($metaData["COD_SES"], $i)->getValue());
             $entity->setAdmissibilite($sheet->getCellByColumnAndRow($metaData["COD_ADM"], $i)->getValue());
             $entity->setNote($sheet->getCellByColumnAndRow($metaData["NOT_ELP"], $i)->getValue());
-            $entity->setStatus($this->date($sheet->getCellByColumnAndRow($metaData["COD_TRE"], $i)->getValue()));//$dateInsc);            
+            $entity->setStatus($sheet->getCellByColumnAndRow($metaData["COD_TRE"], $i)->getValue());//$dateInsc);            
             
             $em->persist($entity);  
             $em->flush();           

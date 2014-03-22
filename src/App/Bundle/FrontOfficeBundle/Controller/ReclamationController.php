@@ -19,7 +19,7 @@ class ReclamationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBackOfficeBundle:Etudiant')->find(1);
+        $entities = $em->getRepository('AppBackOfficeBundle:Etudiant')->find(91279);
 
         return $this->render('AppFrontOfficeBundle:Reclamation:index.html.twig', array(
             'entities' => $entities->getReclamations(),
@@ -43,7 +43,9 @@ class ReclamationController extends Controller
             $validator = $this->get("validator");
             
             $translator  = $this->get('translator');
-            $entity->setEtudiant($em->getRepository("AppBackOfficeBundle:Etudiant")->find("1"));
+            
+            $entity->setEtudiant($em->getRepository("AppBackOfficeBundle:Etudiant")->find(91279));
+            //$entity->setEtudiant($em->getRepository("AppBackOfficeBundle:Etudiant")->find($this->getUser()->getId()));
             $errList = $validator->validate($form);        
                        
             if(count($errList) > 0){
