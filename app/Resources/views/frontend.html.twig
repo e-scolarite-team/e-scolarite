@@ -59,48 +59,56 @@
       <h5 class="sidebartitle">Navigation</h5>
       <ul class="nav nav-pills nav-stacked nav-bracket">
         {% block mainMenu %}
-        <li class="nav-parent active">
-          <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
+        <li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+        <li class="nav-parent"><a href="#"><i class="fa fa-edit"></i> <span>Forms</span></a>
           <ul class="children">
-            <li>
-              <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
-            </li>
-            <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
-            <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
-            <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
-            <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
-            <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
-            <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
-          </ul>
-        </li>
-        <li class="nav-parent">
-          <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
-          <ul class="children">
-            <li>
-              <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-parent">
-          <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
-          <ul class="children">
-            <li>
-              <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
-            </li>
+            <li><a href="general-forms.html"><i class="fa fa-caret-right"></i> General Forms</a></li>
+            <li><a href="form-layouts.html"><i class="fa fa-caret-right"></i> Form Layouts</a></li>
+            <li><a href="form-validation.html"><i class="fa fa-caret-right"></i> Form Validation</a></li>
+            <li><a href="form-wizards.html"><i class="fa fa-caret-right"></i> Form Wizards</a></li>
+            <li><a href="wysiwyg.html"><i class="fa fa-caret-right"></i> WYSIWYG</a></li>
           </ul>
         </li>
         {% endblock %}
       </ul>
       
       <div class="infosummary">
-        <h5 class="sidebartitle">Information sur le Compte</h5>    
+        <h5 class="sidebartitle">Information Summary</h5>    
         <ul>
             <li>
                 <div class="datainfo">
-                    <span class="text-muted">Dernier  Connection</span>
-                    <h4>{{ app.user.lastVisiteAt | date("Y/m/d H:i") }}</h4>
+                    <span class="text-muted">Daily Traffic</span>
+                    <h4>630, 201</h4>
                 </div>
                 <div id="sidebar-chart" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Average Users</span>
+                    <h4>1, 332, 801</h4>
+                </div>
+                <div id="sidebar-chart2" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Disk Usage</span>
+                    <h4>82.2%</h4>
+                </div>
+                <div id="sidebar-chart3" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">CPU Usage</span>
+                    <h4>140.05 - 32</h4>
+                </div>
+                <div id="sidebar-chart4" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Memory Usage</span>
+                    <h4>32.2%</h4>
+                </div>
+                <div id="sidebar-chart5" class="chart"></div>   
             </li>
         </ul>
       </div><!-- infosummary -->
@@ -120,23 +128,164 @@
       
       <div class="header-right">
         <ul class="headermenu">
-          
           <li>
-             <div id="divreload" class="btn-group">
-              <button id="nbr_notif" class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
-               <i class='glyphicon glyphicon-globe'></i>
+            <div class="btn-group">
+              <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="badge">2</span>
               </button>
-              <div id="dropdown-menu" class="dropdown-menu dropdown-menu-head pull-right" >
-               
-                 <h5  class='title'></h5>
-
-                <ul id="list" class="dropdown-list gen-list">  
-
-                 
-                                                    
-
-                  
-                  
+              <div class="dropdown-menu dropdown-menu-head pull-right">
+                <h5 class="title">2 Newly Registered Users</h5>
+                <ul class="dropdown-list user-list">
+                  <li class="new">
+                    <div class="thumb"><a href="#"><img src="{{ asset('images/photos/user1.png') }}" alt="" /></a></div>
+                    <div class="desc">
+                      <h5><a href="#">Draniem Daamul (@draniem)</a> <span class="badge badge-success">new</span></h5>
+                    </div>
+                  </li>
+                  <li class="new">
+                    <div class="thumb"><a href="#"><img src="{{ asset('images/photos/user2.png') }}" alt="" /></a></div>
+                    <div class="desc">
+                      <h5><a href="#">Zaham Sindilmaca (@zaham)</a> <span class="badge badge-success">new</span></h5>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="thumb"><a href="#"><img src="{{ asset('images/photos/user3.png') }}" alt="" /></a></div>
+                    <div class="desc">
+                      <h5><a href="#">Weno Carasbong (@wenocar)</a></h5>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="thumb"><a href="#"><img src="{{ asset('images/photos/user4.png') }}" alt="" /></a></div>
+                    <div class="desc">
+                      <h5><a href="#">Nusja Nawancali (@nusja)</a></h5>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="thumb"><a href="#"><img src="{{ asset('images/photos/user5.png') }}" alt="" /></a></div>
+                    <div class="desc">
+                      <h5><a href="#">Lane Kitmari (@lane_kitmare)</a></h5>
+                    </div>
+                  </li>
+                  <li class="new"><a href="#">See All Users</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="btn-group">
+              <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-envelope"></i>
+                <span class="badge">1</span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-head pull-right">
+                <h5 class="title">You Have 1 New Message</h5>
+                <ul class="dropdown-list gen-list">
+                  <li class="new">
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user1.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Draniem Daamul <span class="badge badge-success">new</span></span>
+                      <span class="msg">Lorem ipsum dolor sit amet...</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user2.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Nusja Nawancali</span>
+                      <span class="msg">Lorem ipsum dolor sit amet...</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user3.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Weno Carasbong</span>
+                      <span class="msg">Lorem ipsum dolor sit amet...</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user4.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Zaham Sindilmaca</span>
+                      <span class="msg">Lorem ipsum dolor sit amet...</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user5.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Veno Leongal</span>
+                      <span class="msg">Lorem ipsum dolor sit amet...</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li class="new"><a href="#">Read All Messages</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="btn-group">
+              <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-globe"></i>
+                <span class="badge">5</span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-head pull-right">
+                <h5 class="title">You Have 5 New Notifications</h5>
+                <ul class="dropdown-list gen-list">
+                  <li class="new">
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user4.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Zaham Sindilmaca <span class="badge badge-success">new</span></span>
+                      <span class="msg">is now following you</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li class="new">
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user5.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Weno Carasbong <span class="badge badge-success">new</span></span>
+                      <span class="msg">is now following you</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li class="new">
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user3.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Veno Leongal <span class="badge badge-success">new</span></span>
+                      <span class="msg">likes your recent status</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li class="new">
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user3.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Nusja Nawancali <span class="badge badge-success">new</span></span>
+                      <span class="msg">downloaded your work</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li class="new">
+                    <a href="#">
+                    <span class="thumb"><img src="{{ asset('images/photos/user3.png') }}" alt="" /></span>
+                    <span class="desc">
+                      <span class="name">Nusja Nawancali <span class="badge badge-success">new</span></span>
+                      <span class="msg">send you 2 messages</span>
+                    </span>
+                    </a>
+                  </li>
+                  <li class="new"><a href="#">See All Notifications</a></li>
                 </ul>
               </div>
             </div>
@@ -503,50 +652,6 @@
 
 
 <script src="{{ asset('js/custom.js') }}"></script>
-<script>
-function init(){
-   refresh();
-}
-
-function refresh() {
-
-$.ajax({
-    url: "{{ path('notification-admin-barre-notif') }}", 
-    success:
-        function(retour){
-         
-        var dem=retour["demandes"];
-        var rec=retour["reclamations"];
-        var nbr=dem["id"].length+rec["id"].length;
-        var str="";
-        
-    for(var j=0 ; j< dem["id"].length; j++){
-      var id=dem["id"][j];
-       str+="<li class='new'><a href='{{ path('notification-admin-to-demande', { 'id': "%s" }) | format('"+id+"') | raw}}'><span class='thumb'></span><span class='desc'><span class='name'> "+dem['nom'][j]+" "+dem['prenom'][j]+"<span class='badge badge-success'>new</span></span><span  class='msg'>a fait une demande ( "+dem['type'][j]+")<br>"+dem['createdAt'][j]+"</span></span></a></li>"; 
-    }
-    for(var j=0 ; j< rec["id"].length; j++){
-      var id=rec["id"][j];
-       str+="<li class='new'><a href='{{ path('notification-admin-to-reclamation', { 'id': "%s" }) | format('"+id+"') | raw}}'><span class='thumb'></span><span class='desc'><span class='name'> "+rec['nom'][j]+" "+rec['prenom'][j]+"<span class='badge badge-success'>new</span></span><span  class='msg'>a fait une réclamation ( "+rec['type'][j]+")<br>"+rec['createdAt'][j]+"</span></span></a></li>"; 
-    }
-
-    jQuery("#list").html(str);
-    jQuery("#nbr_notif").append(jQuery("<span class='badge'>"+nbr+"</span>"));
-   
-    
-
-    jQuery("#list").append(jQuery("<li class='new'><a href='{{path('notification-admin')}}'>Voir toutes les notifications</a></li>"));
-
-     
-    }
-
-});
-    
-    setTimeout('refresh();',10000);
-
- }
-refresh();
-</script>
-
 <!--script src="{{ asset('js/dashboard.js') }}"></script-->
 {% endblock %}
 </body>

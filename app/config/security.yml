@@ -8,9 +8,14 @@ security:
             algorithm:           sha512
             encode_as_base64:    true
             iterations:          10
+        App\Bundle\BackOfficeBundle\Entity\Etudiant: 
+            algorithm:           sha512
+            encode_as_base64:    true
+            iterations:          10
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
+        ROLE_STUDENT:     ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
@@ -20,6 +25,8 @@ security:
                     sadmin: { password: %admin_pass% , roles: [ 'ROLE_SUPER_ADMIN' ] }
         admin_provider:
             entity: { class: AppBackOfficeBundle:Admin, property: email }
+        front_provider:
+            entity: {class: AppBackOfficeBundle:Etudiant, property: cne }
         admin_chain_provider:
             chain:
                 providers: [spa_provider, admin_provider]
@@ -44,13 +51,33 @@ security:
                 remember_me: false
                 username_parameter: _username
                 password_parameter: _password
-        login:
+        front_secured:
+            pattern:    ^/front-office
+            anonymous: ~
+            provider: front_provider
+            logout:
+                path: /front-office/logout
+                target: /front-office/login
+            form_login:
+                login_path: /front-office/login
+                check_path: /front-office/login_check
+                default_target_path: /front-office/demande/rendezvous
+                target_path_parameter: _target_path
+                remember_me: false
+                username_parameter: _username
+                password_parameter: _password
+        admin_login:
             pattern: ^/back-office/login$
+            anonymous: ~
+        front_login:
+            pattern: ^/front-office/login$
             anonymous: ~
 
 
     access_control:
         - { path: ^/back-office/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/front-office/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/back-office/configuration/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/back-office/*, roles: ROLE_ADMIN }
+        - { path: ^/front-office/*, roles: ROLE_STUDENT }
 

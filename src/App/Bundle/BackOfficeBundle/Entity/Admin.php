@@ -123,7 +123,7 @@ class Admin implements AdvancedUserInterface,EquatableInterface
         return $this->id;
     }
 
-    /**
+  /**
   * Set username
   *
   * @param string $username

@@ -23,3 +23,13 @@ listerReclamationEtud:
 showReclamationEtud:
     pattern: /{id}/showReclamation
     defaults: { _controller: AppFrontOfficeBundle:Reclamation:show }
+
+front_login:
+    pattern: /login
+    defaults: { _controller: AppFrontOfficeBundle:SecurityPointAccess:login }
+
+front_login_check:
+    pattern:   /login_check
+    
+front_logout:
+    path:   /logout
