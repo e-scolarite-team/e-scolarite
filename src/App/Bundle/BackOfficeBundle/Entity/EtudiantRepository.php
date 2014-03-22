@@ -12,4 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class EtudiantRepository extends EntityRepository
 {
+	public function deleteAll(){
+		$this->getEntityManager()->createQuery("delete from AppBackOfficeBundle:Etudiant")->execute();
+	}
 }
