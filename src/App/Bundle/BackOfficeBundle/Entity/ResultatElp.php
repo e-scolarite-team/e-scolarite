@@ -18,7 +18,7 @@ class ResultatElp
      * @ORM\Id
      * 
      * @ORM\ManyToOne(targetEntity="ElementPedagogi", inversedBy="resultats")
-     * @ORM\JoinColumn(name="elp_code", referencedColumnName="code")
+     * @ORM\JoinColumn(name="elp_code", referencedColumnName="code",onDelete="NO ACTION")
      */
     protected $element;
 
@@ -27,7 +27,7 @@ class ResultatElp
      * @ORM\Id
      * 
      * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="resultats")
-     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id",onDelete="NO ACTION")
      *
      */
     protected $etudiant;

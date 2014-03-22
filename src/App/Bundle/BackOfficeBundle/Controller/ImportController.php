@@ -126,7 +126,7 @@ class ImportController extends Controller
             $entity->setSexe($etudiantExel->getCellByColumnAndRow($metaData["COD_SEX_ETU"], $i)->getValue());
             $entity->setAnneeInscription($etudiantExel->getCellByColumnAndRow($metaData["DAA_ENT_ETB"], $i)->getValue());
             $entity->setAdresse($etudiantExel->getCellByColumnAndRow($metaData["LIB_VIL_NAI_ETU"], $i)->getValue());           
-            //$entity->preparePassword();
+            $entity->preparePassword();
             $em->persist($entity);  
             $em->flush();           
         }
