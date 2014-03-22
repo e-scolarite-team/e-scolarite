@@ -1,9 +1,9 @@
 Configuration:
     Reclamations:
         Ajouter un type: type-reclamation_new
-        Listes des types:
+        Listes des types: type-reclamation
     Demandes:
-        Ajouter un type:
+        Ajouter un type: type-demande_new
     Importation: import_data
     Administrateur:
         Listes des administrateurs: admin
