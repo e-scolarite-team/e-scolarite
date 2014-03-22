@@ -95,13 +95,15 @@
       <div class="infosummary">
         <h5 class="sidebartitle">Information sur le Compte</h5>    
         <ul>
+            {% if is_granted('ROLE_SUPER_ADMIN') == false %}
             <li>
                 <div class="datainfo">
                     <span class="text-muted">Dernier  Connection</span>
-                    <h4>{% if is_granted('ROLE_SUPER_ADMIN') == false %}{{ app.user.lastVisiteAt | date("Y/m/d H:i") }}{% endif %}</h4>
+                    <h4>{{ app.user.lastVisiteAt | date("Y/m/d H:i") }}</h4>
                 </div>
                 <div id="sidebar-chart" class="chart"></div>   
             </li>
+            {% endif %}
         </ul>
       </div><!-- infosummary -->
       
