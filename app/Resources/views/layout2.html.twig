@@ -23,6 +23,7 @@
 <body>
 
 <!-- Preloader -->
+<div ></div>
 <div id="preloader">
     <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
 </div>
@@ -59,48 +60,56 @@
       <h5 class="sidebartitle">Navigation</h5>
       <ul class="nav nav-pills nav-stacked nav-bracket">
         {% block mainMenu %}
-        <li class="nav-parent active">
-          <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
+        <li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+        <li class="nav-parent"><a href="#"><i class="fa fa-edit"></i> <span>Forms</span></a>
           <ul class="children">
-            <li>
-              <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
-            </li>
-            <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
-            <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
-            <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
-            <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
-            <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
-            <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
-          </ul>
-        </li>
-        <li class="nav-parent">
-          <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
-          <ul class="children">
-            <li>
-              <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-parent">
-          <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
-          <ul class="children">
-            <li>
-              <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
-            </li>
+            <li><a href="general-forms.html"><i class="fa fa-caret-right"></i> General Forms</a></li>
+            <li><a href="form-layouts.html"><i class="fa fa-caret-right"></i> Form Layouts</a></li>
+            <li><a href="form-validation.html"><i class="fa fa-caret-right"></i> Form Validation</a></li>
+            <li><a href="form-wizards.html"><i class="fa fa-caret-right"></i> Form Wizards</a></li>
+            <li><a href="wysiwyg.html"><i class="fa fa-caret-right"></i> WYSIWYG</a></li>
           </ul>
         </li>
         {% endblock %}
       </ul>
       
       <div class="infosummary">
-        <h5 class="sidebartitle">Information sur le Compte</h5>    
+        <h5 class="sidebartitle">Information Summary</h5>    
         <ul>
             <li>
                 <div class="datainfo">
-                    <span class="text-muted">Dernier  Connection</span>
-                    <h4>{% if is_granted('ROLE_SUPER_ADMIN') == false %}{{ app.user.lastVisiteAt | date("Y/m/d H:i") }}{% endif %}</h4>
+                    <span class="text-muted">Daily Traffic</span>
+                    <h4>630, 201</h4>
                 </div>
                 <div id="sidebar-chart" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Average Users</span>
+                    <h4>1, 332, 801</h4>
+                </div>
+                <div id="sidebar-chart2" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Disk Usage</span>
+                    <h4>82.2%</h4>
+                </div>
+                <div id="sidebar-chart3" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">CPU Usage</span>
+                    <h4>140.05 - 32</h4>
+                </div>
+                <div id="sidebar-chart4" class="chart"></div>   
+            </li>
+            <li>
+                <div class="datainfo">
+                    <span class="text-muted">Memory Usage</span>
+                    <h4>32.2%</h4>
+                </div>
+                <div id="sidebar-chart5" class="chart"></div>   
             </li>
         </ul>
       </div><!-- infosummary -->
@@ -112,7 +121,7 @@
     
     <div class="headerbar">
       
-      <a class="menutoggle"><i class="fa fa-bars"></i></a>
+      <a class="menutoggle" ><i class="fa fa-bars"></i></a>
       
       <form class="searchform" action="http://themepixels.com/demo/webpage/bracket/index.html" method="post">
         <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
@@ -122,13 +131,13 @@
         <ul class="headermenu">
           
           <li>
-             <div id="divreload" class="btn-group">
+            <div id="divreload" class="btn-group">
               <button id="nbr_notif" class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
                <i class='glyphicon glyphicon-globe'></i>
               </button>
               <div id="dropdown-menu" class="dropdown-menu dropdown-menu-head pull-right" >
-               
-                 <h5  class='title'></h5>
+                <h5 class="title"></h5>
+                
 
                 <ul id="list" class="dropdown-list gen-list">  
 
@@ -149,8 +158,10 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                <li><a href="profile.html"><i class="glyphicon glyphicon-user"></i> My Profile</a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Account Settings</a></li>
-                <li><a href="{{ path('admin_logout') }}"><i class="glyphicon glyphicon-log-out"></i> Log Out</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i> Help</a></li>
+                <li><a href="signin.html"><i class="glyphicon glyphicon-log-out"></i> Log Out</a></li>
               </ul>
             </div>
           </li>
@@ -501,7 +512,6 @@
 <script src="{{ asset('js/chosen.jquery.min.js') }}"></script>
 <script src="{{ asset('js/fullcalendar.min.js') }}"></script>
 
-
 <script src="{{ asset('js/custom.js') }}"></script>
 <script>
 function init(){
@@ -511,34 +521,31 @@ function init(){
 function refresh() {
 
 $.ajax({
-    url: "{{ path('notification-admin-barre-notif') }}", 
+    url: "{{ path('notification-etudiant-vu-notif') }}", 
     success:
         function(retour){
          
-        var dem=retour["demandes"];
-        var rec=retour["reclamations"];
-        var nbr=dem["id"].length+rec["id"].length;
+        var e1=retour["demandes"];
+        var e2=retour["reclamations"];
+        var nbr=e1["id"].length+e2["id"].length;
         var str="";
         
-    for(var j=0 ; j< dem["id"].length; j++){
-      var id=dem["id"][j];
-       str+="<li class='new'><a href='{{ path('notification-admin-to-demande', { 'id': "%s" }) | format('"+id+"') | raw}}'><span class='thumb'></span><span class='desc'><span class='name'> "+dem['nom'][j]+" "+dem['prenom'][j]+"<span class='badge badge-success'>new</span></span><span  class='msg'>a fait une demande ( "+dem['type'][j]+")<br>"+dem['createdAt'][j]+"</span></span></a></li>"; 
+    for(var j=0 ; j< e1["id"].length; j++){
+        var id=e1["id"][j];
+        str+="<li class='new'><a href='{{ path('notification-etudiant-to-demande', { 'id': "%s" }) | format('"+id+"') | raw}}'><span class='thumb'></span><span class='desc'><span class='name'> l'admin a repondu a votre demande ("+e1['type'][j]+")<span class='badge badge-success'>new</span></span><span  class='msg'>faite le "+e1['createdAt'][j]+"</span></span></a></li>"; 
+        str.replace("id", this.value);
     }
-    for(var j=0 ; j< rec["id"].length; j++){
-      var id=rec["id"][j];
-       str+="<li class='new'><a href='{{ path('notification-admin-to-reclamation', { 'id': "%s" }) | format('"+id+"') | raw}}'><span class='thumb'></span><span class='desc'><span class='name'> "+rec['nom'][j]+" "+rec['prenom'][j]+"<span class='badge badge-success'>new</span></span><span  class='msg'>a fait une réclamation ( "+rec['type'][j]+")<br>"+rec['createdAt'][j]+"</span></span></a></li>"; 
+    for(var j=0 ; j< e2["id"].length; j++){
+        var id=e2["id"][j];
+        str+="<li class='new'><a href='{{ path('notification-etudiant-to-reclamation', { 'id': "%s" }) | format('"+id+"') | raw}}'><span class='thumb'></span><span class='desc'><span class='name'> l'admin a repondu a votre réclamation ("+e2['type'][j]+")<span class='badge badge-success'>new</span></span><span  class='msg'>faite le "+e2['createdAt'][j]+"</span></span></a></li>"; 
     }
-
     jQuery("#list").html(str);
-    jQuery("#nbr_notif").append(jQuery("<span class='badge'>"+nbr+"</span>"));
-   
-    
-
-    jQuery("#list").append(jQuery("<li class='new'><a href='{{path('notification-admin')}}'>Voir toutes les notifications</a></li>"));
+    if(nbr==0){    jQuery("#nbr_notif").append(jQuery("<span class='badge'></span>"));}
+    else {jQuery("#nbr_notif").append(jQuery("<span class='badge'>"+nbr+"</span>"));}
+    jQuery("#list").append(jQuery("<li class='new'><a href='{{ path('notification-etudiant') }}'>Voir toutes les notifications</a></li>"));
 
      
     }
-
 });
     
     setTimeout('refresh();',10000);
@@ -547,7 +554,8 @@ $.ajax({
 refresh();
 </script>
 
-<!--script src="{{ asset('js/dashboard.js') }}"></script-->
+<!-- <script src="{{ asset('js/dashboard.js') }}"></script>
+ -->
 {% endblock %}
 </body>
 </html>

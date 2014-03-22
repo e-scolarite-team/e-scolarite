@@ -17,6 +17,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class EtudiantRepository extends EntityRepository
 {
+	public function deleteAll(){
+
+		$this->getEntityManager()->createQuery("delete from AppBackOfficeBundle:Etudiant")->execute();
+
+	}
 	public function loadUserByUsername($username)
 	{
 		$q = $this->createQueryBuilder('m')

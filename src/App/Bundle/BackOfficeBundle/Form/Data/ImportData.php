@@ -24,7 +24,7 @@ class ImportData
 	* 	mimeTypes={
 	*			   		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 	*   		   		"application/vnd.ms-excel",
-	*              		".csv"
+	*              		"text/csv"
 	*			   }
 	* )
 	* @Validator\NotBlank(message="errors.import.attachment")

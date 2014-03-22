@@ -18,3 +18,10 @@ AppBackOfficeBundle_admin:
     resource: "@AppBackOfficeBundle/Resources/config/routing/admin.yml"
     prefix:   /back-office/admin
 
+AppBackOfficeBundle_notification-admin:
+        resource: "@AppBackOfficeBundle/Resources/config/routing/notification.yml"
+        prefix:   /back-office/notification-admin
+
+AppFrontOfficeBundle_notification-etudiant:
+        resource: "@AppFrontOfficeBundle/Resources/config/routing/notificationetudiant.yml"
+        prefix:   /front-office/notification-etudiant
