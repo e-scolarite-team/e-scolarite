@@ -37,9 +37,8 @@
               <tbody>
                  
                 {% for Demande in demandes %}
-                {% if Demande.notified==0 %}
                                 <tr class="odd gradeX">
-                                    <td>{{ Demande.typeDemande.libelle }}</td>
+                                    <td><a href="{{ path('notification-admin-to-demande', { 'id':Demande.id  }) }}">{{ Demande.typeDemande.libelle }}</a></td>
                                     <td>{{ Demande.etudiant.cne }}</td>
                                     <td>{{ Demande.etudiant.nom }} {{ Demande.etudiant.prenom}}</td>
                                     <td>{{ Demande.etudiant.villeNaissance }}</td>
@@ -48,23 +47,10 @@
                                        
 
                                        <a href="{{ path('notification-admin-vu', { 'id':Demande.id  }) }}" class="delete-row" title="vu"><span class="glyphicon glyphicon-eye-open"></span> </a>
-                                       <a href="#" class="delete-row" title="consulter la demande"><i class="fa fa-pencil"></i></a>
+                                      
                                     </td>
                                 </tr>
-                {% elseif Demande.notified==1 %}
-                <tr class="odd gradeX">
-                                    <td><a href="{{ path('notification-admin-to-demande', { 'id':Demande.id  }) }}">{{ Demande.typeDemande.libelle }}</td>
-                                    <td>{{ Demande.etudiant.cne }}</a></td>
-                                    <td>{{ Demande.etudiant.nom }} {{ Demande.etudiant.prenom}}</td>
-                                    <td>{{ Demande.etudiant.villeNaissance }}</td>
-                                    <td>{{ Demande.createdAt|date('d-m-Y H:i') }}</td>
-                                    <td  class="table-action-hide">
-                                        
-                                        <i class="glyphicon glyphicon-ok"></i>
-                                        <a href="{{ path('notification-admin-to-demande', { 'id':Demande.id  }) }}" class="delete-row" title="consulter la demande"><i class="fa fa-pencil"></i></a>
-                                    </td>
-                                </tr>
-                {% endif %}
+                
                             {% endfor %}
               </tbody>
        </table>
@@ -113,7 +99,7 @@
                                 <td>{{ Reclamation.createdAt|date('d-m-Y H:i') }}</td>
                                 <td  class="table-action-hide">
                                 <a href="{{ path('notification-admin-vu-reclamation', { 'id':Reclamation.id  }) }}" class="delete-row" title="vu"><span class="glyphicon glyphicon-eye-open"></span></a>
-                                <a href="{{ path('notification-admin-to-reclamation', { 'id':Reclamation.id  }) }}" class="delete-row" title="consulter la réclamation"><i class="fa fa-pencil"></i></a>
+                                
                                    
                                 </td>
                             </tr>
