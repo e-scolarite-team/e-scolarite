@@ -1,0 +1,81 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %} Changement de Module {% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+          <form id="basicForm" action="{{ path( 'listedemandechangement' ) }}" class="form-horizontal" novalidate="novalidate">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-btns">
+                  <a href="#" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title">Liste des demandes de changement du Module</h4>
+              </div>
+              <div class="panel-body" >
+          <div class="table-responsive">
+          <table class="table  table-hidaction table-hover" id="list-type">
+            <thead>
+              <tr>
+                <th>CNE</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Modules Changeés</th>
+                <th>Etat</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for etatdemande in etatdemandes %}  
+                    <tr>
+                      <td>{{ etatdemande.demande.etudiant.cne }}</td>
+                      <td>{{ etatdemande.demande.etudiant.nom }}</td>
+                      <td>{{ etatdemande.demande.etudiant.prenom }}</td>
+                      <td>{{ etatdemande.demande.remarque }}</td>
+                      <td>{{ etatdemande.etat }}</td>  
+                      {% if etatdemande.etat == 'en attente' %}
+                      <td class="table-action">
+                           <a href="{{ path( 'traiterdemandechangement', { id: etatdemande.demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
+                      </td>
+                      {% else %} 
+                        <td class="table-action">
+                           
+                        </td>
+                      {% endif %}
+                    </tr>             
+            {% endfor %}
+            </tbody>
+          </table>
+          </div><!-- table-responsive -->  
+              
+          </div>
+        </div><!-- panel-body -->
+                       </div><!-- panel -->
+          </form>     
+        </div>
+  {% endblock %}
+        
+{% block javascripts %}
+   {{ parent() }}               
+  <script>
+    jQuery(document).ready(function() {
+      jQuery('#list-type').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    
+        // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+    });
+  </script>          
+{% endblock %}

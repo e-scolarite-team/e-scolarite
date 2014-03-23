@@ -20,7 +20,18 @@ traiterdemande:
     defaults: { _controller: AppBackOfficeBundle:Demande:traiterdemande }
     requirements:
           id: \d+
+          
+listedemandechangement:
+    pattern:  /listedemandechangement
+    defaults: { _controller: AppBackOfficeBundle:Changement:listedemandechangement }
     
+
+traiterdemandechangement:
+    pattern:  /traiterdemandechangement/{id}
+    defaults: { _controller: AppBackOfficeBundle:Changement:traiterdemandechangement }
+    requirements:
+          id: \d+
+
 
     
 listerReclamation:
