@@ -107,7 +107,7 @@ public function todemandeAction($id){
         $em->flush();
 
 
-        // redirection vers la demande selectionnée  
+        return $this->redirect($this->generateUrl('listedemande'));
     }
 
 
@@ -120,6 +120,6 @@ public function todemandeAction($id){
         $em->persist($reclamation);
         $em->flush();
 
-       // redirection vers la reclamation selectionnée    
+       return $this->redirect($this->generateUrl('listerReclamation'));
     }
 }
