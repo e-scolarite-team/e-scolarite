@@ -12,6 +12,10 @@ demandepiece:
     pattern:  /demande/demandepiece
     defaults: { _controller: AppFrontOfficeBundle:Demande:demandepiece }
 
+changer:
+    pattern:  /changement
+    defaults: { _controller: AppFrontOfficeBundle:Changement:changer }
+    
 reclamationEtud:
     pattern: /reclamation
     defaults: { _controller: AppFrontOfficeBundle:Reclamation:envoyer }
