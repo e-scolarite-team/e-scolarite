@@ -19,28 +19,28 @@ class EtatDemande
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="etat", type="string", length=255, nullable=true)
      */
-    private $etat;
+    protected $etat;
 
     /**
      * @var string
      *
      * @ORM\Column(name="justification", type="string", length=255, nullable=true)
      */
-    private $justification;
+    protected $justification;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var Demande

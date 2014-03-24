@@ -10,12 +10,12 @@
     </li>
   </ul>
 </li>
-<li class="nav-parent   active nav-active">
+<li class="nav-parent  active nav-active">
   <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
-  <ul class="children"  style="display: block;">
-    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Demande un rendez-vous</a></li>
+  <ul class="children" style="display: block;">
+    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Consulter les rendez-vous</a></li>
     <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demande une piece</a></li>
-    <li><a href="#"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
+    <li><a href="{{ path('changer') }}"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
   </ul>
 </li>
 {% endblock %}
