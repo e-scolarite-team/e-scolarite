@@ -21,7 +21,7 @@ class TypeReclamation
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -29,7 +29,7 @@ class TypeReclamation
      * @ORM\Column(name="code", type="string", length=255)
      * @Validator\NotBlank(message="errors.typereclamation.code")
      */
-    private $code;
+    protected $code;
 
     /**
      * @var string
@@ -37,7 +37,7 @@ class TypeReclamation
      * @ORM\Column(name="libelle", type="string", length=255, nullable=true)
      * @Validator\NotBlank(message="errors.typereclamation.libelle")
      */
-    private $libelle;
+    protected $libelle;
 
     /**
      * @var integer
@@ -46,7 +46,7 @@ class TypeReclamation
      * @Validator\NotBlank(message="errors.typereclamation.maxauto")
      * @Validator\Type(type="int", message="errors.typereclamation.maxautoint")
      */
-    private $maxAutorise;
+    protected $maxAutorise;
 
     /**
     * @var ArrayCollection

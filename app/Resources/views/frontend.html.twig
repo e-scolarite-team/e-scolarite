@@ -182,12 +182,9 @@
 
 <script src="{{ asset('js/custom.js') }}"></script>
 <script>
-function init(){
-   refresh();
-}
+
 
 function refresh() {
-
 $.ajax({
     url: "{{ path('notification-etudiant-vu-notif') }}", 
     success:
@@ -219,7 +216,8 @@ $.ajax({
     setTimeout('refresh();',10000);
 
  }
-refresh();
+
+    jQuery(document).ready(function(){ refresh() });
 </script>
 
 <!-- <script src="{{ asset('js/dashboard.js') }}"></script>

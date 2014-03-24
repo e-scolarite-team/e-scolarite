@@ -2,8 +2,6 @@
 
 {% block title %} Demandes Reçus {% endblock %}
 
-<<<<<<< HEAD
-=======
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent">
@@ -39,7 +37,7 @@
 </li>
 {% endblock %}
 
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
+
 {% block content %}
 <div class="col-md-12">
           <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate">
@@ -65,10 +63,6 @@
             </thead>
             <tbody>
               {% for demande in demandes %}  
-<<<<<<< HEAD
-=======
-                 {% if demande.status == 0 %}
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
                     <tr>
                       <td>{{ demande.etudiant.cne }}</td>
                       <td>{{ demande.etudiant.nom }}</td>
@@ -77,12 +71,8 @@
                       <td class="table-action">
                         <a href="{{ path( 'traiterdemande', { id: demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
                       </td>
-<<<<<<< HEAD
                     </tr>              
-=======
-                    </tr>
-                {% endif %}                
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
+
             {% endfor %}
             </tbody>
           </table>

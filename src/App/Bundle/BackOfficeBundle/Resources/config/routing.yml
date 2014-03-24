@@ -7,32 +7,19 @@ import_data:
     defaults: { _controller: AppBackOfficeBundle:Import:update }
 
 
-<<<<<<< HEAD
+
 listedemande:
     pattern:  demande/listedemande
     defaults: { _controller: AppBackOfficeBundle:Demande:listedemande }
 
-=======
-    
-listedemande:
-    pattern:  /demande/listedemande
-    defaults: { _controller: AppBackOfficeBundle:Demande:listedemande }
-    
 
-    
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
 
 traiterdemande:
     pattern:  /demande/traiterdemande/{id}
     defaults: { _controller: AppBackOfficeBundle:Demande:traiterdemande }
     requirements:
           id: \d+
-<<<<<<< HEAD
-    
-    
-=======
-          
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
+
 listedemandechangement:
     pattern:  /listedemandechangement
     defaults: { _controller: AppBackOfficeBundle:Changement:listedemandechangement }
@@ -43,8 +30,7 @@ traiterdemandechangement:
     defaults: { _controller: AppBackOfficeBundle:Changement:traiterdemandechangement }
     requirements:
           id: \d+
-<<<<<<< HEAD
-=======
+
 
 
     
@@ -64,4 +50,3 @@ admin_login_check:
     
 admin_logout:
     path:   /logout
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97

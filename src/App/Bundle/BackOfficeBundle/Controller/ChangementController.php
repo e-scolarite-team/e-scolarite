@@ -65,9 +65,11 @@ class ChangementController extends Controller {
                 $qb->update('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
                 ->set('d.status', '?1')
                 ->set('d.updatedAt', '?3')
+                ->set('e.notified', '?4')
                 ->where($qb->expr()->eq('d.id', '?2'))
                 ->setParameter(1, 2)
                 ->setParameter(2, $id)
+                ->setParameter(4, 0)
                 ->setParameter(3, new \DateTime());
                 $test = $qb->getQuery()->getResult();
 
@@ -92,9 +94,11 @@ class ChangementController extends Controller {
                 $qb->update('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
                 ->set('d.status', '?1')
                 ->set('d.updatedAt', '?3')
+                ->set('e.notified', '?4')
                 ->where($qb->expr()->eq('d.id', '?2'))
                 ->setParameter(1, 1)
                 ->setParameter(2, $id)
+                ->setParameter(4, 0)
                 ->setParameter(3, new \DateTime());
                 $test = $qb->getQuery()->getResult();
                 

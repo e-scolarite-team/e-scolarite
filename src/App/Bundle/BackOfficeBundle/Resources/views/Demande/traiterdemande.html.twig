@@ -1,9 +1,7 @@
 {% extends "::layout.html.twig" %}
 
 {% block title %} Traitement de la demande {% endblock %}
-{% block content %}
 
-=======
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent">
@@ -80,9 +78,7 @@
 <label class="col-sm-3 control-label"> Justification <span class="asterisk">*</span></label>
 <div class="col-sm-9">
 
-<input type="text" name="justification" class="form-control"  required=""  >
-
-<input type="text" name="justification" class="form-control"  required>
+<input type="text" name="justification" class="form-control"  required="required">
 
 </div>
 </div>
@@ -91,8 +87,6 @@
                  <div class="input-group">
 
                 <input type="text" class="form-control" placeholder="dd-mm-yy" id="datepicker" name="rv" >
-
-                <input type="text" class="form-control" placeholder="dd-mm-yy" id="datepicker" name="rv" onkeypress="vider()" required>
 
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
               </div>

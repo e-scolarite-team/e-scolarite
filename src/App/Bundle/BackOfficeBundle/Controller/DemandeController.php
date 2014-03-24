@@ -64,9 +64,11 @@ class DemandeController extends Controller {
                 $qb->update('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
                 ->set('d.status', '?1')
                 ->set('d.updatedAt', '?3')
+                ->set('d.notified', '?4')
                 ->where($qb->expr()->eq('d.id', '?2'))
                 ->setParameter(1, 2)
                 ->setParameter(2, $id)
+                ->setParameter(4, 0)
                 ->setParameter(3, new \DateTime());
                 $test = $qb->getQuery()->getResult();
 
@@ -77,7 +79,6 @@ class DemandeController extends Controller {
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Rejeter')
                 ->setParameter(2, $admin)
-                ->setParameter(2, 1)
                 ->setParameter(3, $demande);
 
                 $test = $qq->getQuery()->getResult();
@@ -98,10 +99,13 @@ class DemandeController extends Controller {
                 ->set('d.status', '?1')
                 ->set('d.updatedAt', '?3')
                 ->set('d.dateReponce', '?4')
+
+                ->set('d.notified', '?5')
                 ->where($qb->expr()->eq('d.id', '?2'))
                 ->setParameter(1, 1)
                 ->setParameter(2, $id)
                 ->setParameter(3, new \DateTime())
+                ->setParameter(5, 0)
                 ->setParameter(4, new \DateTime($rv));
                 $test = $qb->getQuery()->getResult();
                 
@@ -114,7 +118,6 @@ class DemandeController extends Controller {
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Traiter')
                 ->setParameter(2, $admin)
-                ->setParameter(2, 1)
                 ->setParameter(3, $demande)
                 ->setParameter(4, $justification);
 

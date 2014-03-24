@@ -13,14 +13,40 @@ use App\Bundle\BackOfficeBundle\Entity\Reclamation;
 class NotificationController extends Controller{
 
 
+
+
+
+
+
     public function notificationetudiantAction(){
         $em = $this->getDoctrine()->getManager();
-
-        $cne='2927645118'; // recuperer cne d'un etudiant
+        
+        $cne= $this->getUser()->getCne();// recuperer cne d'un etudiant
         $e = $em->getRepository('AppBackOfficeBundle:Etudiant')->findByCne($cne);
-       // return new Response(var_dump($e[0]));
-        $demandes = $em->getRepository('AppBackOfficeBundle:Demande')->findBy(array('etudiant' => $e[0], 'status' => '1', 'notified' => '0' ) );
-        $reclamations = $em->getRepository('AppBackOfficeBundle:Reclamation')->findBy(array('etudiant' => $e[0], 'status' => '1', 'notified' => '0'));
+        $qb = $em->createQueryBuilder();
+        $qb->select('d')
+        ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
+        ->where($qb->expr()->eq('d.etudiant', '?1'))
+        ->andWhere($qb->expr()->eq('d.notified', '?2'))
+        ->andWhere($qb->expr()->neq('d.status', '?3'))
+
+        ->setParameter(1, $e[0])
+        ->setParameter(2, 0)
+        ->setParameter(3, 0);
+
+        $demandes = $qb->getQuery()->getResult();
+
+        $qb->select('r')
+        ->from('App\Bundle\BackOfficeBundle\Entity\Reclamation', 'r')
+        ->where($qb->expr()->eq('r.etudiant', '?1'))
+        ->andWhere($qb->expr()->eq('r.notified', '?2'))
+        ->andWhere($qb->expr()->neq('r.status', '?3'))
+
+        ->setParameter(1, $e[0])
+        ->setParameter(2, 0)
+        ->setParameter(3, 0);
+
+        $reclamations = $qb->getQuery()->getResult();
 
         return $this->render('AppFrontOfficeBundle:Notification:notification.html.twig', array(
                 'demandes' => $demandes,
@@ -60,10 +86,22 @@ class NotificationController extends Controller{
     public function vunotificationAction(){
         $em = $this->getDoctrine()->getManager();
 
-        $cne='2927645118'; // recuperer cne d'un etudiant
+        $cne=$this->getUser()->getCne(); // recuperer cne d'un etudiant
         $e = $em->getRepository('AppBackOfficeBundle:Etudiant')->findByCne($cne);
+        $qb = $em->createQueryBuilder();
+       
 
-        $entities1 =$em->getRepository('AppBackOfficeBundle:Demande')->findBy(array('etudiant' => $e[0], 'status' => '1', 'notified' => '0') );
+        $qb->select('d')
+        ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
+        ->where($qb->expr()->eq('d.etudiant', '?1'))
+        ->andWhere($qb->expr()->eq('d.notified', '?2'))
+        ->andWhere($qb->expr()->neq('d.status', '?3'))
+
+        ->setParameter(1, $e[0])
+        ->setParameter(2, 0)
+        ->setParameter(3, 0);
+
+        $entities1 = $qb->getQuery()->getResult();
         $demandes=array();$demandes["id"]=array(); $demandes["type"]=array(); $demandes["createdAt"]=array();
        
         for($i=0 ; $i<count($entities1); $i++) {
@@ -72,7 +110,18 @@ class NotificationController extends Controller{
             array_push($demandes["createdAt"], $entities1[$i]->getCreatedAt()->format('d-m-Y H:i'));               
         }
         
-        $entities2 = $em->getRepository('AppBackOfficeBundle:Reclamation')->findBy(array('etudiant' => $e[0], 'status' => '1', 'notified' => '0'));
+
+        $qb->select('r')
+        ->from('App\Bundle\BackOfficeBundle\Entity\Reclamation', 'r')
+        ->where($qb->expr()->eq('r.etudiant', '?1'))
+        ->andWhere($qb->expr()->eq('r.notified', '?2'))
+        ->andWhere($qb->expr()->neq('r.status', '?3'))
+
+        ->setParameter(1, $e[0])
+        ->setParameter(2, 0)
+        ->setParameter(3, 0);
+
+        $entities2  = $qb->getQuery()->getResult();
         $reclamations=array(); $reclamations["id"]=array(); $reclamations["type"]=array();$reclamations["createdAt"]=array();
         
         for($i=0 ; $i<count($entities2); $i++){
@@ -81,6 +130,8 @@ class NotificationController extends Controller{
             array_push($reclamations["createdAt"], $entities2[$i]->getCreatedAt()->format('d-m-Y H:i')); 
 
         }
+
+        
         
         $json = json_encode(array(
             'demandes' => $demandes,
@@ -101,8 +152,8 @@ class NotificationController extends Controller{
         $demande->setNotified(1);
         $em->persist($demande);
         $em->flush();
-
-
+        $id = trim($id);
+        return $this->redirect($this->get('router')->generate('showReclamationEtud',array('id' => $id)));
         // redirection vers la demande selectionnée  
     }
 
@@ -115,7 +166,8 @@ class NotificationController extends Controller{
         $reclamation->setNotified(1);
         $em->persist($reclamation);
         $em->flush();
-
+        $id = trim($id);
+        return $this->redirect($this->get('router')->generate('showReclamationEtud',array('id' => $id)));
        // redirection vers la reclamation selectionnée    
     }
 

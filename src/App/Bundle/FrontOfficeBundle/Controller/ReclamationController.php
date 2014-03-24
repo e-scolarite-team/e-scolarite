@@ -17,12 +17,12 @@ class ReclamationController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBackOfficeBundle:Etudiant')->find(91279);
+        //$entities = $em->getRepository('AppBackOfficeBundle:Etudiant')->find($this->getUser()->getId());
 
         return $this->render('AppFrontOfficeBundle:Reclamation:index.html.twig', array(
-            'entities' => $entities->getReclamations(),
+            'entities' => $this->getUser()->getReclamations(),
         ));
     }
 
@@ -44,7 +44,7 @@ class ReclamationController extends Controller
             
             $translator  = $this->get('translator');
             
-            $entity->setEtudiant($em->getRepository("AppBackOfficeBundle:Etudiant")->find(91279));
+            $entity->setEtudiant($this->getUser());
             //$entity->setEtudiant($em->getRepository("AppBackOfficeBundle:Etudiant")->find($this->getUser()->getId()));
             $errList = $validator->validate($form);        
                        
