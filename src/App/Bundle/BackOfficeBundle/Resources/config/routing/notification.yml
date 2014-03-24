@@ -1,0 +1,19 @@
+notification-admin:
+    pattern:  /
+    defaults: { _controller: "AppBackOfficeBundle:Notification:index" }
+notification-admin-vu:
+    pattern:  /voir/{id}
+    defaults: { _controller: "AppBackOfficeBundle:Notification:vu" }
+notification-admin-vu-reclamation:
+    pattern:  /voir-reclamation/{id}
+    defaults: { _controller: "AppBackOfficeBundle:Notification:vureclamation" }
+notification-admin-barre-notif:
+    pattern:  /notif/
+    defaults: { _controller: "AppBackOfficeBundle:Notification:barrenotification" }
+notification-admin-to-demande:
+    pattern:  /todem/{id}
+    defaults: { _controller: "AppBackOfficeBundle:Notification:todemande" }
+
+notification-admin-to-reclamation:
+    pattern:  /torec/{id}
+    defaults: { _controller: "AppBackOfficeBundle:Notification:toreclamation" }

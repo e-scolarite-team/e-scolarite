@@ -1,0 +1,228 @@
+{% extends '::frontend.html.twig' %}
+
+{% block breadcrumb %}
+{%endblock%}
+
+{% block mainMenu %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamationEtud') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+      <a href="{{ path('reclamationEtud') }}"><i class="fa fa-caret-right"></i>Envoyer une reclamation</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children">
+    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Demande un rendez-vous</a></li>
+    <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demande une piece</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
+  </ul>
+</li>
+{% endblock %}
+
+{% block content %}
+{% block pageTitle %}
+        <i class="fa fa-home"></i> Mes notifications
+{% endblock %}
+<title>{% block title %}Notifications d'un etudiant{% endblock %}</title>
+
+<div class="col-md-12">
+  <div id="accordion2" class="panel-group panel-group-dark">
+    <div class="panel panel-default">
+              <div class="panel-heading" style=" background-color:#BDBDBD;">
+                <h4 class="panel-title">
+                  <a href="#collapseOne2" data-parent="#accordion2" data-toggle="collapse" class="collapsed">
+                   Mes demandes
+                  </a>
+                </h4>
+              </div>
+
+      <div class="panel-collapse collapse" id="collapseOne2" style="height: 0px;">
+        <div class="panel-body">
+         <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-btns">
+        <a href="#" class="minimize">&minus;</a>
+      </div>
+      
+      <p></p>
+    </div>
+
+    <div class="panel-body">
+      <table class="table  table-hidaction table-hover" id="list-type">
+          <thead>
+             <tr>
+                <th>Type</th>
+                <th>Remarque</th>
+                <th>Créer le</th>
+                <th>Date de la réponse </th>
+                <th>Actions</th>
+
+                
+              
+             </tr>
+          </thead>
+          <tbody>
+             
+            {% for Demande in demandes %}
+              {% if Demande.notified==0 %}
+
+                <tr class="odd gradeX">
+                  <td><a href="{{ path('notification-etudiant-to-demande', { 'id':Demande.id  }) }}"> {{ Demande.typeDemande.libelle }}</a></td>
+                  </td>                   
+                  <td>{{ Demande.remarque}}</td>
+                  <td>{{ Demande.createdAt|date('Y-m-d')}}</td>
+                  <td>{{ Demande.dateReponce|date('Y-m-d')}}</td>
+                  <td  class="table-action-hide">                                  
+                       <a href="{{ path('notification-etudiant-vu-demande', { 'id':Demande.id  }) }}" class="delete-row" title="vu"><span class="glyphicon glyphicon-eye-open"></span> </a>
+                   </td>            
+                </tr>
+              {% elseif Demande.notified==1 %}
+                <tr class="odd gradeX">
+                   <td>{{ Demande.typeDemande.libelle }}</td>                   
+                   <td>{{ Demande.remarque}}</td>
+                   <td>{{ Demande.createdAt|date('Y-m-d')}}</td>
+                   <td>{{ Demande.dateReponce|date('Y-m-d')}}</td>
+                   <td  class="table-action-hide">
+                    <i class="glyphicon glyphicon-ok"></i>
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+                </tbody>
+       </table>
+    </div><!-- panel-body -->
+    
+<div class="panel-footer">
+   <div class="row">
+    
+   </div>
+  </div><!-- panel-footer -->
+
+</div><!-- panel -->
+          </div>
+        </div>
+      </div>
+    
+
+
+
+
+    <div class="panel panel-default">
+                  <div class="panel-heading" style=" background-color:#BDBDBD;">
+                    <h4 class="panel-title">
+                      <a href="#collapseTwo2" data-parent="#accordion2" data-toggle="collapse" class="collapsed">
+                       Mes réclamations
+                      </a>
+                    </h4>
+                  </div>
+      <div class="panel-collapse collapse" id="collapseTwo2" style="height: 0px;">
+        <div class="panel-body">
+          <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="panel-btns">
+                      <a href="#" class="minimize">&minus;</a>
+                  </div> <p></p>
+                </div>
+
+            <div class="panel-body">
+              <table class="table  table-hidaction table-hover" id="list-type2">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Objet</th>
+                    <th>Description</th>
+                    <th>Créer le</th>
+                    <th>Date de la réponse </th>
+                    <th>La réponse </th>
+                    <th>Actions</th>
+
+
+                  </tr>
+              </thead>
+              <tbody>
+             
+             {% for Reclamation in reclamations %}
+               {% if Reclamation.notified==0 %}
+                <tr class="odd gradeX">
+                    <td><a href="{{ path('notification-etudiant-to-reclamation', { 'id':Reclamation.id  }) }}"> {{ Reclamation.typeReclamation.libelle }}</a></td>                 
+                    <td>{{ Reclamation.objet}} </td>
+                    <td>{{ Reclamation.description}} </td>
+                    <td>{{ Reclamation.createdAt|date('Y-m-d')}}</td>
+                    <td>{{ Reclamation.consultedAt|date('Y-m-d')}}</td>
+                    <td>{{ Reclamation.reponse}} </td>
+                  
+                   <td  class="table-action-hide">                                  
+                       <a href="{{ path('notification-etudiant-vu-reclamation', { 'id':Reclamation.id  }) }}" class="delete-row" title="vu"><span class="glyphicon glyphicon-eye-open"></span> </a>
+                   </td>       
+                </tr>
+               {% elseif Reclamation.notified==1 %}
+              <tr class="odd gradeX">
+                    <td>{{ Reclamation.typeReclamation.libelle }}</td>
+                    <td>{{ Reclamation.objet}} </td>
+                    <td>{{ Reclamation.description}} </td>
+                    <td>{{ Reclamation.createdAt|date('Y-m-d')}}</td>
+                    <td>{{ Reclamation.consultedAt|date('Y-m-d')}}</td>
+                    <td>{{ Reclamation.reponse}} </td>
+                    <td  class="table-action-hide">
+                      <i class="glyphicon glyphicon-ok"></i>
+                    </td>     
+                </tr>
+                {% endif %}
+             {% endfor %}
+         </tbody>
+                          </table>
+            </div><!-- table-responsive -->
+          </div><!-- panel-body -->
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+</div>
+
+{% endblock %}
+ 
+ {% block javascripts %}
+   {{ parent() }}               
+<script>
+    jQuery(document).ready(function() {
+      jQuery('#list-type').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    jQuery('#list-type2').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    
+        // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+    });
+  </script>                    
+{% endblock %}
+
+
+
+
+
+
+
+
+        
+
+
+

@@ -4,6 +4,11 @@ namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Etudiant
@@ -11,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  * @ORM\Table(name="etudiants",uniqueConstraints={@ORM\UniqueConstraint(name="indx_code_apo",columns={"code_appog"})})
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\EtudiantRepository")
  */
-class Etudiant
+class Etudiant extends ContainerAware  implements AdvancedUserInterface, EquatableInterface
 {
 
     /**
@@ -132,10 +137,47 @@ class Etudiant
     */
     protected $resultats;
 
-    public function __construct(){
+    /**
+    * @var \DateTime
+    *
+    *
+    * @ORM\Column(name="last_visite_at", type="datetime", nullable=true)
+    */
+    protected $last_visite_at;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255, nullable=true)
+     */
+    protected $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
+     */
+    protected $salt;
+
+
+    /**
+    * @var array $roles
+    * @ORM\Column(name="roles", type="array", nullable=true)
+    */
+    protected $roles ;
+
+    /**
+    * @param ContainerInterface
+    *
+    */
+    public function __construct(ContainerInterface $container = null){
         $this->demandes =  new ArrayCollection();
         $this->reclamations =  new ArrayCollection();
         $this->resultats =  new ArrayCollection();
+        $this->last_visite_at = new \DateTime();
+        $this->salt = sha1(uniqid(mt_rand(), true));
+        $this->roles = array("ROLE_STUDENT");
+        $this->container = $container;
     }
 
     /**
@@ -161,6 +203,16 @@ class Etudiant
         return $this;
     }
 
+
+
+    /**
+    * Get username
+    *
+    * @return string
+    */
+    public function getUsername(){
+        return $this->cne;
+    }
 
     /**
      * Set codeAppogee
@@ -520,4 +572,204 @@ class Etudiant
     public function getResultats(){
         return $this->resultats->toArray();
     }
+
+    /**
+     * Set last_visite_at
+     *
+     * @param \DateTime $last_visite_at
+     * @return Admin
+     */
+    public function setLastVisiteAt($last_visite_at)
+    {
+        $this->last_visite_at = $last_visite_at;
+
+        return $this;
+    }
+
+    /**
+     * Get last_visite_at
+     *
+     * @return \DateTime 
+     */
+    public function getLastVisiteAt()
+    {
+        return $this->last_visite_at;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Admin
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return Admin
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string 
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Set container
+     *
+     * @param ContainerInterface $container
+     * @return Etudiant
+     */
+    public function setContainer(ContainerInterface $container = NULL)
+    {
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+    * @access public 
+    *
+    * @param ContainerAware $container
+    * 
+    */
+    public function preparePassword(ContainerAware $container = null){
+        if($container != null) 
+            $this->container = $container;
+
+        $enFactory = $this->container->get('security.encoder_factory');
+        $encoder = $enFactory->getEncoder($this);
+        
+        $this->setPassword($encoder->encodePassword($this->getCodeAppogee(),$this->getSalt()));
+    }
+
+    /**
+      * Add role
+      *
+      * @param Role $role
+      * @return Admin
+      */
+      public function addRole($role){
+        $this->roles[] = $role;
+        return $this;
+      }
+
+      /**
+      * Get roles
+      *
+      * @return array
+      */
+      public function getRoles(){
+        return $this->roles;
+      }
+
+      /**
+      * @access public
+      *
+      * @return boolean
+      */
+      public function equals(UserInterface $user){
+
+        return $this->getUsername() == $user->getUsername();
+
+      }
+
+      /**
+      * @access public
+      * @see Symfony\Component\Security\Core\User.UserInterface::eraseCredentials()
+      */
+      public function eraseCredentials(){
+        return '';
+      }
+
+      /**
+      * @access public
+      *
+      * @return boolean
+      */
+      public function isAccountNonExpired()
+      {
+        return true;
+      }
+
+      /**
+      * @access public
+      *
+      * @return boolean
+      */
+      public function isAccountNonLocked()
+      {
+        return true;
+      }
+
+      /**
+      * @access public
+      *
+      * @return boolean
+      */
+      public function isCredentialsNonExpired()
+      {
+        return true;
+      }
+
+      /**
+      * @access public
+      *
+      * @return boolean
+      */
+      public function isEnabled()
+      {
+        return true;
+      }
+      
+      public function isEqualTo(UserInterface $user)
+      {
+        if (!$user instanceof Etudiant) {
+            return false;
+        }
+      
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+      
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+      
+        if ($this->getUsername() !== $user->getUsername()) {
+            return false;
+        }
+      
+        return true;
+      }
+
+
 }

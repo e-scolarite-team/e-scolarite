@@ -2,6 +2,44 @@
 
 {% block title %} Demandes Reçus {% endblock %}
 
+<<<<<<< HEAD
+=======
+{% block mainMenu %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
+    </li>
+    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
+    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
+    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
+    <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
+  </ul>
+</li>
+{% endif %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent  active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children" style="display: block;">
+    <li>
+      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
+    </li>
+  </ul>
+</li>
+{% endblock %}
+
+>>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
 {% block content %}
 <div class="col-md-12">
           <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate">
@@ -27,6 +65,10 @@
             </thead>
             <tbody>
               {% for demande in demandes %}  
+<<<<<<< HEAD
+=======
+                 {% if demande.status == 0 %}
+>>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
                     <tr>
                       <td>{{ demande.etudiant.cne }}</td>
                       <td>{{ demande.etudiant.nom }}</td>
@@ -35,7 +77,12 @@
                       <td class="table-action">
                         <a href="{{ path( 'traiterdemande', { id: demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
                       </td>
+<<<<<<< HEAD
                     </tr>              
+=======
+                    </tr>
+                {% endif %}                
+>>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
             {% endfor %}
             </tbody>
           </table>

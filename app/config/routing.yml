@@ -7,10 +7,25 @@ app_back_office:
     prefix:   /back-office
 
 AppBackOfficeBundle_type-demande:
-        resource: "@AppBackOfficeBundle/Resources/config/routing/typedemande.yml"
-        prefix:   /back-office/type-demande
+   resource: "@AppBackOfficeBundle/Resources/config/routing/typedemande.yml"
+   prefix:   /back-office/configuration/type-demande
 
 AppBackOfficeBundle_type-reclamation:
     resource: "@AppBackOfficeBundle/Resources/config/routing/typereclamation.yml"
     prefix:   /back-office/type-reclamation
 
+AppBackOfficeBundle_admin:
+    resource: "@AppBackOfficeBundle/Resources/config/routing/admin.yml"
+    prefix:   /back-office/admin
+
+AppBackOfficeBundle_notification-admin:
+        resource: "@AppBackOfficeBundle/Resources/config/routing/notification.yml"
+        prefix:   /back-office/notification-admin
+
+AppFrontOfficeBundle_notification-etudiant:
+        resource: "@AppFrontOfficeBundle/Resources/config/routing/notificationetudiant.yml"
+        prefix:   /front-office/notification-etudiant
+        
+AppFrontOfficeBundle_module_libre:
+        resource: "@AppFrontOfficeBundle/Resources/config/routing/Modulelibre.yml"
+        prefix:   /module-libre

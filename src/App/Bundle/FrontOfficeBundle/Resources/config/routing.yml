@@ -1,8 +1,12 @@
 app_front_office_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: AppFrontOfficeBundle:Default:index }
+<<<<<<< HEAD
     
     
+=======
+       
+>>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
 rendezvous:
     pattern:  /demande/rendezvous
     defaults: { _controller: AppFrontOfficeBundle:Demande:rendezvous }
@@ -14,4 +18,30 @@ demandepiece:
 
 changer:
     pattern:  /changement
+<<<<<<< HEAD
     defaults: { _controller: AppFrontOfficeBundle:Changement:changer }
+=======
+    defaults: { _controller: AppFrontOfficeBundle:Changement:changer }
+    
+reclamationEtud:
+    pattern: /reclamation
+    defaults: { _controller: AppFrontOfficeBundle:Reclamation:envoyer }
+
+listerReclamationEtud:
+    pattern: /listerReclamation
+    defaults: { _controller: AppFrontOfficeBundle:Reclamation:index }
+
+showReclamationEtud:
+    pattern: /{id}/showReclamation
+    defaults: { _controller: AppFrontOfficeBundle:Reclamation:show }
+
+front_login:
+    pattern: /login
+    defaults: { _controller: AppFrontOfficeBundle:SecurityPointAccess:login }
+
+front_login_check:
+    pattern:   /login_check
+    
+front_logout:
+    path:   /logout
+>>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97

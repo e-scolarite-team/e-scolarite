@@ -4,6 +4,7 @@ namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Symfony\Component\Validator\Constraints as Validator;
 
 /**
  * Reclamation
@@ -26,6 +27,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="objet", type="string", length=255, nullable=true)
+     * @Validator\NotBlank(message="errors.reclamation.objet")
      */
     protected $objet;
 
@@ -33,6 +35,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+     * @Validator\NotBlank(message="errors.reclamation.description")
      */
     protected $description;
 
@@ -40,6 +43,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="reponse", type="text", nullable=true)
+     * 
      */
     protected $reponse;
 
@@ -60,15 +64,22 @@ class Reclamation
     /**
      * @var integer
      *
-     * @ORM\Column(name="status", type="integer", nullable=true)
+     * @ORM\Column(name="status", type="integer", nullable=true, options={"default":0})
      */
-    protected $status;
+    protected $status = 0;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="notified", type="boolean", nullable=true, options={"default":0})
+     */
+    protected $notified = 0;
 
     /**
      * @var Etudiant
      *
      * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="reclamations")
-     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id",onDelete="SET NULL")
      */
     protected $etudiant;
 
@@ -77,8 +88,17 @@ class Reclamation
      *
      * @ORM\ManyToOne(targetEntity="TypeReclamation", inversedBy="reclamations")
      * @ORM\JoinColumn(name="type_reclamation_id", referencedColumnName="id")
+     * 
      */
     protected $typeReclamation;
+
+    /**
+     * @var Admin
+     *
+     * @ORM\ManyToOne(targetEntity="Admin", inversedBy="reclamations")
+     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     */
+    protected $admin;
 
 
     public function __construct(){
@@ -147,7 +167,7 @@ class Reclamation
      * @param string $reponse
      * @return Reclamation
      */
-    public function setreponse($reponse)
+    public function setReponse($reponse)
     {
         $this->reponse = $reponse;
 
@@ -159,7 +179,7 @@ class Reclamation
      *
      * @return string 
      */
-    public function getreponse()
+    public function getReponse()
     {
         return $this->reponse;
     }
@@ -234,6 +254,30 @@ class Reclamation
     }
 
     /**
+     * Set notified
+     *
+     * @param boolean $notified
+     * @return Demande
+     */
+    public function setNotified($notified)
+    {
+        $this->notified = $notified;
+
+        return $this;
+    }
+
+    /**
+     * Get notified
+     *
+     * @return boolean 
+     */
+    public function getNotified()
+    {
+        return $this->notified;
+    }
+
+
+    /**
      * Set etudiant
      *
      * @param Etudiant $etudiant
@@ -277,6 +321,29 @@ class Reclamation
     public function getTypeReclamation()
     {
         return $this->typeReclamation;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param Admin $admin
+     * @return Reclamation
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return Admin 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
     
 }

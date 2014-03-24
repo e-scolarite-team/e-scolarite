@@ -2,6 +2,41 @@
 
 {% block title %}Ajouter un type de demande{% endblock %}
 
+{% block mainMenu %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+<li class="nav-parent  active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
+  <ul class="children" style="display: block;">
+    <li>
+      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
+    </li>
+    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
+    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
+    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
+    <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
+  </ul>
+</li>
+{% endif %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
+    </li>
+  </ul>
+</li>
+{% endblock %}
+
 {% block content %}
 	<div class="panel panel-default">
         {{ form_start(edit_form,{'attr' : {'class' : 'form-horizontal form-bordered', 'novalidate':'novalidate'}})}}

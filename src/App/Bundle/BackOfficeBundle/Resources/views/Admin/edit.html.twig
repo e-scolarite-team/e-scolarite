@@ -1,0 +1,113 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %} Admin{% endblock %}
+
+{% block mainMenu %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+<li class="nav-parent  active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
+  <ul class="children" style="display: block;">
+    <li>
+      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
+    </li>
+    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
+    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
+    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
+    <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
+  </ul>
+</li>
+{% endif %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
+    </li>
+  </ul>
+</li>
+{% endblock %}
+
+{% block content %}
+	<div class="panel panel-default">
+    {{ form_start(edit_form,{'attr' : {'class' : 'form-horizontal form-bordered', 'novalidate':'novalidate'}})}}
+        <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="#" class="panel-close">&times;</a>
+            <a href="#" class="minimize">&minus;</a>
+          </div>
+          <h4 class="panel-title">Modifier un adminstrateur</h4>
+          <p>Cette interface permet de modifier les informations d'un administrateur.</p>
+          
+        </div>
+
+        <div class="panel-body panel-body-nopadding">
+          
+          {% if errors %}
+            <div class="error" style="display:block;padding : 25px 50px;">
+              {% for err in errors %}
+              <label class="error">{{ err | raw }}</label>
+              {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="{{ edit_form.nom.vars.id }}">Nom</label>
+              <div class="col-sm-6">
+                {{ form_widget(edit_form.nom,{'attr' : {'class' : 'form-control'}})}}
+              </div>
+            </div>
+       
+           	<div class="form-group">
+              <label class="col-sm-3 control-label" for="{{ edit_form.prenom.vars.id }}">Prénom</label>
+              <div class="col-sm-6">
+                {{ form_widget(edit_form.prenom,{'attr' : {'class' : 'form-control'}})}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="{{ edit_form.email.vars.id }}">Email</label>
+              <div class="col-sm-6">
+                {{ form_widget(edit_form.email,{'attr' : {'class' : 'form-control'}})}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="{{ edit_form.password.vars.id }}">Mot de passe</label>
+              <div class="col-sm-6">
+                {{ form_widget(edit_form.password,{'attr' : {'class' : 'form-control'}})}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="{{ edit_form.expired.vars.id }}">Expirer</label>
+              <div class="col-sm-6">
+                {{ form_widget(edit_form.expired,{'attr' : {'class' : 'form-control'}})}}
+              </div>
+            </div>
+           
+             {{ form_rest(edit_form)}}
+
+        </div><!-- panel-body -->
+        
+      <div class="panel-footer">
+       <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <center>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+          </center>
+        </div>
+       </div>
+      </div><!-- panel-footer -->
+      {{ form_end(edit_form)}}
+      </div><!-- panel -->
+{% endblock %}

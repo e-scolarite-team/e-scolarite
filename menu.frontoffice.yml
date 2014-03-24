@@ -1,0 +1,17 @@
+listerReclamationEtud : Reclamations
+	reclamationEtud : Envoyer une reclamation
+demande:
+    rendezvous:rendezvous
+    pieces:demandepiece
+
+
+///////      
+  rendezvous: 
+            Les Rendez Vous
+            
+demandepiece: 
+            Demander une piece
+            
+Changement de Module
+	Changement de Module : changer
+

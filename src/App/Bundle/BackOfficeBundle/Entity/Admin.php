@@ -4,6 +4,10 @@ namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Admin
@@ -11,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  * @ORM\Table(name="admins")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\AdminRepository")
  */
-class Admin
+class Admin implements AdvancedUserInterface,EquatableInterface
 {
     /**
      * @var integer
@@ -49,6 +53,14 @@ class Admin
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     protected $createdAt;
+  
+    /**
+    * @var \DateTime
+    *
+    *
+    * @ORM\Column(name="last_visite_at", type="datetime", nullable=true)
+    */
+    protected $last_visite_at;
 
     /**
      * @var string
@@ -78,9 +90,27 @@ class Admin
     */
     protected $etatDemandes;
 
+    /**
+    * @var ArrayCollection
+    *
+    * @ORM\OneToMany(targetEntity="Reclamation", mappedBy="admin", cascade={"persist"})
+    */
+    protected $reclamations;
+
+    /**
+    * @var array $roles
+    * @ORM\Column(name="roles", type="array", nullable=true)
+    */
+    protected $roles ;
+
     public function __construct(){
         $this->createdAt = new \DateTime();
+        $this->last_visite_at = new \DateTime();
         $this->etatDemandes = new ArrayCollection();
+        $this->reclamations = new ArrayCollection();
+        $this->salt = sha1(uniqid(mt_rand(), true));
+        $this->roles = array();
+        $this->expired = false;
     }
 
     /**
@@ -92,6 +122,26 @@ class Admin
     {
         return $this->id;
     }
+
+  /**
+  * Set username
+  *
+  * @param string $username
+  * @return Admin
+  */
+  public function setUsername($username){
+    $this->email = $username;
+    return $this;
+  }
+
+  /**
+  * Get username
+  *
+  * @return string
+  */
+  public function getUsername(){
+    return $this->email;
+  }
 
     /**
      * Set nom
@@ -186,6 +236,30 @@ class Admin
     }
 
     /**
+     * Set last_visite_at
+     *
+     * @param \DateTime $last_visite_at
+     * @return Admin
+     */
+    public function setLastVisiteAt($last_visite_at)
+    {
+        $this->last_visite_at = $last_visite_at;
+
+        return $this;
+    }
+
+    /**
+     * Get last_visite_at
+     *
+     * @return \DateTime 
+     */
+    public function getLastVisiteAt()
+    {
+        return $this->last_visite_at;
+    }
+
+
+    /**
      * Set password
      *
      * @param string $password
@@ -261,7 +335,7 @@ class Admin
     */
     public function addEtatDemande($etatDemande){
         $this->etatDemandes[] = $etatDemande;
-        $etatDemande->setDemande($this);
+        $etatDemande->setAdmin($this);
         return $this;
     }
 
@@ -273,4 +347,124 @@ class Admin
     public function getEtatDemandes(){
         return $this->etatDemandes->toArray();
     }
+
+    /**
+    * Add reclamation
+    * @param Reclamation $reclamation
+    * @return Admin
+    */
+    public function addReclamation($reclamation){
+        $this->reclamations[] = $reclamation;
+        $reclamation->setAdmin($this);
+        return $this;
+    }
+
+    /**
+    * Get reclamations
+    * 
+    * @return array
+    */
+    public function getReclamations(){
+        return $this->reclamations->toArray();
+    }
+
+    /**
+  * Add role
+  *
+  * @param Role $role
+  * @return Admin
+  */
+  public function addRole($role){
+    $this->roles[] = $role;
+    return $this;
+  }
+
+  /**
+  * Get roles
+  *
+  * @return array
+  */
+  public function getRoles(){
+    return $this->roles;
+  }
+
+  /**
+  * @access public
+  *
+  * @return boolean
+  */
+  public function equals(UserInterface $user){
+
+    return $this->getUsername() == $user->getUsername();
+
+  }
+
+  /**
+  * @access public
+  * @see Symfony\Component\Security\Core\User.UserInterface::eraseCredentials()
+  */
+  public function eraseCredentials(){
+    return '';
+  }
+
+  /**
+  * @access public
+  *
+  * @return boolean
+  */
+  public function isAccountNonExpired()
+  {
+    return true;
+  }
+
+  /**
+  * @access public
+  *
+  * @return boolean
+  */
+  public function isAccountNonLocked()
+  {
+    return true;
+  }
+
+  /**
+  * @access public
+  *
+  * @return boolean
+  */
+  public function isCredentialsNonExpired()
+  {
+    return true;
+  }
+
+  /**
+  * @access public
+  *
+  * @return boolean
+  */
+  public function isEnabled()
+  {
+    return !$this->expired;
+  }
+  
+  public function isEqualTo(UserInterface $user)
+  {
+    if (!$user instanceof Admin) {
+        return false;
+    }
+  
+    if ($this->password !== $user->getPassword()) {
+        return false;
+    }
+  
+    if ($this->salt !== $user->getSalt()) {
+        return false;
+    }
+  
+    if ($this->getUsername() !== $user->getUsername()) {
+        return false;
+    }
+  
+    return true;
+  }
 }

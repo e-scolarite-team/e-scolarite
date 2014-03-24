@@ -7,27 +7,36 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ResultatElp
  *
- * @ORM\Table(name="results_elp")
+ * @ORM\Table(name="results_elp",uniqueConstraints={@ORM\UniqueConstraint(name="resultat_unq", columns={"etudiant_id", "elp_code","annee", "session", "admissibilite"})})
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\ResultatElpRepository")
  */
 class ResultatElp
 {
     
     /**
-     * @var ElementPedagogi
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var ElementPedagogi
+     * 
      * 
      * @ORM\ManyToOne(targetEntity="ElementPedagogi", inversedBy="resultats")
-     * @ORM\JoinColumn(name="elp_code", referencedColumnName="code")
+     * @ORM\JoinColumn(name="elp_code", referencedColumnName="code",onDelete="SET NULL")
      */
     protected $element;
 
     /**
      * @var Etudiant
-     * @ORM\Id
+     * 
      * 
      * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="resultats")
-     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id",onDelete="SET NULL")
      *
      */
     protected $etudiant;
@@ -35,14 +44,14 @@ class ResultatElp
     /**
      * @var integer
      *
-     * @ORM\Id
+     * 
      * @ORM\Column(name="annee", type="integer")
      */
     protected $annee;
 
     /**
      * @var integer
-     * @ORM\Id
+     * 
      * 
      * @ORM\Column(name="session", type="integer")
      */
@@ -51,14 +60,14 @@ class ResultatElp
     /**
      * @var integer
      *
-     * @ORM\Id
+     * 
      * @ORM\Column(name="admissibilite", type="integer")
      */
     protected $admissibilite;
 
     /**
      * @var float
-     * @ORM\Id
+     * 
      * 
      * @ORM\Column(name="note", type="float")
      */
@@ -66,18 +75,28 @@ class ResultatElp
 
     /**
      * @var string
-     * @ORM\Id
+     * 
      * 
      * @ORM\Column(name="status", type="string", length=255)
      */
     protected $status;
 
-    public function __construct($etudiant,$element,$annee,$session,$admissibilite){
+    public function __construct($etudiant = null,$element=null,$annee=null,$session=null,$admissibilite=null){
         $this->element = $element;
         $this->etudiant = $etudiant;
         $this->annee = $annee;
         $this->admissibilite = $admissibilite;
         $this->session = $session;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
 

@@ -16,8 +16,10 @@ use App\Bundle\BackOfficeBundle\Form\ImportFormType;
 
 class DemandeController extends Controller {
   
-	
-    public function demandepieceAction() {
+
+
+   public function demandepieceAction() {
+
         $em = $this->getDoctrine()->getEntityManager();
         
             if($this->get('request')->request->get('demande') != ""){           
@@ -95,18 +97,17 @@ class DemandeController extends Controller {
                                 array( 'typesdemandes' => $typesdemandes )
                             );
     }
-	
-  
- 
-	
+
+
     // -------------------------------------------------------------------
     
-    public function rendezvousAction() {
+
+   public function rendezvousAction() {
         
         $em = $this->getDoctrine()->getEntityManager();
         
-        $repEtudiant = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Etudiant');
-        $etudiant = $repEtudiant->findOneById(1);
+      	$etudiant = $this->getUser();
+
         
         $td = $em->createQueryBuilder();
         $td->select('t')
@@ -137,7 +138,7 @@ class DemandeController extends Controller {
                                 array( 'etatdemandes' => $etatdemandes )
                             );
     }
-	
+
   
 
 }

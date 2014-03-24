@@ -15,17 +15,13 @@ use App\Bundle\BackOfficeBundle\Form\ImportFormType;
 
 
 class DemandeController extends Controller {
-  
-	
-  
-    
+
     // --------------------------------------------------------------------
     
     
     public function listedemandeAction() {
-        
+
         $admin = $this->getUser();
-        // SESSION 
         $em = $this->getDoctrine()->getEntityManager();
                 
         $td = $em->createQueryBuilder();
@@ -56,7 +52,7 @@ class DemandeController extends Controller {
     public function traiterdemandeAction($id) {
         
           $em = $this->getDoctrine()->getEntityManager();
-          // SESSION
+
           $admin = $this->getUser();
           
           $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
@@ -81,6 +77,7 @@ class DemandeController extends Controller {
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Rejeter')
                 ->setParameter(2, $admin)
+                ->setParameter(2, 1)
                 ->setParameter(3, $demande);
 
                 $test = $qq->getQuery()->getResult();
@@ -117,6 +114,7 @@ class DemandeController extends Controller {
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Traiter')
                 ->setParameter(2, $admin)
+                ->setParameter(2, 1)
                 ->setParameter(3, $demande)
                 ->setParameter(4, $justification);
 

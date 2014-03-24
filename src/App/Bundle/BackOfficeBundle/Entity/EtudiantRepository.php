@@ -3,6 +3,11 @@
 namespace App\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Doctrine\ORM\NoResultException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * EtudiantRepository
@@ -12,4 +17,62 @@ use Doctrine\ORM\EntityRepository;
  */
 class EtudiantRepository extends EntityRepository
 {
+	public function deleteAll(){
+
+		$this->getEntityManager()->createQuery("delete from AppBackOfficeBundle:Etudiant")->execute();
+
+	}
+	public function loadUserByUsername($username)
+	{
+		$q = $this->createQueryBuilder('m')
+			->where('m.cne = :username')
+			->setParameter('username', $username)
+			->getQuery();
+	
+		try {
+			
+			$user = $q->getSingleResult();
+		} catch (NoResultException $e) {
+			$message = sprintf(
+					'aucun etudiant identifie par "%s".',
+					$username
+			);
+			throw new UsernameNotFoundException($message, 0, $e);
+		}
+	
+		return $user;
+	}
+	
+	public function refreshUser(UserInterface $user)
+	{
+		$class = get_class($user);
+		if (!$this->supportsClass($class)) {
+			throw new UnsupportedUserException(
+					sprintf(
+							'Instances of "%s" are not supported.',
+							$class
+					)
+			);
+		}
+	
+		return $this->find($user->getId());
+	}
+	
+	public function supportsClass($class)
+	{
+		return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
+	}
+        /*
+        public function findOneByCne($cne)
+        {
+           
+         $qb = $this->createQueryBuilder('e')
+                    ->where('e.cne= :cne')
+                    ->setParameter('cne', $cne);
+          return $qb->getQuery()
+                    ->getResult();
+
+        }
+         * 
+         */
 }

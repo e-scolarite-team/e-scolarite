@@ -54,7 +54,7 @@ class ElementPedagogi
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="date")
+     * @ORM\Column(name="updated_at", type="date", nullable=true)
      */
     protected $updatedAt;
 
@@ -68,21 +68,21 @@ class ElementPedagogi
     /**
      * @var string
      *
-     * @ORM\Column(name="lib_elp_ar", type="string", length=255)
+     * @ORM\Column(name="lib_elp_ar", type="string", length=255, nullable=true)
      */
     protected $libAr;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lic_elp_ar", type="string", length=255)
+     * @ORM\Column(name="lic_elp_ar", type="string", length=255, nullable=true)
      */
     protected $licAr;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="elp_order", type="integer")
+     * @ORM\Column(name="elp_order", type="integer", nullable=true)
      */
     protected $order;
 
@@ -305,7 +305,7 @@ class ElementPedagogi
      */
     public function setLicAr($licElpAr)
     {
-        $this->licAr = $licElpArb;
+        $this->licAr = $licElpAr;
 
         return $this;
     }

@@ -1,0 +1,3 @@
+module_libre:
+    pattern:  /module5
+    defaults: { _controller: "AppFrontOfficeBundle:ModuleLibre:module5" }
