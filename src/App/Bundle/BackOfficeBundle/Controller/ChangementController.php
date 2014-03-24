@@ -14,46 +14,43 @@ use App\Bundle\BackOfficeBundle\Form\Data\ImportData;
 use App\Bundle\BackOfficeBundle\Form\ImportFormType;
 
 
-class DemandeController extends Controller {
+class ChangementController extends Controller {
   
-    
+	
   
     
     // --------------------------------------------------------------------
     
     
-    public function listedemandeAction() {
-      
-        $admin = $this->getUser();
-        $em = $this->getDoctrine()->getEntityManager();
-                
-        $td = $em->createQueryBuilder();
-        $td->select('t')
-        ->from('App\Bundle\BackOfficeBundle\Entity\TypeDemande', 't')
-        ->Where($td->expr()->in('t.code', '?1'))
-        ->setParameter(1, array( 'ER', '5M', 'CM'));
-        $typedemandes = $td->getQuery()->getResult();
-        //return new Response(var_dump($typedemandes));
+    public function listedemandechangementAction() {
+    	
+    	
         
-        $qb = $em->createQueryBuilder();
-        $qb->select('d')
-        ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
-        ->Where($qb->expr()->eq('d.status', '?1'))
-        ->andWhere($qb->expr()->notIn('d.typeDemande', '?2'))
-        ->setParameter(1, 0)
-        ->setParameter(2, $typedemandes);
-        $demandes = $qb->getQuery()->getResult();
-        
-        return $this->render(
-                                'AppBackOfficeBundle:Demande:listedemande.html.twig', 
-                                array('demandes' => $demandes)
+            $em = $this->getDoctrine()->getEntityManager();
+            
+            $admin = $this->getUser();
+            
+            $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
+            $typedemande = $repTypeDemande->findOneByCode('CM');
+            
+             $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
+             $demande = $repDemande->findByTypeDemande($typedemande);
+            
+            $qb = $em->createQueryBuilder();
+            $qb->select('e')
+            ->from('App\Bundle\BackOfficeBundle\Entity\EtatDemande', 'e')
+            ->where($qb->expr()->in('e.demande', '?1'))
+            ->setParameter(1, $demande);
+            $etatdemandes = $qb->getQuery()->getResult();
+           
+            return $this->render(
+                                'AppBackOfficeBundle:Changement:listedemandechangement.html.twig', 
+                                array('etatdemandes' => $etatdemandes)
                             );
     }
     
-   
     
-    public function traiterdemandeAction($id) {
-        
+    public function traiterdemandechangementAction($id) {
           $em = $this->getDoctrine()->getEntityManager();
           
           $admin = $this->getUser();
@@ -62,6 +59,7 @@ class DemandeController extends Controller {
           $demande = $repDemande->findOneById($id);
           
           if($this->get('request')->request->get('rejeter') == 'rejeter'){
+              // return new Response("Rejeter");
               
                 $qb = $em->createQueryBuilder();
                 $qb->update('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
@@ -79,56 +77,45 @@ class DemandeController extends Controller {
                 ->set('e.admin', '?2')
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Rejeter')
-                ->setParameter(2, 1)
+                ->setParameter(2, $admin)
                 ->setParameter(3, $demande);
 
                 $test = $qq->getQuery()->getResult();
                 
-                return $this->redirect($this->get('router')->generate('listedemande', array()));
+                return $this->redirect($this->get('router')->generate('listedemandechangement', array()));
                 
-         } elseif ($this->get('request')->request->get('fixer') == 'fixer'){
-             
-                $justification = $this->get('request')->request->get('justification');
-                $s = $this->get('request')->request->get('rv');
-                /*03/25/2014
-                2015-08-30*/
-                $rv = \DateTime::createFromFormat('d-m-Y', $s)->format('Y-m-d');
-               // $rv = substr($s, 6, 4) . "-" . substr($s, 0, 2) . "-" . substr($s, 3, 2);
+                
+         } elseif ($this->get('request')->request->get('valider') == 'valider'){
+                 //return new Response("Valider");
                 $qb = $em->createQueryBuilder();
                 
                 $qb->update('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
                 ->set('d.status', '?1')
                 ->set('d.updatedAt', '?3')
-                ->set('d.dateReponce', '?4')
                 ->where($qb->expr()->eq('d.id', '?2'))
                 ->setParameter(1, 1)
                 ->setParameter(2, $id)
-                ->setParameter(3, new \DateTime())
-                ->setParameter(4, new \DateTime($rv));
+                ->setParameter(3, new \DateTime());
                 $test = $qb->getQuery()->getResult();
                 
                 
+              
                 $qq = $em->createQueryBuilder();
                 $qq->update('App\Bundle\BackOfficeBundle\Entity\EtatDemande', 'e')
                 ->set('e.etat', '?1')
                 ->set('e.admin', '?2')
-                ->set('e.justification', '?4')
                 ->where($qq->expr()->eq('e.demande', '?3'))
-                ->setParameter(1, 'Traiter')
-                ->setParameter(2, 1)
-                ->setParameter(3, $demande)
-                ->setParameter(4, $justification);
+                ->setParameter(1, 'Valider')
+                ->setParameter(2, $admin)
+                ->setParameter(3, $demande);
 
                 $test = $qq->getQuery()->getResult();
                 
-               return $this->redirect($this->get('router')->generate('listedemande', array()));            
+               return $this->redirect($this->get('router')->generate('listedemandechangement', array()));            
          } 
-         
-        $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
-        $demande = $repDemande->findOneById($id);
               
         return $this->render( 
-                                'AppBackOfficeBundle:Demande:traiterdemande.html.twig', 
+                                'AppBackOfficeBundle:Changement:traiterdemandechangement.html.twig', 
                                  array( 'demande' => $demande )
                             );
     }

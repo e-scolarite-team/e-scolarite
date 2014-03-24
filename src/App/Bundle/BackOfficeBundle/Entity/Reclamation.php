@@ -79,7 +79,7 @@ class Reclamation
      * @var Etudiant
      *
      * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="reclamations")
-     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id",onDelete="NO ACTION")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id",onDelete="SET NULL")
      */
     protected $etudiant;
 
