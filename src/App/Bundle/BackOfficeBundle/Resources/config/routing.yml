@@ -7,10 +7,10 @@ import_data:
     defaults: { _controller: AppBackOfficeBundle:Import:update }
 
 
-
 listedemande:
-    pattern:  /demande/listedemande
+    pattern:  demande/listedemande
     defaults: { _controller: AppBackOfficeBundle:Demande:listedemande }
+
 
 traiterdemande:
     pattern:  /demande/traiterdemande/{id}
@@ -27,7 +27,7 @@ traiterdemandechangement:
     defaults: { _controller: AppBackOfficeBundle:Changement:traiterdemandechangement }
     requirements:
           id: \d+
-    
+
 listerReclamation:
     pattern: /listerReclamation
     defaults: { _controller: AppBackOfficeBundle:Reclamation:index }

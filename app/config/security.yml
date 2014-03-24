@@ -46,7 +46,7 @@ security:
             form_login:
                 login_path: /back-office/login
                 check_path: /back-office/login_check
-                default_target_path: /back-office/hello/fay
+                default_target_path: /back-office/notification-admin/
                 target_path_parameter: _target_path
                 remember_me: false
                 username_parameter: _username
@@ -61,7 +61,7 @@ security:
             form_login:
                 login_path: /front-office/login
                 check_path: /front-office/login_check
-                default_target_path: /front-office/demande/rendezvous
+                default_target_path: /front-office/notification-etudiant/
                 target_path_parameter: _target_path
                 remember_me: false
                 username_parameter: _username

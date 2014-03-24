@@ -2,7 +2,6 @@
 
 {% block title %} Demandes Reçus {% endblock %}
 
-
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent">
@@ -19,7 +18,7 @@
     <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
   </ul>
 </li>
-{% endif %}
+{% else %}
 <li class="nav-parent">
   <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
   <ul class="children">
@@ -34,8 +33,10 @@
     <li>
       <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
     </li>
+    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
   </ul>
 </li>
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -63,10 +64,6 @@
             </thead>
             <tbody>
               {% for demande in demandes %}  
-<<<<<<< HEAD
-=======
-                 {% if demande.status == 0 %}
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
                     <tr>
                       <td>{{ demande.etudiant.cne }}</td>
                       <td>{{ demande.etudiant.nom }}</td>
@@ -75,12 +72,8 @@
                       <td class="table-action">
                         <a href="{{ path( 'traiterdemande', { id: demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
                       </td>
-<<<<<<< HEAD
                     </tr>              
-=======
-                    </tr>
-                {% endif %}                
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
+
             {% endfor %}
             </tbody>
           </table>

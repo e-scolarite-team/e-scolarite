@@ -18,12 +18,7 @@ class ReclamationController extends Controller
      */
     public function indexAction()
     {
-        //$em = $this->getDoctrine()->getManager();
-
-        //$entity = $em->getRepository('AppBackOfficeBundle:Etudiant')->find("91279");
-        //$entity = $em->getRepository('AppBackOfficeBundle:Etudiant')->find($this->getUser()->getId());        
         
-        //return new Response( var_dump(count($entity)));
         return $this->render('AppFrontOfficeBundle:Reclamation:index.html.twig', array(
             'entities' => $this->getUser()->getReclamations(),
         ));

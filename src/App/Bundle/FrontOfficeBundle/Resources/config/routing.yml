@@ -13,6 +13,7 @@ demandepiece:
 
 changer:
     pattern:  /changement
+
     defaults: { _controller: AppFrontOfficeBundle:Changement:changer }
     
 reclamationEtud:

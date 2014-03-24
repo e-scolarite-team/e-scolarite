@@ -1,9 +1,7 @@
 {% extends "::layout.html.twig" %}
 
 {% block title %} Traitement de la demande {% endblock %}
-{% block content %}
 
-=======
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent">
@@ -20,7 +18,7 @@
     <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
   </ul>
 </li>
-{% endif %}
+{% else %}
 <li class="nav-parent">
   <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
   <ul class="children">
@@ -35,8 +33,10 @@
     <li>
       <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
     </li>
+    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
   </ul>
 </li>
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -80,9 +80,7 @@
 <label class="col-sm-3 control-label"> Justification <span class="asterisk">*</span></label>
 <div class="col-sm-9">
 
-<input type="text" name="justification" class="form-control"  required=""  >
-
-<input type="text" name="justification" class="form-control"  required>
+<input type="text" name="justification" class="form-control"  required="required">
 
 </div>
 </div>
@@ -91,8 +89,6 @@
                  <div class="input-group">
 
                 <input type="text" class="form-control" placeholder="dd-mm-yy" id="datepicker" name="rv" >
-
-                <input type="text" class="form-control" placeholder="dd-mm-yy" id="datepicker" name="rv" onkeypress="vider()" required>
 
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
               </div>

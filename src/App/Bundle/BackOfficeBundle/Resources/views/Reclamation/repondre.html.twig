@@ -23,7 +23,7 @@
     <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
   </ul>
 </li>
-{% endif %}
+{% else %}
 <li class="nav-parent  active nav-active">
   <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
   <ul class="children" style="display: block;">
@@ -38,8 +38,10 @@
     <li>
       <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
     </li>
+    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
   </ul>
 </li>
+{% endif %}
 {% endblock %}
 
 {% block content %}

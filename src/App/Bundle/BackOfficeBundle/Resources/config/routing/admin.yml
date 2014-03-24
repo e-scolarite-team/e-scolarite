@@ -6,6 +6,7 @@ admin_show:
     pattern:  /{id}/show
     defaults: { _controller: "AppBackOfficeBundle:Admin:show" }
 
+
 admin_new:
     pattern:  /new
     defaults: { _controller: "AppBackOfficeBundle:Admin:new" }

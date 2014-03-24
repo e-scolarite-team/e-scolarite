@@ -55,6 +55,7 @@ class NotificationController extends Controller
 
       public function barrenotificationAction()
     {
+        //if($this->get('security.context')->isGranted('ROLE_SUPER_USER'))
         $em = $this->getDoctrine()->getManager();
         $demandes = $em->getRepository('AppBackOfficeBundle:Demande')->findBy(array('status' => '0', 'notified' => '0'));
         $reclamations = $em->getRepository('AppBackOfficeBundle:Reclamation')->findBy(array('status' => '0', 'notified' => '0'));
