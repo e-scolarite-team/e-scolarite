@@ -5,3 +5,27 @@ app_back_office_homepage:
 import_data:
     pattern: /import/data
     defaults: { _controller: AppBackOfficeBundle:Import:update }
+
+
+listedemande:
+    pattern:  demande/listedemande
+    defaults: { _controller: AppBackOfficeBundle:Demande:listedemande }
+
+
+traiterdemande:
+    pattern:  /demande/traiterdemande/{id}
+    defaults: { _controller: AppBackOfficeBundle:Demande:traiterdemande }
+    requirements:
+          id: \d+
+    
+    
+listedemandechangement:
+    pattern:  /listedemandechangement
+    defaults: { _controller: AppBackOfficeBundle:Changement:listedemandechangement }
+    
+
+traiterdemandechangement:
+    pattern:  /traiterdemandechangement/{id}
+    defaults: { _controller: AppBackOfficeBundle:Changement:traiterdemandechangement }
+    requirements:
+          id: \d+

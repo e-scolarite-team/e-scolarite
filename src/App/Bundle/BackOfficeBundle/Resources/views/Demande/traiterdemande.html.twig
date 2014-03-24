@@ -1,0 +1,89 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %} Traitement de la demande {% endblock %}
+
+{% block content %}
+
+<div class="col-md-12">
+          <form id="basicForm" action="{{ path( 'traiterdemande', { id: demande.id } ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-btns">
+                  <a href="#" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title">Traitement de la demande</h4>
+                <p>Vous pouvez fixer un Rendez-vous pour cette demande!</p>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"> CNE <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                      <input type="text" name="cne" class="form-control"  readonly="true" required="" value="{{ demande.etudiant.cne }}" >
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"> Nom <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="email" name="nom" class="form-control"  readonly="true" required="" value="{{ demande.etudiant.nom }}" >
+                  </div>
+                </div>
+                 <div class="form-group">
+                  <label class="col-sm-3 control-label"> Prénom <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="email" name="prenom" class="form-control"  readonly="true" required="" value="{{ demande.etudiant.prenom }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"> Type de pièce <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.typeDemande.libelle }}" >
+                  </div>
+                </div>
+<div class="form-group">
+<label class="col-sm-3 control-label"> Justification <span class="asterisk">*</span></label>
+<div class="col-sm-9">
+<input type="text" name="justification" class="form-control"  required=""  >
+</div>
+</div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"> Rendez-vous <span class="asterisk">*</span></label>
+                 <div class="input-group">
+                <input type="text" class="form-control" placeholder="dd-mm-yy" id="datepicker" name="rv" >
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+              </div>
+              
+          </div>
+        </div><!-- panel-body -->
+              
+              <div class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-9 col-sm-offset-3">
+                      <button class="btn btn-primary" type="submit" name="fixer"  value="fixer" >Fixer</button>
+                      <button class="btn btn-default" type="submit" name="rejeter" value="rejeter" >Rejeter</button>
+                  </div>
+                </div>
+              </div>
+            
+          </div><!-- panel -->
+          </form>     
+        </div>
+        
+
+        
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent()}}
+  <script>
+
+    jQuery(document).ready(function(){
+      
+      // Date Picker
+
+        jQuery('#datepicker').datepicker({ dateFormat: "dd-mm-yy" });
+      });
+
+  </script>
+{% endblock %}

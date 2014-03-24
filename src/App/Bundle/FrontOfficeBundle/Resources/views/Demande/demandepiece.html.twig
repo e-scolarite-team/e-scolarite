@@ -1,0 +1,36 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %} Demande des pièces {% endblock %}
+
+{% block content %}
+
+<div class="col-md-12">
+          <form id="basicForm" action="{{ path('demandepiece') }}" class="form-horizontal" novalidate="novalidate" method="POST">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-btns">
+                  <a href="#" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title">Demande de Pièces</h4>
+                <p>Vous pouvez faire votre demande pour la pièce que vous voulez récuprérer auprès du service de scolartié.</p>
+              </div>
+              <div class="panel-body">
+          <div class="form-group">
+            <div class="col-md-6">
+              <label class="col-sm-3 control-label">Type de Pièce</label>
+              <select name="demande" class="form-control mb15">
+               {% for  typedemande in typesdemandes %} 
+                 
+                <option value="{{ typedemande.code }}">{{ typedemande.libelle }}</option>  
+              
+               {% endfor %}
+               </select>
+               <button class="btn btn-primary">Envoyer</button>
+          </div>
+          </div>        
+        </div><!-- panel-body -->
+      </div><!-- panel -->
+    </form>     
+  </div>
+
+{% endblock %}
