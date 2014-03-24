@@ -25,8 +25,8 @@ class DemandeController extends Controller {
                     $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
                     $typedemande = $repTypeDemande->findOneByCode($this->get('request')->request->get('demande')); 
 
-                    $repEtudiant = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Etudiant');
-                    $etudiant = $repEtudiant->findOneById(1);
+			$etudiant = $this->getUser();
+
 
                     $demande = new Demande();
                     $demande->setEtudiant($etudiant);
@@ -108,8 +108,7 @@ class DemandeController extends Controller {
         
         $em = $this->getDoctrine()->getEntityManager();
         
-        $repEtudiant = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Etudiant');
-        $etudiant = $repEtudiant->findOneById(1);
+      	$etudiant = $this->getUser();
         
         $td = $em->createQueryBuilder();
         $td->select('t')
