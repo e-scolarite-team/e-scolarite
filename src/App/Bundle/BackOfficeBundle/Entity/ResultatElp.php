@@ -7,36 +7,29 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ResultatElp
  *
- * @ORM\Table(name="results_elp",uniqueConstraints={@ORM\UniqueConstraint(name="resultat_unq", columns={"etudiant_id", "elp_code","annee", "session", "admissibilite"})})
+ * @ORM\Table(name="results_elp")
  * @ORM\Entity(repositoryClass="App\Bundle\BackOfficeBundle\Entity\ResultatElpRepository")
  */
 class ResultatElp
 {
     
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    
 
     /**
      * @var ElementPedagogi
      * 
-     * 
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="ElementPedagogi", inversedBy="resultats")
-     * @ORM\JoinColumn(name="elp_code", referencedColumnName="code",onDelete="SET NULL")
+     * @ORM\JoinColumn(name="elp_code", referencedColumnName="code",onDelete="NO ACTION")
      */
     protected $element;
 
     /**
      * @var Etudiant
      * 
-     * 
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="resultats")
-     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id",onDelete="SET NULL")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id",onDelete="NO ACTION")
      *
      */
     protected $etudiant;
@@ -44,7 +37,7 @@ class ResultatElp
     /**
      * @var integer
      *
-     * 
+     * @ORM\Id
      * @ORM\Column(name="annee", type="integer")
      */
     protected $annee;
@@ -52,7 +45,7 @@ class ResultatElp
     /**
      * @var integer
      * 
-     * 
+     * @ORM\Id
      * @ORM\Column(name="session", type="integer")
      */
     protected $session;
@@ -60,7 +53,7 @@ class ResultatElp
     /**
      * @var integer
      *
-     * 
+     * @ORM\Id
      * @ORM\Column(name="admissibilite", type="integer")
      */
     protected $admissibilite;
@@ -87,16 +80,6 @@ class ResultatElp
         $this->annee = $annee;
         $this->admissibilite = $admissibilite;
         $this->session = $session;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
 

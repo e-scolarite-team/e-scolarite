@@ -103,13 +103,15 @@ class ImportController extends Controller
         //labied younes karoum todo here
 
         $em = $this->get('doctrine')->getManager();       
-        $em->getRepository("AppBackOfficeBundle:Etudiant")->deleteAll();
+        //$em->getRepository("AppBackOfficeBundle:Etudiant")->deleteAll();
         $etudiantExel = $this->getWorkSheet($path,0);
         $metaData = $this->getMetaData($etudiantExel);
         
         $highestRow = $etudiantExel->getHighestRow();       
         
         for ($i=2; $i <= $highestRow; $i++) { 
+
+            
 
             $entity = new Etudiant($this->container);
             
@@ -127,7 +129,8 @@ class ImportController extends Controller
             $entity->setAnneeInscription($etudiantExel->getCellByColumnAndRow($metaData["DAA_ENT_ETB"], $i)->getValue());
             $entity->setAdresse($etudiantExel->getCellByColumnAndRow($metaData["LIB_VIL_NAI_ETU"], $i)->getValue());           
             $entity->preparePassword();
-            $em->persist($entity);  
+            //if($etu) $em->persist($etu);
+              $em->merge($entity);  
             $em->flush();           
         }
       
@@ -143,7 +146,7 @@ class ImportController extends Controller
         //paul todo here
 
         $em = $this->get('doctrine')->getManager();        
-        $em->getRepository("AppBackOfficeBundle:ResultatElp")->deleteAll();
+        //$em->getRepository("AppBackOfficeBundle:ResultatElp")->deleteAll();
         $sheet = $this->getWorkSheet($path,0);
         $metaData = $this->getMetaData($sheet);
         
@@ -151,9 +154,9 @@ class ImportController extends Controller
         
         for ($i=2; $i <= $highestRow; $i++) { 
             $entity = new ResultatElp();
+
             $etudiant = $em->getRepository("AppBackOfficeBundle:Etudiant")->find($sheet->getCellByColumnAndRow($metaData["COD_IND"], $i)->getValue());
-            $element = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());
-            
+            $element = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());            
             $entity->setEtudiant($etudiant);            
             $entity->setElement($element);            
             $entity->setAnnee($sheet->getCellByColumnAndRow($metaData["COD_ANU"], $i)->getValue());
@@ -162,7 +165,7 @@ class ImportController extends Controller
             $entity->setNote($sheet->getCellByColumnAndRow($metaData["NOT_ELP"], $i)->getValue());
             $entity->setStatus($sheet->getCellByColumnAndRow($metaData["COD_TRE"], $i)->getValue());//$dateInsc);            
             
-            $em->persist($entity);  
+            $em->merge($entity);  
             $em->flush();           
         }
         
@@ -186,6 +189,8 @@ class ImportController extends Controller
         
         for ($i=2; $i <= $highestRow; $i++) { 
             $entity = new ElementPedagogi();
+
+            //$elem = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());
             
             $entity->setCode($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());
             $entity->setNature($sheet->getCellByColumnAndRow($metaData["COD_NEL"], $i)->getValue());
@@ -196,8 +201,9 @@ class ImportController extends Controller
             $entity->setLicAr($sheet->getCellByColumnAndRow($metaData["LIC_ELP_ARB"], $i)->getValue());                        
             $entity->setCreatedAt($this->date($sheet->getCellByColumnAndRow($metaData["DAT_CRE_ELP"], $i)->getValue()));
             $updateDat = $sheet->getCellByColumnAndRow($metaData["DAT_MOD_ELP"], $i)->getValue();
-            if($updateDat != null)$entity->setUpdatedAt($this->date($sheet->getCellByColumnAndRow($metaData["DAT_MOD_ELP"], $i)->getValue()));
-            $em->persist($entity);  
+            if($updateDat != null)$entity->setUpdatedAt($this->date($sheet->getCellByColumnAndRow($metaData["DAT_MOD_ELP"], $i)->getValue()));            
+            //if($elem) $em->persist($elem);
+            $em->merge($entity);  
             $em->flush();           
         }
                 

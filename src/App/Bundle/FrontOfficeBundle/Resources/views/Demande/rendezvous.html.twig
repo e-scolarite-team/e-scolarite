@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-{% extends "::layout.html.twig" %}
 
-{% block title %} Rendez-Vous {% endblock %}   
-
-=======
 {% extends "::frontend.html.twig" %}
 
 {% block title %} Rendez-Vous {% endblock %}   
@@ -28,7 +23,6 @@
 </li>
 {% endblock %}
 
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
 {% block content %}
 <div class="col-md-12">
           <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate">
@@ -51,11 +45,8 @@
               </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
                 {% for etatdemande in etatdemandes %}  
-=======
-                {% for etatdemande in demandes %}  
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
+
                 <tr>
                     <td>{{ etatdemande.demande.id }}</td>
                     <td>{{ etatdemande.demande.typeDemande.libelle }}</td>
