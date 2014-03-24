@@ -74,7 +74,7 @@ class ChangementController extends Controller {
                 ->set('e.admin', '?2')
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Rejeter')
-                ->setParameter(2, 1)
+                ->setParameter(2, $admin)
                 ->setParameter(3, $demande);
 
                 $test = $qq->getQuery()->getResult();
@@ -103,7 +103,7 @@ class ChangementController extends Controller {
                 ->set('e.admin', '?2')
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Valider')
-                ->setParameter(2, 1)
+                ->setParameter(2, $admin)
                 ->setParameter(3, $demande);
 
                 $test = $qq->getQuery()->getResult();
