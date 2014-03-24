@@ -62,4 +62,17 @@ class EtudiantRepository extends EntityRepository
 	{
 		return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
 	}
+        /*
+        public function findOneByCne($cne)
+        {
+           
+         $qb = $this->createQueryBuilder('e')
+                    ->where('e.cne= :cne')
+                    ->setParameter('cne', $cne);
+          return $qb->getQuery()
+                    ->getResult();
+
+        }
+         * 
+         */
 }

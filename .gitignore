@@ -4,5 +4,9 @@ app/cache/*
 app/logs/*
 app/config/parameters.yml
 vendor
+<<<<<<< HEAD
+/nbproject/private/
+=======
 /nbproject/private/
 web/uploads/exchange/
+>>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97

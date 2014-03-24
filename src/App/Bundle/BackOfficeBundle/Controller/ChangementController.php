@@ -23,8 +23,13 @@ class ChangementController extends Controller {
     
     
     public function listedemandechangementAction() {
+
+
+    	
         
             $em = $this->getDoctrine()->getEntityManager();
+            
+            $admin = $this->getUser();
             
             $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
             $typedemande = $repTypeDemande->findOneByCode('CM');
@@ -48,9 +53,7 @@ class ChangementController extends Controller {
     
     public function traiterdemandechangementAction($id) {
           $em = $this->getDoctrine()->getEntityManager();
-          
-          $repAdmin = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Admin');
-          $admin = $repAdmin->findOneById(1);
+          $admin = $this->getUser();
           
           $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
           $demande = $repDemande->findOneById($id);
@@ -74,7 +77,7 @@ class ChangementController extends Controller {
                 ->set('e.admin', '?2')
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Rejeter')
-                ->setParameter(2, 1)
+                ->setParameter(2, $admin)
                 ->setParameter(3, $demande);
 
                 $test = $qq->getQuery()->getResult();
@@ -103,7 +106,7 @@ class ChangementController extends Controller {
                 ->set('e.admin', '?2')
                 ->where($qq->expr()->eq('e.demande', '?3'))
                 ->setParameter(1, 'Valider')
-                ->setParameter(2, 1)
+                ->setParameter(2, $admin)
                 ->setParameter(3, $demande);
 
                 $test = $qq->getQuery()->getResult();
