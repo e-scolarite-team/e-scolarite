@@ -23,6 +23,8 @@ class DemandeController extends Controller {
     
     
     public function listedemandeAction() {
+      
+        $admin = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
                 
         $td = $em->createQueryBuilder();
@@ -54,8 +56,7 @@ class DemandeController extends Controller {
         
           $em = $this->getDoctrine()->getEntityManager();
           
-          $repAdmin = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Admin');
-          $admin = $repAdmin->findOneById(1);
+          $admin = $this->getUser();
           
           $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
           $demande = $repDemande->findOneById($id);
