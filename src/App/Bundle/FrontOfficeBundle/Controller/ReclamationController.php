@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Bundle\BackOfficeBundle\Entity\Reclamation;
+use App\Bundle\BackOfficeBundle\Entity\Etudiant;
 use App\Bundle\FrontOfficeBundle\Form\ReclamationFormType;
 
 class ReclamationController extends Controller
@@ -17,13 +18,11 @@ class ReclamationController extends Controller
      */
     public function indexAction()
     {
-        //$em = $this->getDoctrine()->getManager();
-
-        //$entities = $em->getRepository('AppBackOfficeBundle:Etudiant')->find($this->getUser()->getId());
-
+        
         return $this->render('AppFrontOfficeBundle:Reclamation:index.html.twig', array(
             'entities' => $this->getUser()->getReclamations(),
         ));
+
     }
 
     public function envoyerAction(Request $request){

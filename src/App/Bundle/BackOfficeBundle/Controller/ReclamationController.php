@@ -65,8 +65,8 @@ class ReclamationController extends Controller
             $entity->setConsultedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
-
-            $entity->setAdmin($em->getRepository("AppBackOfficeBundle:Admin")->find($this->getUser()->getId()));
+            //return new Response(var_dump($this->getUser()));
+            $entity->setAdmin($this->getUser());
             
             $notBlank = new Assert\NotBlank();
 

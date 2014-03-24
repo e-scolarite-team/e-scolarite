@@ -1,11 +1,18 @@
 {% extends '::frontend.html.twig' %}
+
+{% block title %}Reclamation{% endblock %}
+
+{% block pageTitle %}
+    <i class="fa fa-home"></i>
+    Reclamation
+
+{% endblock %}
+
 {% block breadcrumb %}
   <li><a href="{{ path('listerReclamationEtud') }}">Reclamation</a></li>
           <li class="active">Envoyer</li>
 
-
 {% endblock %}
-{% block title %}Reclamation{% endblock %}
 
 {% block mainMenu %}
 <li class="nav-parent  active nav-active">
