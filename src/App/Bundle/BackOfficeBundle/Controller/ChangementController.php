@@ -23,8 +23,12 @@ class ChangementController extends Controller {
     
     
     public function listedemandechangementAction() {
+    	
+    	
         
             $em = $this->getDoctrine()->getEntityManager();
+            
+            $admin = $this->getUser();
             
             $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
             $typedemande = $repTypeDemande->findOneByCode('CM');
@@ -49,8 +53,7 @@ class ChangementController extends Controller {
     public function traiterdemandechangementAction($id) {
           $em = $this->getDoctrine()->getEntityManager();
           
-          $repAdmin = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Admin');
-          $admin = $repAdmin->findOneById(1);
+          $admin = $this->getUser();
           
           $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
           $demande = $repDemande->findOneById($id);
