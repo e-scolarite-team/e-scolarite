@@ -25,3 +25,7 @@ AppBackOfficeBundle_notification-admin:
 AppFrontOfficeBundle_notification-etudiant:
         resource: "@AppFrontOfficeBundle/Resources/config/routing/notificationetudiant.yml"
         prefix:   /front-office/notification-etudiant
+        
+AppFrontOfficeBundle_module_libre:
+        resource: "@AppFrontOfficeBundle/Resources/config/routing/Modulelibre.yml"
+        prefix:   /module-libre

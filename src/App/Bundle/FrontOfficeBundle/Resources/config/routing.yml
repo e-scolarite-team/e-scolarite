@@ -1,8 +1,7 @@
 app_front_office_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: AppFrontOfficeBundle:Default:index }
-    
-    
+       
 rendezvous:
     pattern:  /demande/rendezvous
     defaults: { _controller: AppFrontOfficeBundle:Demande:rendezvous }
