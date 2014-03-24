@@ -19,8 +19,8 @@ class ChangementController extends Controller {
     public function changerAction(){
         
         $em = $this->getDoctrine()->getEntityManager();
-        $repEtudiant = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Etudiant');
-        $etudiant = $repEtudiant->findOneById(4);
+        $etudiant = $this->getUser();
+
         
         $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
         $typedemande = $repTypeDemande->findOneByCode('CM');
