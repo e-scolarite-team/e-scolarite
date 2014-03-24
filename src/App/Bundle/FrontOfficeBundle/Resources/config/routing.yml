@@ -28,6 +28,10 @@ showReclamationEtud:
     pattern: /{id}/showReclamation
     defaults: { _controller: AppFrontOfficeBundle:Reclamation:show }
 
+showDemandeEtud:
+    pattern: /demande/{id}/show
+    defaults: { _controller: AppFrontOfficeBundle:Demande:show }
+
 front_login:
     pattern: /login
     defaults: { _controller: AppFrontOfficeBundle:SecurityPointAccess:login }
