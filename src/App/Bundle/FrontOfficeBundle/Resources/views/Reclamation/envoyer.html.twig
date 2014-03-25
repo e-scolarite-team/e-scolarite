@@ -56,6 +56,15 @@
               {% endfor %}
             </div>
             {% endif %}
+
+            {% if message != "" %}
+            <div class="error" style="display:block;padding : 25px 50px;">
+              
+              <label class="error">{{ message }}</label>
+              
+            </div>
+            {% endif %}
+
             <div class="form-group">
               <label class="col-sm-3 control-label" for="{{ form.objet.vars.id }}">Objet <span class="asterisk">*</span> :</label>
               <div class="col-sm-6">

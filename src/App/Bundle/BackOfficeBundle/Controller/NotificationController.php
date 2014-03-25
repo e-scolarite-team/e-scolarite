@@ -120,7 +120,8 @@ public function todemandeAction($id){
         $reclamation->setNotified(1);
         $em->persist($reclamation);
         $em->flush();
-
-       return $this->redirect($this->generateUrl('listerReclamation'));
+        $id = trim($id);
+        return $this->redirect($this->get('router')->generate('repondreReclamation',array('id' => $id)));
+       //return $this->redirect($this->generateUrl('listerReclamation'));
     }
 }

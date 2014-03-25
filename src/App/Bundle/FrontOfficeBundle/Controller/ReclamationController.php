@@ -26,12 +26,14 @@ class ReclamationController extends Controller
     }
 
     public function envoyerAction(Request $request){
-    
-    	$entity = new Reclamation();
-    	
-    	$errors = array();
-    	$em = $this->getDoctrine()->getManager();
+
+        $etudiant = $this->getUser();
+
+        $message = "";
         
+    	$entity = new Reclamation();            	    
+
+    	$em = $this->getDoctrine()->getManager();        
         
         $form = $this->createForm(new ReclamationFormType(),$entity);
         
@@ -43,11 +45,35 @@ class ReclamationController extends Controller
             
             $translator  = $this->get('translator');
             
-            $entity->setEtudiant($this->getUser());
-            //$entity->setEtudiant($em->getRepository("AppBackOfficeBundle:Etudiant")->find($this->getUser()->getId()));
+            $entity->setEtudiant($etudiant);
+
+            $d =  (new \DateTime())->format('Y-m-d');
+                    $year = substr($d, 0, 4);
+                    $month = substr($d, 5, 2);
+                    if($month == "09" || $month == "10" || $month == "11" || $month == "12"){
+                               $debut =  $year . "-09-01 00:00:00"; 
+                               $date_debut = new \DateTime($debut);
+                               $fin = ($year + 1) . "-08-30 00:00:00";
+                               $date_fin  = new \DateTime($fin);                      
+                    } elseif ($month == "01" || $month == "02" || $month == "03" || $month == "04" || $month == "05" || $month == "06" || $month == "07" || $month == "08"){
+                                $debut =  ($year - 1) . "-09-01 00:00:00"; 
+                                $date_debut = new \DateTime($debut);
+                                $fin = $year . "-08-30 00:00:00";
+                                $date_fin = new \DateTime($fin);
+                    }
+
+        $i = 0;
+
+        foreach ($etudiant->getReclamations() as $rec) {
+            
+            if($rec->getCreatedAt() < $date_fin && $rec->getCreatedAt() > $date_debut) $i++;
+
+        }
+        
+           //if(count($errList)>0)return new Response(var_dump(count($errList)));
             $errList = $validator->validate($form);        
-                       
-            if(count($errList) > 0){
+        if($i >= $entity->getTypeReclamation()->getMaxAutorise()) $message = "Vous avez atteindre le nombre de reclamation autorise";
+            if(count($errList) > 0 || $message != ""){
             
                 foreach ($errList as $err) 
                    $errors[] =  $translator->trans($err->getMessage(), array(), 'messages', 'fr_FR');
@@ -64,6 +90,7 @@ class ReclamationController extends Controller
             //'entity' => $entity,
             'form'   => $form->createView(),
             'errors' => $errors,
+            'message'=> $message,
         ));
     }   
 

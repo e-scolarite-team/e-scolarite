@@ -1,4 +1,9 @@
 {% extends "::layout.html.twig" %}
+{% block pageTitle %}
+    <i class="fa fa-home"></i>
+    Reclamation
+
+{% endblock %}
 {% block breadcrumb %}
   <li><a href="{{ path('listerReclamation') }}">Liste des reclamations</a></li>
           <li class="active">Repondre</li>

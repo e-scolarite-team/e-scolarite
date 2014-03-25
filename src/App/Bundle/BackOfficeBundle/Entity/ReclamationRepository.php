@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReclamationRepository extends EntityRepository
 {
+	public function estAutorise(){
+
+		$qb = $em->createQueryBuilder()->select('d')
+                    ->from('App\Bundle\BackOfficeBundle\Entity\Reclamation', 'r')
+                    ->where($qb->expr()->eq('r.etudiant', '?1'))
+                    ->andWhere($qb->expr()->eq('d.typeReclamation', '?2'))
+                    ->andWhere($qb->expr()->neq('d.status', '?5'))
+                    ->andWhere($qb->expr()->between('d.createdAt', '?3', '?4'))
+                    ->setParameter(1, $etudiant)
+                    ->setParameter(2, $typedemande)
+                    ->setParameter(3, $date_debut)
+                    ->setParameter(4, $date_fin)
+                    ->setParameter(5, 2);
+                    $Demandes = $qb->getQuery()->getResult();
+
+	}
 }
