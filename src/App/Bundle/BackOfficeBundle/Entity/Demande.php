@@ -307,4 +307,8 @@ class Demande
     public function getEtatDemandes(){
         return $this->etatDemandes->toArray();
     }
+
+    public function getLastEtatDemande(){
+        return $this->etatDemandes[0];
+    }
 }

@@ -107,21 +107,24 @@ public function todemandeAction($id){
         $em->persist($demande);
         $em->flush();
 
+        $route = 'traiterdemande';
+        if($demande->getTypeDemande()->getCode() == 'CM')
+            $route = 'traiterdemandechangement';
 
-        return $this->redirect($this->generateUrl('listedemande'));
+        return $this->redirect($this->generateUrl($route,array('id' =>  trim($id) )));
     }
 
 
     
     public function toreclamationAction($id){
+
         $em = $this->getDoctrine()->getManager();
 
         $reclamation = $em->getRepository('AppBackOfficeBundle:Reclamation')->find($id);
         $reclamation->setNotified(1);
         $em->persist($reclamation);
         $em->flush();
-        $id = trim($id);
-        return $this->redirect($this->get('router')->generate('repondreReclamation',array('id' => $id)));
-       //return $this->redirect($this->generateUrl('listerReclamation'));
+
+       return $this->redirect($this->generateUrl('repondreReclamation',array('id' => trim($id))));
     }
 }

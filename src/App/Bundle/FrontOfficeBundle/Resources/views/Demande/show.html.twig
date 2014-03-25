@@ -1,0 +1,71 @@
+{% extends '::frontend.html.twig' %}
+{% block breadcrumb %}
+  
+{% endblock %}
+
+{% block title %}Information sur la demande{% endblock %}
+{% block pageTitle %}<i class="fa fa-home"></i> Demande <span> reponce changement de module</span>{% endblock %}
+
+{% block mainMenu %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamationEtud') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+      <a href="{{ path('reclamationEtud') }}"><i class="fa fa-caret-right"></i>Envoyer une reclamation</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent   active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children" style="display: block;">
+    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Consulter les rendez-vous</a></li>
+    <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demande une piece</a></li>
+    <li><a href="{{ path('changer') }}"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
+  </ul>
+</li>
+{% endblock %}
+
+{% block content %}
+	<div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-btns">
+        <a href="#" class="panel-close">&times;</a>
+        <a href="#" class="minimize">&minus;</a>
+      </div>
+      <h4 class="panel-title">Demande</h4>
+      
+      
+      
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+          <form class="form" action="data">
+            <div class="form-group">
+               <label class="col-sm-3 control-label">Demande :</label>
+               <div class="col-sm-6">
+               <LAbel class="form-control" >{{entity.typeDemande.libelle}}</labael>
+            </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Description :</label>
+              <div class="col-sm-6">
+              <LAbel class="form-control" >{{entity.remarque }}</labael>
+            </div>
+            </div>
+            
+            <div class="form-group">
+                       <label class="col-sm-3 control-label">Reponce :</label>
+            <div class="col-sm-6">
+               <textarea readonly="readonly" class="form-control" >{{entity.lastEtatDemande.etat}}</textarea>
+               </br>
+              
+            </div>
+            </div>
+          </form>
+        </div>
+        </div>
+        </div>
+      </div><!-- tab-content -->
+      
+{% endblock %}
