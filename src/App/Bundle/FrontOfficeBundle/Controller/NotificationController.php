@@ -153,7 +153,7 @@ class NotificationController extends Controller{
         $em->persist($demande);
         $em->flush();
         $id = trim($id);
-        return $this->redirect($this->get('router')->generate('showReclamationEtud',array('id' => $id)));
+        return $this->redirect($this->get('router')->generate('showDemandeEtud',array('id' => $id)));
         // redirection vers la demande selectionnée  
     }
 

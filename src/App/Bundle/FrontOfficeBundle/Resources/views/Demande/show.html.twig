@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block title %}Information sur la demande{% endblock %}
+{% block pageTitle %}<i class="fa fa-home"></i> Demande <span> reponce changement de module</span>{% endblock %}
 
 {% block mainMenu %}
 <li class="nav-parent">
@@ -40,35 +41,27 @@
         <div class="tab-pane active" id="tab1">
           <form class="form" action="data">
             <div class="form-group">
-               <label class="col-sm-3 control-label">Objet :</label>
+               <label class="col-sm-3 control-label">Demande :</label>
                <div class="col-sm-6">
-               <LAbel class="form-control" >{{entity.objet}}</labael>
+               <LAbel class="form-control" >{{entity.typeDemande.libelle}}</labael>
             </div>
             </div>
             
             <div class="form-group">
-              <label class="col-sm-3 control-label">Types :</label>
+              <label class="col-sm-3 control-label">Description :</label>
               <div class="col-sm-6">
-              <LAbel class="form-control" >{{entity.typeReclamation.libelle}}</labael>
+              <LAbel class="form-control" >{{entity.remarque }}</labael>
             </div>
             </div>
             
             <div class="form-group">
-                       <label class="col-sm-3 control-label">Description :</label>
+                       <label class="col-sm-3 control-label">Reponce :</label>
             <div class="col-sm-6">
-               <textarea readonly="readonly" class="form-control" >{{entity.description}}</textarea>
+               <textarea readonly="readonly" class="form-control" >{{entity.lastEtatDemande.etat}}</textarea>
                </br>
               
             </div>
             </div>
-            {% if entity.reponse != null %}
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Reponse  :</label>
-              <div class="col-sm-6">
-              <textarea readonly="readonly" class="form-control" >{{entity.reponse}}</textarea>
-            </div>
-            </div>
-            {% endif %}
           </form>
         </div>
         </div>
