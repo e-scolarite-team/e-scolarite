@@ -21,15 +21,15 @@ class NotificationController extends Controller{
     public function notificationetudiantAction(){
         $em = $this->getDoctrine()->getManager();
         
-        $cne= $this->getUser()->getCne();// recuperer cne d'un etudiant
+        $cne= $this->getUser()->getCne();
         $e = $em->getRepository('AppBackOfficeBundle:Etudiant')->findByCne($cne);
         $qb = $em->createQueryBuilder();
+        
         $qb->select('d')
         ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
         ->where($qb->expr()->eq('d.etudiant', '?1'))
         ->andWhere($qb->expr()->eq('d.notified', '?2'))
         ->andWhere($qb->expr()->neq('d.status', '?3'))
-
         ->setParameter(1, $e[0])
         ->setParameter(2, 0)
         ->setParameter(3, 0);
@@ -41,7 +41,6 @@ class NotificationController extends Controller{
         ->where($qb->expr()->eq('r.etudiant', '?1'))
         ->andWhere($qb->expr()->eq('r.notified', '?2'))
         ->andWhere($qb->expr()->neq('r.status', '?3'))
-
         ->setParameter(1, $e[0])
         ->setParameter(2, 0)
         ->setParameter(3, 0);
@@ -54,6 +53,7 @@ class NotificationController extends Controller{
             ));
     }
 
+    
     
     public function vudemandeAction($id){
         $em = $this->getDoctrine()->getManager();
@@ -96,12 +96,12 @@ class NotificationController extends Controller{
         ->where($qb->expr()->eq('d.etudiant', '?1'))
         ->andWhere($qb->expr()->eq('d.notified', '?2'))
         ->andWhere($qb->expr()->neq('d.status', '?3'))
-
         ->setParameter(1, $e[0])
         ->setParameter(2, 0)
         ->setParameter(3, 0);
 
         $entities1 = $qb->getQuery()->getResult();
+        
         $demandes=array();$demandes["id"]=array(); $demandes["type"]=array(); $demandes["createdAt"]=array();
        
         for($i=0 ; $i<count($entities1); $i++) {
@@ -116,12 +116,12 @@ class NotificationController extends Controller{
         ->where($qb->expr()->eq('r.etudiant', '?1'))
         ->andWhere($qb->expr()->eq('r.notified', '?2'))
         ->andWhere($qb->expr()->neq('r.status', '?3'))
-
         ->setParameter(1, $e[0])
         ->setParameter(2, 0)
         ->setParameter(3, 0);
 
         $entities2  = $qb->getQuery()->getResult();
+        
         $reclamations=array(); $reclamations["id"]=array(); $reclamations["type"]=array();$reclamations["createdAt"]=array();
         
         for($i=0 ; $i<count($entities2); $i++){
@@ -131,6 +131,7 @@ class NotificationController extends Controller{
 
         }
 
+        
         
         
         $json = json_encode(array(
@@ -154,7 +155,6 @@ class NotificationController extends Controller{
         $em->flush();
         $id = trim($id);
         return $this->redirect($this->get('router')->generate('showDemandeEtud',array('id' => $id)));
-        // redirection vers la demande selectionnée  
     }
 
 
@@ -168,7 +168,6 @@ class NotificationController extends Controller{
         $em->flush();
         $id = trim($id);
         return $this->redirect($this->get('router')->generate('showReclamationEtud',array('id' => $id)));
-       // redirection vers la reclamation selectionnée    
     }
 
 }
