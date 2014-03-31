@@ -1,5 +1,14 @@
 {% extends "::layout.html.twig" %}
+{% block pageTitle %}
+    <i class="fa fa-file-text"></i>
+    Demande
 
+{% endblock %}
+{% block breadcrumb %}
+  <li><a href="{{ path('notification-admin') }}">Notification</a></li>
+          <li class="active">lister les demandes</li>
+
+{% endblock %}
 {% block title %} Demandes Reçus {% endblock %}
 
 {% block mainMenu %}

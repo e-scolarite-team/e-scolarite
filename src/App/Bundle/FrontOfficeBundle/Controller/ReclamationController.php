@@ -47,7 +47,8 @@ class ReclamationController extends Controller
             
             $entity->setEtudiant($etudiant);
 
-            $d =  (new \DateTime())->format('Y-m-d');
+            $d =  new \DateTime();
+            $d->format('Y-m-d');
                     $year = substr($d, 0, 4);
                     $month = substr($d, 5, 2);
                     if($month == "09" || $month == "10" || $month == "11" || $month == "12"){
