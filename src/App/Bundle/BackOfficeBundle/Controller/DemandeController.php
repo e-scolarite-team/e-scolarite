@@ -86,7 +86,17 @@ class DemandeController extends Controller {
                 return $this->redirect($this->get('router')->generate('listedemande', array()));
                 
          } elseif ($this->get('request')->request->get('fixer') == 'fixer'){
-             
+          //  return new Response(strlen($this->get('request')->request->get('rv')));
+               //isDateEmpty($this->get('request')->request->get('rv'),$id);
+                if(strlen( $this->get('request')->request->get('rv'))==0){
+         $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
+        $demande = $repDemande->findOneById($id);
+        $error=1;
+              
+        return $this->render( 
+                                'AppBackOfficeBundle:Demande:traiterdemande.html.twig', 
+                                 array( 'demande' => $demande ,'error'=>$error)
+                            );}
                 $justification = $this->get('request')->request->get('justification');
                 $s = $this->get('request')->request->get('rv');
                 /*03/25/2014
@@ -128,13 +138,26 @@ class DemandeController extends Controller {
          
         $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
         $demande = $repDemande->findOneById($id);
+        $error=0;
+       
               
         return $this->render( 
                                 'AppBackOfficeBundle:Demande:traiterdemande.html.twig', 
-                                 array( 'demande' => $demande )
+                                 array( 'demande' => $demande ,'error'=>$error)
                             );
     }
-
-
+    private function isDateEmpty($str,$id)
+    {
+        if(strlen($str)==0){
+         $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
+        $demande = $repDemande->findOneById($id);
+        $error=null;
+              
+        return $this->render( 
+                                'AppBackOfficeBundle:Demande:traiterdemande.html.twig', 
+                                 array( 'demande' => $demande ,'error'=>'')
+                            );}
+        return new Response($str);
+    }
 }
 

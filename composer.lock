@@ -1225,13 +1225,11 @@
         },
         {
             "name": "symfony/icu",
-
             "version": "v1.0.1",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-
                 "reference": "fdba214b1e087c149843bde976263c53ac10c975"
             },
             "dist": {
@@ -1270,7 +1268,7 @@
                 "icu",
                 "intl"
             ],
-
+            
             "time": "2013-10-04 09:12:07"
         },
         {

@@ -72,7 +72,7 @@ class ReclamationController extends Controller
 
             $notBlank->message = 'errors.reclamation.reponse';   
 
-            $reponse = $form->getData()["reponse"];            
+            $reponse = $form->getData("reponse");            
 
             $validator = $this->get("validator");
             

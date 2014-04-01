@@ -1,8 +1,12 @@
 {% extends "::frontend.html.twig" %}
+{% block breadcrumb %}
+  <li>changement de module</li>
+          <li class="active">changer</li>
 
+{% endblock %}
 {% block mainMenu %}
 <li class="nav-parent">
-  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <a href="#"><i class="fa fa-maxcdn"></i> <span>Reclamations</span></a>
   <ul class="children">
     <li>
       <a href="{{ path('listerReclamationEtud') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
