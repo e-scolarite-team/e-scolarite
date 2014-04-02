@@ -59,7 +59,7 @@ class AdminController extends Controller
                 
                 $enFactory = $this->get('security.encoder_factory');
         
-                $entity->addRole('SOUS_ADMIN');
+                $entity->addRole('ROLE_ADMIN');
         
                 $encoder = $enFactory->getEncoder($entity);
         

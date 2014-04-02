@@ -5,20 +5,14 @@ namespace App\Bundle\BackOfficeBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- */
-class Configuration implements ConfigurationInterface
+
+class EscolariteConfiguration implements ConfigurationInterface
 {
-    /**
-     * {@inheritDoc}
-     */
+    
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('app_back_office');
+        $rootNode = $treeBuilder->root('escolarite');
         $rootNode->children()
                         ->scalarNode("date_format")
                             ->defaultValue("d-m-Y")
@@ -45,7 +39,7 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode("status")
                                     ->isRequired()
                                     ->validate()
-                                        ->ifNotInArray(array("activate","deativate"))
+                                        ->ifNotInArray(array("activate","deactivate"))
                                             ->thenInvalid('auto_demands_answers.status value "%s" not correct in config.yml')
                                         ->end()
                                 ->end()

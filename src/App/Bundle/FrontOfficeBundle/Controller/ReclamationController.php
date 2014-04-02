@@ -73,7 +73,7 @@ class ReclamationController extends Controller
         
            //if(count($errList)>0)return new Response(var_dump(count($errList)));
             $errList = $validator->validate($form);        
-        if($i >= $entity->getTypeReclamation()->getMaxAutorise()) $message = "Vous avez atteindre le nombre de reclamation autorise";
+        if($i >= $entity->getTypeReclamation()->getMaxAutorise()) $message = "Vous avez atteint le nombre de reclamation autorise";
             if(count($errList) > 0 || $message != ""){
             
                 foreach ($errList as $err) 
