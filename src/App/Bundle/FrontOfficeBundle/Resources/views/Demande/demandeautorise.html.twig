@@ -1,6 +1,15 @@
 
 {% extends "::frontend.html.twig" %}
+{% block pageTitle %}
+    <i class="fa fa-file-text"></i>
+    Demande
 
+{% endblock %}
+{% block breadcrumb %}
+  <li><a href="{{ path('rendezvous') }}">Rendezvous</a></li>
+          <li class="active">Demander une piece</li>
+
+{% endblock %}
 {% block title %} Demandes Reçus {% endblock %}
 
 {% block mainMenu %}
@@ -31,7 +40,7 @@
                 <div class="panel-btns">
                   <a href="#" class="minimize">−</a>
                 </div>
-                <h4 class="panel-title">Demande Accepter</h4>
+                <h4 class="panel-title">Demande Envoyer</h4>
                 <p>Votre demande  ({{ demande.typeDemande.libelle }}) est accepteé. </p>
               </div>
               
