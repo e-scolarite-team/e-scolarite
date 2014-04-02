@@ -10,8 +10,6 @@ class DefaultController extends Controller
 {
     public function indexAction($name){
 		
-		//$this->container->getParameter("date_format")
-		return new Response($this->container->get("esconfig_manager")->getAutoAnswersStatus());
-        return $this->render('AppBackOfficeBundle:Default:index.html.twig', array('name' => var_dump($this->container)));
+        return $this->render('AppBackOfficeBundle:Default:index.html.twig', array('name' => $name));
     }
 }

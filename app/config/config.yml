@@ -77,12 +77,3 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-app_back_office:
-    date_format: "d-m-Y"
-    datetime_format: "d-m-Y\TH:i"
-    current_semester: 2
-    current_academic_year: 2014
-    activate_service: yes
-    auto_demands_answers:
-        status: activate
-        amount: 10

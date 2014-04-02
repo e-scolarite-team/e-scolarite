@@ -7,6 +7,7 @@ services:
         arguments: []
         calls:
             - [setContainer,[@service_container]]
+            - [parseConfiguration,[]]
 
 
 #    app_back_office.example:
