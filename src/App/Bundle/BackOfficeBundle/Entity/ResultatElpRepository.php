@@ -15,4 +15,37 @@ class ResultatElpRepository extends EntityRepository
 	public function deleteAll(){
 		$this->getEntityManager()->createQuery("delete from AppBackOfficeBundle:ResultatElp")->execute();
 	}
+        
+          public function tousResultatEtudiant($id){
+            
+            $qb = $this->_em->createQuery
+                    (
+                    'SELECT DISTINCT r,etud,elt FROM AppBackOfficeBundle:ResultatElp r '
+                    . 'JOIN r.etudiant etud '
+                    . 'JOIN r.element elt '
+                    . 'WHERE etud.id=:id '
+                    . 'AND r.status is not null '
+                    . "AND elt.nature LIKE 'SM%' "
+                    . 'HAVING r.annee =(SELECT max(res.annee)FROM AppBackOfficeBundle:ResultatElp res '
+                                          . 'JOIN res.etudiant etu '
+                                          . 'JOIN res.element eltm '
+                                          . 'WHERE etu.id=:id '
+                                          . 'AND res.status is not null '
+                                          . "AND eltm.nature LIKE 'SM%' "
+                                          .')'
+                    )
+                    ->setParameter('id',$id);
+              $resultat =$qb->getResult();
+            
+            return $resultat ;
+                 
+        }
+        public function statusSemestre($resultat){
+            
+              /* $qb = $this->_em->createQuery
+                    (
+                    'SELECT DISTINCT r FROM AppBackOfficeBundle:ResultatElp r '
+                    . 'JOIN r.element elt ')*/
+                       
+        }
 }

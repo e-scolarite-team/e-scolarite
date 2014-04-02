@@ -1,3 +1,3 @@
 module_libre:
-    pattern:  /module5
-    defaults: { _controller: "AppFrontOfficeBundle:ModuleLibre:module5" }
+    pattern: /verifAuto
+    defaults: { _controller: AppFrontOfficeBundle:ModuleLibre:module5 }
