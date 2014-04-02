@@ -22,6 +22,15 @@ class AppBackOfficeExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        // set default value
+        $container->setParameter("app_back_office.date_format",$config['date_format']);
+        $container->setParameter("app_back_office.datetime_format",$config['datetime_format']);
+        $container->setParameter("app_back_office.current_semester",$config['current_semester']);
+        $container->setParameter("app_back_office.current_academic_year",$config['current_academic_year']);
+        $container->setParameter("app_back_office.activate_service",$config['activate_service']);
+        $container->setParameter("app_back_office.auto_demands_answers.status",$config['auto_demands_answers']['status']);
+        $container->setParameter("app_back_office.auto_demands_answers.amount",$config['auto_demands_answers']['amount']);
+        
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
