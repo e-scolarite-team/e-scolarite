@@ -154,19 +154,21 @@ class ImportController extends Controller
         
         for ($i=2; $i <= $highestRow; $i++) { 
             $entity = new ResultatElp();
-
-            $etudiant = $em->getRepository("AppBackOfficeBundle:Etudiant")->find($sheet->getCellByColumnAndRow($metaData["COD_IND"], $i)->getValue());
-            $element = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());            
-            $entity->setEtudiant($etudiant);            
-            $entity->setElement($element);            
-            $entity->setAnnee($sheet->getCellByColumnAndRow($metaData["COD_ANU"], $i)->getValue());
-            $entity->setSession($sheet->getCellByColumnAndRow($metaData["COD_SES"], $i)->getValue());
-            $entity->setAdmissibilite($sheet->getCellByColumnAndRow($metaData["COD_ADM"], $i)->getValue());
-            $entity->setNote($sheet->getCellByColumnAndRow($metaData["NOT_ELP"], $i)->getValue());
-            $entity->setStatus($sheet->getCellByColumnAndRow($metaData["COD_TRE"], $i)->getValue());//$dateInsc);            
             
-            $em->merge($entity);  
-            $em->flush();           
+
+                $etudiant = $em->getRepository("AppBackOfficeBundle:Etudiant")->find($sheet->getCellByColumnAndRow($metaData["COD_IND"], $i)->getValue());
+                $element = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());            
+                $entity->setEtudiant($etudiant);            
+                $entity->setElement($element);            
+                $entity->setAnnee($sheet->getCellByColumnAndRow($metaData["COD_ANU"], $i)->getValue());
+                $entity->setSession($sheet->getCellByColumnAndRow($metaData["COD_SES"], $i)->getValue());
+                $entity->setAdmissibilite($sheet->getCellByColumnAndRow($metaData["COD_ADM"], $i)->getValue());
+                $entity->setNote($sheet->getCellByColumnAndRow($metaData["NOT_ELP"], $i)->getValue());
+                $entity->setStatus($sheet->getCellByColumnAndRow($metaData["COD_TRE"], $i)->getValue());//$dateInsc);            
+                
+                $em->merge($entity);  
+                $em->flush(); 
+            
         }
         
                 

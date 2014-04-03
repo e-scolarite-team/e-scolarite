@@ -44,3 +44,4 @@ admin_login_check:
     
 admin_logout:
     path:   /logout
+

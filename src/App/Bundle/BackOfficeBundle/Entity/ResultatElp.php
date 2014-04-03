@@ -62,7 +62,7 @@ class ResultatElp
      * @var float
      * 
      * 
-     * @ORM\Column(name="note", type="float")
+     * @ORM\Column(name="note", type="float", nullable=true)
      */
     protected $note;
 
@@ -70,7 +70,7 @@ class ResultatElp
      * @var string
      * 
      * 
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     protected $status;
 

@@ -41,3 +41,7 @@ front_login_check:
     
 front_logout:
     path:   /logout
+
+ElemRef:
+    pattern: /Elemref
+    defaults: { _controller: AppFrontOfficeBundle:Elemref:index }
