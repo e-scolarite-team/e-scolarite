@@ -12,6 +12,8 @@ use App\Bundle\BackOfficeBundle\Entity\EtatDemande;
 use App\Bundle\BackOfficeBundle\Entity\Admin;
 use App\Bundle\BackOfficeBundle\Form\Data\ImportData;
 use App\Bundle\BackOfficeBundle\Form\ImportFormType;
+/*use App\Bundle\BackOfficeBundle;*/
+
 
 
 class DemandeController extends Controller {
@@ -72,6 +74,10 @@ class DemandeController extends Controller {
 
                     $demande->setStatus(0);
                     $demande->setNotified(0);
+                    //--------------------------------------------
+                    $this->setDateReponceOfDemande($demande);
+                    
+                    //--------------------------------------------
                     $em->persist($demande);
                     $etatDemandes = new EtatDemande();
                     $etatDemandes->setEtat("en attente");
@@ -98,6 +104,39 @@ class DemandeController extends Controller {
                             );
     }
 
+public function setDateReponceOfDemande($demande)
+{     
+   if(true){
+        $lastDate=$this->getDoctrine()->getEntityManager()->getRepository("AppBackOfficeBundle:Demande")->getLastReponceDate();
+        $date=$this->getAppropriateDate($lastDate);
+        $demande->setDateReponce($date);
+        $demande->setNotified(1);
+        $demande->setStatus(2);
+                    }
+
+}
+   
+ private function getAppropriateDate($date)
+   {
+    $appropriateDate=\date_create($date);
+    $test=$this->isFull($date);
+    if($test){
+        return (\date("D",strtotime($date))=='Fri')?\date_add($appropriateDate, date_interval_create_from_date_string('3 days')):\date_add($appropriateDate, date_interval_create_from_date_string('1 days'));
+    }
+    return $appropriateDate;
+  }
+  private function isFull($date)
+  {
+      $day=date("D",strtotime($date));  
+      $amountAnswers=($day=='Fri')?$this->container->get("esconfig_manager")->getAutoAnswersAmount()*3:$this->container->get("esconfig_manager")->getAutoAnswersAmount();
+      $demandesCount=count($this->getDoctrine()->getEntityManager()->getRepository("AppBackOfficeBundle:Demande")->findByDateReponce(\date_create($date)));
+        
+      if($demandesCount>=$amountAnswers){
+        return true;
+      }
+      return false;
+      //$this->container->get("esconfig_manager")->getAutoAnswersAmount();
+  }
 
     // -------------------------------------------------------------------
     
@@ -162,6 +201,7 @@ class DemandeController extends Controller {
             
                    ));
     }
+    
 
 }
 
