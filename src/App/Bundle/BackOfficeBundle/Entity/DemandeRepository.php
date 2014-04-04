@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class DemandeRepository extends EntityRepository
 {
+	public function getLastReponceDate()
+	{
+		
+		$qb = $this->createQueryBuilder("d")->
+		select ("max(d.dateReponce)")->getQuery();
+		$resutls=$qb->getResult();
+		return $resutls[0][1];
+	}
+	
 }
