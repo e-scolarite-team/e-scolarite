@@ -106,16 +106,25 @@ class DemandeController extends Controller {
 
 public function setDateReponceOfDemande($demande)
 {     
-   if(true){
+   if($this->container->get("esconfig_manager")->getAutoAnswersStatus()=='activate'){
         $lastDate=$this->getDoctrine()->getEntityManager()->getRepository("AppBackOfficeBundle:Demande")->getLastReponceDate();
+        $dateInterval=(\date_create($lastDate)->diff(new \DateTime('2014-04-02')));
+        $dateIntervalStr=$dateInterval->format('%R%a');
+        $lastDate=(\substr($dateIntervalStr,0,1)=="+" ||\substr($dateIntervalStr,1,1)=="0" )?$this->getFirstDayButNotInWeekEnd():$lastDate;
         $date=$this->getAppropriateDate($lastDate);
-        $demande->setDateReponce($date);
-        $demande->setNotified(1);
-        $demande->setStatus(2);
-                    }
+        $demande->setDateReponce(\date_create($lastDate));
+        }
 
 }
-   
+public function getFirstDayButNotInWeekEnd()
+{
+    $lastDate=\date_add(\date_create(\date("Y-m-d")), date_interval_create_from_date_string('1 days'));
+   $lastDate=($lastDate->format("D")=='Sat')?\date_add($lastDate, date_interval_create_from_date_string('2 days')):$lastDate;
+    $lastDate=($lastDate->format("D")=='Sun')?\date_add($lastDate, date_interval_create_from_date_string('1 days')):$lastDate;
+    return $lastDate->format("Y-m-d");
+    
+
+}
  private function getAppropriateDate($date)
    {
     $appropriateDate=\date_create($date);
@@ -128,7 +137,7 @@ public function setDateReponceOfDemande($demande)
   private function isFull($date)
   {
       $day=date("D",strtotime($date));  
-      $amountAnswers=($day=='Fri')?$this->container->get("esconfig_manager")->getAutoAnswersAmount()*3:$this->container->get("esconfig_manager")->getAutoAnswersAmount();
+      $amountAnswers=($day=='Fri')?3:1;
       $demandesCount=count($this->getDoctrine()->getEntityManager()->getRepository("AppBackOfficeBundle:Demande")->findByDateReponce(\date_create($date)));
         
       if($demandesCount>=$amountAnswers){
@@ -201,7 +210,7 @@ public function setDateReponceOfDemande($demande)
             
                    ));
     }
-    
+   
 
 }
 
