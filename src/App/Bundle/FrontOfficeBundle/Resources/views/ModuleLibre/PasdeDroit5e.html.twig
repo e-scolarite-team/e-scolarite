@@ -18,18 +18,8 @@
 
           </div>
            <div class="panel-body">
-               <table>
-                   <p> Les Module que vous allez é étudier au Semestre {{semestre}}  sont :  </p>
-               {% for  module in moduleSemestre %}
-                   <tr><td>{{module.code}}--{{module.lic}}</td></tr>
-               {% endfor %}
-               <form method='post' action='controlerDemande'>
-                   <tr><td> <p>Vous pouvez demander le module libre {{ moduleLibre.code}}--{{ moduleLibre.lic}}!!<input type='checkbox' name='codeModuleLibre' value={{ moduleLibre.code}}/> </p></td></tr> 
-                   <tr><td><input type='submit' value='valider'/></td></tr>
-               </form>
-               </table>
-               
-               
+              <h4 class="text-danger"> Aucun module libre  ne peut etre accordé pour cette Session !!!</h4>
+                  <p>veillez attendre la section suivante  ou contacter l'administration !!</p>
 
 
 
@@ -41,6 +31,4 @@
   </div>
   
 {% endblock %}
-
-
 
