@@ -15,4 +15,70 @@ class ResultatElpRepository extends EntityRepository
 	public function deleteAll(){
 		$this->getEntityManager()->createQuery("delete from AppBackOfficeBundle:ResultatElp")->execute();
 	}
+//////////cette fonction retourne un objet permettant de savoir le semestre max contenu dans la base de données
+        //pour  un étudiant donné          
+          public function tousResultatEtudiant($id){
+            
+            $qb = $this->_em->createQuery
+                    (
+                    'SELECT DISTINCT r,etud,elt FROM AppBackOfficeBundle:ResultatElp r '
+                    . 'JOIN r.etudiant etud '
+                    . 'JOIN r.element elt '
+                    . 'WHERE etud.id=:id '
+                    . 'AND r.status is not null '
+                    . "AND elt.nature LIKE 'SM%' "
+                    . 'HAVING r.annee =(SELECT max(res.annee)FROM AppBackOfficeBundle:ResultatElp res '
+                                          . 'JOIN res.etudiant etu '
+                                          . 'JOIN res.element eltm '
+                                          . 'WHERE etu.id=:id '
+                                          . 'AND res.status is not null '
+                                          . "AND eltm.nature LIKE 'SM%' "
+                                          .') '
+                    . 'AND elt.code =(SELECT max(el.code)FROM AppBackOfficeBundle:ResultatElp re '
+                                          . 'JOIN re.etudiant etudi '
+                                          . 'JOIN re.element el '
+                                          . 'WHERE etudi.id=:id '
+                                          . 'AND re.status is not null '
+                                          . "AND el.nature LIKE 'SM%' "
+                                          .')'
+                    )
+                    ->setParameter('id',$id);
+              $resultat =$qb->getSingleResult();
+            
+            return $resultat ;
+                 
+        }
+        
+   // ModuleDeSemestre permet de determiner les modules Validé et Non Validé pour un étudiant      
+      public function ModuleDeSemestreEtud($semestre,$id){//module d'1 semestre pour 1 etudiant avec toutes les info
+               
+          $qb = $this->_em->createQuery
+                          (
+                    'SELECT DISTINCT resul,elt FROM AppBackOfficeBundle:ResultatElp resul '
+                  . 'JOIN resul.etudiant etud '
+                  . 'jOIN resul.element elt '
+                  . 'WHERE etud.id=:id '
+                  . "AND resul.status in ('V','NV') "
+                  . 'AND elt.parent=:sem '
+                      )
+                  ->setParameter('id', $id)
+                  ->setParameter('sem', $semestre)
+                       ;
+               return $qb->getResult() ;
+                    
+        }
+        
+        public function ModuleDeSemestre($semestre){ //determiner les modules d'un semestre quelquonque
+             $qb = $this->_em->createQuery
+                          (
+                    'SELECT DISTINCT elp FROM AppBackOfficeBundle:ElementPedagogi elp '
+                    . 'JOIN elp.parent pa   '
+                    . 'WHERE pa.code =:par '
+                    . "AND elp.nature LIKE 'MOD%' "
+                    )
+                     ->setParameter('par', $semestre)
+                            ;
+             return $qb->getResult();
+            
+        }
 }

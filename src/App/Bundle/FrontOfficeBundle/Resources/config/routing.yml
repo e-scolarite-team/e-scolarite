@@ -41,3 +41,9 @@ front_login_check:
     
 front_logout:
     path:   /logout
+
+test:
+    path: /test
+    defaults: { _controller: AppFrontOfficeBundle:Demande:test }
+
+
