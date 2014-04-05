@@ -46,7 +46,7 @@ admin_login_check:
 admin_logout:
     path:   /logout
 
-test:
-    path: /test
-    defaults: { _controller: AppBackOfficeBundle:Demande:test }
+reponceAuto:
+    path: /reponceAuto
+    defaults: { _controller: AppBackOfficeBundle:Demande:reponceAuto }
 

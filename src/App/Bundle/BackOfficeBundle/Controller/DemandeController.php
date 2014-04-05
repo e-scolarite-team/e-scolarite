@@ -63,7 +63,7 @@ public function getFirstDayButNotInWeekEnd()
     public function listedemandeAction() {
 
         $date="none";
-        if($this->container->get("esconfig_manager")->getAutoAnswersStatus()=='activate'){
+        if($this->container->get("esconfig_manager")->getAutoAnswersStatus()=='deactivate'){
          $date=$this->getAutoDateReponce();
          $date=$date->format("d-m-Y");
         }
@@ -198,7 +198,7 @@ private function getDemandeToList()
                 );
         }
        
-        public function testAction()
+        public function reponceAutoAction()
         {
             // $date=new \DateTime('now');
 

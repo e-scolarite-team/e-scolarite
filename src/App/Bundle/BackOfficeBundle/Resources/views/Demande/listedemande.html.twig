@@ -58,7 +58,7 @@
                 </div>
                 <h4 class="panel-title">Liste des demandes Reçus</h4>
                 {% if date != "none" and autoReponceAmount != 0  %}
-               <form id="basicForm" action="{{ path( 'test' ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
+               <form id="basicForm" action="{{ path( 'reponceAuto' ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
                 <div class="form-group">
                   <div class="col-sm-5">
                  <p>Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!, ou vous pouvez fixez les {{autoReponceAmount}} premiere demandes dans cette date en cliquant sur le boutton Fixer</p>
