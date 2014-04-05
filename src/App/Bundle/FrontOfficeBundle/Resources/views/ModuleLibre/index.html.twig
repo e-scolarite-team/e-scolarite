@@ -1,0 +1,91 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Etudiant|Module libre{{parent()}}{% endblock %}
+{% block pageTitle %}
+        <i class="fa fa-home"></i> Module Libre
+{% endblock %}
+{% block breadcrumb %}
+   
+
+{% endblock %}
+{% block content %}
+
+
+<div class="col-md-12">
+ <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate"> 
+  <div class="panel panel-default"> 
+    <div class="panel-heading">
+     <div class="panel-btns">
+      <a href="#" class="minimize">−</a>
+       </div>
+        <h4 class="panel-title">Vous trouverez ci-dessous le module libre (5eme module) que vous pouvez choisir.</h4>
+         
+          </div>
+           <div class="panel-body">
+                    <form class="form">
+                      
+                      <div class="form-group">
+                      <label class="col-sm-4">les Modules normaux  au Semestre {{semestre}}  sont :</label>
+                      <p></p>  
+                      <table>
+                          {% for  module in moduleSemestre %}
+                          <tr><td>{{module.code}}&nbsp;&nbsp;</td><td>{{module.lib}}</td></tr>
+                          {% endfor %}    
+                          <tr><td>{{nonValider.element.code}}&nbsp;&nbsp;</td><td>{{nonValider.element.lib}}</td></tr>   
+                       </table>
+                      </div>
+                      
+                     
+                      <div class="form-group">
+                        <label class="col-sm-4">Module libre</label>
+                        <div class="col-sm-4">
+                          <div class="rdio rdio-success">
+                        <input name="radio" value="4" id="radioSuccess" type="radio">
+                        <label for="radioSuccess">{{ moduleLibre.code}}--{{ moduleLibre.lic}}</label>
+                      </div>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="col-sm-4"></label>
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <center><a href="#" class="btn btn-primary">Envoyer une reclamation</a></center>
+                        </div>
+                      </div>
+            
+                    </form>
+
+
+
+</div><!-- panel-body --> <div class="panel-footer"> <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> </div> </div> </div><!-- panel --> </form> </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				  
+ </div>
+
+{% endblock %}

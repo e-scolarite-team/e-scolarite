@@ -36,12 +36,12 @@ class ModuleLibreController extends Controller
                     }
                       
              if( $status=='V'){//le status du semestre
-             return $this->render('AppFrontOfficeBundle:ModuleLibre:PasdeDroit5e.html.twig');
+             return $this->render('AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig');
              }
              elseif ($session==1){//la session 1
                   if(!in_array($semestre, array(1,3,5))){
                       
-                  return $this->render('AppFrontOfficeBundle:ModuleLibre:PasdeDroit5e.html.twig');
+                  return $this->render('AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig');
                  }
                  else{//le semestre est 1,3 ou 5
        /// ici on va regarder l'etat des modules de ce semestre //
@@ -142,12 +142,14 @@ class ModuleLibreController extends Controller
                  if($ModSemLibre[$j]->getCode()!=$libre->getCode()){
                     $sementreARendre[]=$ModSemLibre[$j];
                  }
+            
               }
                 
               
-              return $this->render('AppFrontOfficeBundle:ModuleLibre:Module5.html.twig', 
+              return $this->render('AppFrontOfficeBundle:ModuleLibre:index.html.twig', 
                       array('moduleLibre'=>$libre,
                              'semestre'=>$semprochain,
+                             'nonValider'=> $ModNonvalide1,
                              'moduleSemestre'=>$sementreARendre));
                                 /* foreach($ModSemLibre as $libre){
                                     echo $libre->getCode().'<br/>';
@@ -155,7 +157,7 @@ class ModuleLibreController extends Controller
                           }
                     }
                     else{
-                        echo'5ème module Refusé !!!<br/>'; 
+             return $this->render('AppFrontOfficeBundle:ModuleLibre:refuser5em.html.twig');  
                     }
                     
                  }
@@ -167,7 +169,7 @@ class ModuleLibreController extends Controller
                  
                  if(!in_array($semestre, array(2,4,6))){
                      
-                  return $this->render('AppFrontOfficeBundle:ModuleLibre:PasdeDroit5e.html.twig');
+                  return $this->render('AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig');
                  
                   
                  }
@@ -272,11 +274,13 @@ class ModuleLibreController extends Controller
                  if($ModSemLibre[$j]->getCode()!=$libre->getCode()){
                     $sementreARendre[]=$ModSemLibre[$j];
                  }
+               
               }
                 
               
-              return $this->render('AppFrontOfficeBundle:ModuleLibre:Module5.html.twig', 
+              return $this->render('AppFrontOfficeBundle:ModuleLibre:index.html.twig', 
                       array('moduleLibre'=>$libre,
+                            'nonValider'=> $ModNonvalide2,
                              'semestre'=> $semprochain2,
                              'moduleSemestre'=>$sementreARendre));
                                 /* foreach($ModSemLibre as $libre){
@@ -285,17 +289,20 @@ class ModuleLibreController extends Controller
                           }
                     }
                     else{
-                  return $this->render('AppFrontOfficeBundle:ModuleLibre:RefuserMod5.html.twig');  
+                  return $this->render('AppFrontOfficeBundle:ModuleLibre:refuser5em.html.twig');  
                     }
                     
                  }
                }    
              }                  
      
-           /*  public function EnvoyerDemande(Request $request){
+         public function EnvoyerDemande(Request $request){
                   if ($request->isMethod('POST')) 
                   {
                   $dem5Mode =new Demande();
+                  $form=$this->createFormBuilder($dem5Mode);
+                  
+                  $form->add($etu, $type);
                   $dem5Mode->setEtudiant($this->getUser())
                           ->setTypeDemande('5M')
                           ;
@@ -308,7 +315,7 @@ class ModuleLibreController extends Controller
                 return $this->render('AppFrontOfficeBundle:ModuleLibre:DmdEnvoyer.html.twig');  
                  
                   }
-             }*/
+             }
 }
 
 

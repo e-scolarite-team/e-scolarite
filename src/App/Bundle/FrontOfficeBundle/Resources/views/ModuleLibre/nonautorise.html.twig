@@ -1,12 +1,16 @@
 {% extends '::layout.html.twig' %}
 {% block title %}Etudiant|Module libre{{parent()}}{% endblock %}
+{% block pageTitle %}
+        <i class="fa fa-home"></i> Module Libre
+{% endblock %}
 {% block breadcrumb %}
-<li class="active">Hello</li>
-{%endblock%}
+
+{% endblock %}
+
 
 {% block content %}
-  
-  <div class="panel panel-default">
+    
+	<div class="panel panel-default">
   
 <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate"> 
   <div class="panel panel-default"> 
@@ -14,22 +18,16 @@
      <div class="panel-btns">
       <a href="#" class="minimize">−</a>
        </div>
-        <h4 class="panel-title">Module libre (5eme module)</h4>
+
 
           </div>
            <div class="panel-body">
-              <h4 class="text-danger"> Vous ne remplisez les conditions pour obtenir le Module Libre !!!</h4>
-                  <p>veillez  contacter l'administration pour plus d'explication !!</p>
+              <h4 class="text-danger">Vous n'êtes pas autorisé à demander un module libre !!!</h4>
 
 
-
-
-</div><!-- panel-body --> <div class="panel-footer"> <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> </div> </div> </div><!-- panel --> 
-</form> </div>
+</div><!-- panel-body --> <div class="panel-footer"> <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> </div> </div> </div><!-- panel --> </form> </div>
 
 				
   </div>
-  
+	
 {% endblock %}
-
-
