@@ -46,7 +46,13 @@ admin_login_check:
 admin_logout:
     path:   /logout
 
+
 reponceAuto:
     path: /reponceAuto
     defaults: { _controller: AppBackOfficeBundle:Demande:reponceAuto }
+    
+config_page:
+    pattern: /configuration/config/e-scolarite
+    defaults: {_controller: AppBackOfficeBundle:Config:config}
+
 

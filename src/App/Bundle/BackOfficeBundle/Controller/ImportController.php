@@ -23,7 +23,6 @@ class ImportController extends Controller
 
     public function updateAction(Request $request)
     {
-        //abdellatif karroum todo here
         $errors = array();
         
         $form  = $this->createForm(new ImportFormType(),new ImportData());

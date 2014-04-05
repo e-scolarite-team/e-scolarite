@@ -1,0 +1,126 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Configuration de l'application{% endblock %}
+
+{% block mainMenu %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+<li class="nav-parent  active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
+  <ul class="children" style="display: block;">
+    <li>
+      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
+    </li>
+    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
+    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
+    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
+    <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
+    <li><a href="{{ path('admin') }}"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
+    <li><a href="{{ path('admin_new') }}"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
+  </ul>
+</li>
+{% else %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
+    </li>
+    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
+  </ul>
+</li>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="panel panel-dark panel-alt widget-quick-status-post">
+  {{ form_start(form,{'attr' : {'class' : 'form-horizontal form-bordered', 'novalidate':'novalidate'}})}}
+  <div class="panel-heading">
+    <div class="panel-btns">
+      <a href="#" class="minimize">&minus;</a>
+    </div><!-- panel-btns -->
+    <h3 class="panel-title">Configuration du systeme</h3>
+  </div>
+  <div class="panel-body">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="active"><a href="#config-demande" data-toggle="tab"><i class="fa fa-pencil"></i> <strong>Automatisation de la demande</strong></a></li>
+      <li><a href="#config-univ" data-toggle="tab"><i class="fa fa-picture-o"></i> <strong>Informations universitaire</strong></a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="config-demande" class="tab-pane active">
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="{{ form.autoDemandeState.vars.id }}">Etat :</label>
+          <div class="col-sm-6">
+            {{ form_widget(form.autoDemandeState)}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="{{ form.autoDemandeAmount.vars.id }}">Nombre Demande a traite :</label>
+          <div class="col-sm-6">
+            {{ form_widget(form.autoDemandeAmount,{'attr' : {'class' : 'form-control'}})}}
+          </div>
+        </div>
+      </div>
+      <div id="config-univ" class="tab-pane">
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="{{ form.infoDateFormat.vars.id }}">Format du date :</label>
+          <div class="col-sm-6">
+            {{ form_widget(form.infoDateFormat,{'attr' : {'class' : 'form-control'}})}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="{{ form.infoDatetimeFormat.vars.id }}">Format du date/heur :</label>
+          <div class="col-sm-6">
+            {{ form_widget(form.infoDatetimeFormat,{'attr' : {'class' : 'form-control'}})}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="{{ form.infoSemester.vars.id }}">Semesttre courante :</label>
+          <div class="col-sm-6">
+            {{ form_widget(form.infoSemester,{'attr' : {'class' : 'form-control'}})}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="{{ form.infoYear.vars.id }}">Annee universitaire :</label>
+          <div class="col-sm-6">
+            {{ form_widget(form.infoYear,{'attr' : {'class' : 'form-control'}})}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label" for="{{ form.infoServiceState.vars.id }}">Etat des services :</label>
+          <div class="col-sm-6">
+            {{ form_widget(form.infoServiceState)}}
+          </div>
+        </div>
+      </div>
+      {% if errors %}
+      <div class="error" style="display:block;padding : 25px 50px;">
+        {% for err in errors %}
+        <label class="error">{{ err | raw }}</label>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <center></center>
+    </div><!-- tab-content -->
+    
+  </div><!-- panel-body -->
+  <div class="panel-footer">
+   <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <center><button type="submit" class="btn btn-primary">Valide</button></center>
+    </div>
+   </div>
+  </div><!-- panel-footer -->
+  {{ form_end(form)}}
+</div><!-- panel -->
+{% endblock %}
