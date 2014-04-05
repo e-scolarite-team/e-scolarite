@@ -63,7 +63,7 @@ public function getFirstDayButNotInWeekEnd()
     public function listedemandeAction() {
 
         $date="none";
-        if($this->container->get("esconfig_manager")->getAutoAnswersStatus()=='deactivate'){
+        if($this->container->get("esconfig_manager")->getAutoAnswersStatus()=='activate'){
          $date=$this->getAutoDateReponce();
          $date=$date->format("d-m-Y");
         }
