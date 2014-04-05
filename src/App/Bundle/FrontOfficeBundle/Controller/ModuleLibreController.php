@@ -296,26 +296,73 @@ class ModuleLibreController extends Controller
                }    
              }                  
      
-         public function EnvoyerDemande(Request $request){
-                  if ($request->isMethod('POST')) 
-                  {
-                  $dem5Mode =new Demande();
-                  $form=$this->createFormBuilder($dem5Mode);
-                  
-                  $form->add($etu, $type);
-                  $dem5Mode->setEtudiant($this->getUser())
-                          ->setTypeDemande('5M')
-                          ;
-                    
-                    $em = $this->getDoctrine()->getManager();                
-                    $em->persist($dem5Mode);
-                
-                     $em->flush();
+          public function EnvoyerDemandeModule5Action() {
 
-                return $this->render('AppFrontOfficeBundle:ModuleLibre:DmdEnvoyer.html.twig');  
-                 
-                  }
-             }
+           $em = $this->getDoctrine()->getEntityManager();
+        
+            if($this->get('request')->request->get('modulelibre') != ""){           
+
+                    $em = $this->getDoctrine()->getEntityManager();
+
+
+                    $etudiant = $this->getUser();
+                    
+                    $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
+                    $typedemande = $repTypeDemande->findOneByCode('5M');
+
+                    $demande = new Demande();
+                    $demande->setEtudiant($etudiant);
+                    $demande->setTypeDemande($typedemande);
+                    $demande->setCreatedAt(new \DateTime());
+                    $d =  $demande->getCreatedAt()->format('Y-m-d');
+                    $year = substr($d, 0, 4);
+                    $month = substr($d, 5, 2);
+                    if($month == "09" || $month == "10" || $month == "11" || $month == "12"){
+                               $debut =  $year . "-09-01 00:00:00"; 
+                               $date_debut = new \DateTime($debut);
+                               $fin = ($year + 1) . "-08-30 00:00:00";
+                               $date_fin  = new \DateTime($fin);                      
+                    } elseif ($month == "01" || $month == "02" || $month == "03" || $month == "04" || $month == "05" || $month == "06" || $month == "07" || $month == "08"){
+                                $debut =  ($year - 1) . "-09-01 00:00:00"; 
+                                $date_debut = new \DateTime($debut);
+                                $fin = $year . "-08-30 00:00:00";
+                                $date_fin = new \DateTime($fin);
+                    }
+
+                    $qb = $em->createQueryBuilder();
+                    $qb->select('d')
+                    ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
+                    ->where($qb->expr()->eq('d.etudiant', '?1'))
+                    ->andWhere($qb->expr()->eq('d.typeDemande', '?2'))
+                    ->andWhere($qb->expr()->neq('d.status', '?5'))
+                    ->andWhere($qb->expr()->between('d.createdAt', '?3', '?4'))
+                    ->setParameter(1, $etudiant)
+                    ->setParameter(2, $typedemande)
+                    ->setParameter(3, $date_debut)
+                    ->setParameter(4, $date_fin)
+                    ->setParameter(5, 2);
+                    $Demandes = $qb->getQuery()->getResult();
+
+                   
+
+                    $demande->setStatus(0);
+                    $demande->setNotified(0);
+                
+                    $em->persist($demande);
+                    $etatDemandes = new EtatDemande();
+                    $etatDemandes->setEtat("en attente");
+                    $etatDemandes->setDemande($demande);
+                    $em->persist($etatDemandes);
+                    $em->flush();
+
+                     return $this->render(
+                                        'AppFrontOfficeBundle:ModuleLibre:DmdEnvoyer.html.twig'
+                                        
+                                    );
+            }       
+        
+           
+    }
 }
 
 
