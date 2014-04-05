@@ -44,3 +44,8 @@ admin_login_check:
     
 admin_logout:
     path:   /logout
+
+config_page:
+    pattern: /configuration/config/e-scolarite
+    defaults: {_controller: AppBackOfficeBundle:Config:config}
+
