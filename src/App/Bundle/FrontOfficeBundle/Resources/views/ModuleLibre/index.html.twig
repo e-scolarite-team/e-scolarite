@@ -12,7 +12,6 @@
 
 
 <div class="col-md-12">
- <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate"> 
   <div class="panel panel-default"> 
     <div class="panel-heading">
      <div class="panel-btns">
@@ -22,7 +21,7 @@
          
           </div>
            <div class="panel-body">
-                    <form class="form">
+                    <form action="{{ path('demande-module-libre') }}" class="form-horizontal" novalidate="novalidate" method="POST">
                       
                       <div class="form-group">
                       <label class="col-sm-4">les Modules normaux  au Semestre {{semestre}}  sont :</label>
@@ -39,9 +38,9 @@
                       <div class="form-group">
                         <label class="col-sm-4">Module libre</label>
                         <div class="col-sm-4">
-                          <div class="rdio rdio-success">
-                        <input name="radio" value="4" id="radioSuccess" type="radio">
-                        <label for="radioSuccess">{{ moduleLibre.code}}--{{ moduleLibre.lic}}</label>
+                          <div >
+                        <input type="checkbox" name="modulelibre" value="{{ moduleLibre.code}}" >
+                        {{ moduleLibre.code}}--{{ moduleLibre.lic}}
                       </div>
                         </div>
                       </div>
@@ -49,7 +48,8 @@
                       <div class="form-group">
                         <label class="col-sm-4"></label>
                         <div class="col-sm-6 col-sm-offset-3">
-                          <center><a href="#" class="btn btn-primary">Envoyer une reclamation</a></center>
+                          <center>   <button class="btn btn-primary">Envoyer</button></center>
+
                         </div>
                       </div>
             
@@ -57,7 +57,7 @@
 
 
 
-</div><!-- panel-body --> <div class="panel-footer"> <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> </div> </div> </div><!-- panel --> </form> </div>
+</div><!-- panel-body --> <div class="panel-footer"> <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> </div> </div> </div><!-- panel --> </div>
 
 
 
@@ -85,7 +85,7 @@
 
 
 
-				  
+          
  </div>
 
 {% endblock %}
