@@ -15,7 +15,7 @@ class ConfigData
 
 	/**
 	* @var integer
-	* @Validator\GreaterThanOrEqual(value=1, message="errors.config.auto.amount")
+	* @Validator\GreaterThanOrEqual(value="1", message="errors.config.auto.amount")
 	*/
 	protected $autoDemandeAmount;
 
@@ -44,7 +44,7 @@ class ConfigData
 
 	/**
 	* @var integer
-	* @Validator\GreaterThanOrEqual(value=2012, message="errors.config.info.yearuniv")
+	* @Validator\GreaterThanOrEqual(value="2012", message="errors.config.info.yearuniv")
 	*/
 	protected $infoYear;
 
