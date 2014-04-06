@@ -9,6 +9,7 @@ use Symfony\Component\Yaml\Parser;
 use App\Bundle\BackOfficeBundle\DependencyInjection\EscolariteConfiguration;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Config\Definition\Processor;
+use App\Bundle\BackOfficeBundle\Form\Data\ConfigData;
 
 /**
 * 
@@ -232,4 +233,41 @@ class ConfigManagerService extends ContainerAware
         $rootDir =  $this->container->getParameter('kernel.root_dir');
         return $rootDir.DIRECTORY_SEPARATOR."config".DIRECTORY_SEPARATOR."escolarite_config.yml";
     }
+
+    /**
+     * @access public
+     *
+     * @param  ConfigData
+     * 
+     * 
+     */
+    public function fill(ConfigData &$data){
+        $data->setAutoDemandeState(($this->getAutoAnswersStatus() == 'activate' ? true : false));
+        $data->setAutoDemandeAmount($this->getAutoAnswersAmount());
+        $data->setInfoYear($this->getCurrentAcademicYear());
+        $data->setInfoSemester($this->getCurrentSemester());
+        $data->setInfoDateFormat($this->getDateFormat());
+        $data->setInfoDatetimeFormat($this->getDateTimeFormat());
+        $data->setInfoServiceState(($this->getServiceStatus() == 'yes' ? true : false));
+    }
+
+
+    /**
+     * @access public
+     *
+     * @param  ConfigData
+     * 
+     * 
+     */
+    public function fillFrom(ConfigData $data){
+        $this->setAutoAnswersStatus(($data->getAutoDemandeState() ? 'activate' : 'deactivate'));
+        $this->setAutoAnswersAmount((int)$data->getAutoDemandeAmount());
+        $this->setCurrentAcademicYear((int)$data->getInfoYear());
+        $this->setCurrentSemester((int)$data->getInfoSemester());
+        $this->setDateFormat($data->getInfoDateFormat());
+        $this->setDateTimeFormat($data->getInfoDatetimeFormat());
+        $this->setServiceStatus(($data->getInfoServiceState() ? 'yes' : 'no'));
+    }
+
+
 }

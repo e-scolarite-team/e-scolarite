@@ -1,0 +1,54 @@
+{% extends "::frontend.html.twig" %}
+
+{% block title %}Etudiant|Module libre{{parent()}}{% endblock %}
+{% block pageTitle %}
+        <i class="fa fa-home"></i> Module Libre
+{% endblock %}
+{% block breadcrumb %}
+
+
+{% endblock %}
+
+{% block mainMenu %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamationEtud') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+      <a href="{{ path('reclamationEtud') }}"><i class="fa fa-caret-right"></i>Envoyer une reclamation</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent  active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children" style="display: block;">
+    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Consulter les rendez-vous</a></li>
+    <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demande une piece</a></li>
+    <li><a href="{{ path('changer') }}"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
+  </ul>
+</li>
+{% endblock %}
+
+{% block content %}
+    
+	<div class="panel panel-default">
+  
+<form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate"> 
+  <div class="panel panel-default"> 
+    <div class="panel-heading">
+     <div class="panel-btns">
+      <a href="#" class="minimize">−</a>
+       </div>
+
+
+          </div>
+           <div class="panel-body">
+              <h4 class="text-danger">Vous n'êtes pas autorisé à demander un module libre !!!</h4>
+
+
+</div><!-- panel-body --> <div class="panel-footer"> <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> </div> </div> </div><!-- panel --> </form> </div>
+
+				
+  </div>
+	
+{% endblock %}

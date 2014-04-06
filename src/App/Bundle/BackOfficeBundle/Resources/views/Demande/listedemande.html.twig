@@ -50,14 +50,37 @@
 
 {% block content %}
 <div class="col-md-12">
-          <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate">
+          
           <div class="panel panel-default">
               <div class="panel-heading">
                 <div class="panel-btns">
                   <a href="#" class="minimize">−</a>
                 </div>
                 <h4 class="panel-title">Liste des demandes Reçus</h4>
-                <p>Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!</p>
+                {% if date != "none" and autoReponceAmount != 0  %}
+               <form id="basicForm" action="{{ path( 'reponceAuto' ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
+                <div class="form-group">
+                  <div class="col-sm-5">
+                 <p>Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!, ou vous pouvez fixez les {{autoReponceAmount}} premiere demandes dans cette date en cliquant sur le boutton Fixer</p>
+                 </div>
+                 <div class="col-sm-3">
+                  <div class="input-group">
+
+                <input type="text" class="form-control" placeholder="dd-mm-yy" rea id="datepicker" name="rv" value="{{date}}">
+
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+              </div>
+                </div>
+                  <div class="col-sm-2">
+                      <button class="btn btn-primary" type="submit" name="fixer"  value="fixer" >Fixer</button>
+                      
+                  </div>
+                </div>
+                
+                </form>
+                {%  else %}
+                <p>Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!<p>
+                {% endif %}
               </div>
               <div class="panel-body" >
           <div class="table-responsive">
@@ -117,5 +140,12 @@
       jQuery(this).find('.table-action-hide a').animate({opacity: 0});
     });
     });
+    jQuery(document).ready(function(){
+      
+      // Date Picker
+
+        jQuery('#datepicker').datepicker({ dateFormat: "dd-mm-yy" });
+         
+      });
   </script>          
 {% endblock %}
