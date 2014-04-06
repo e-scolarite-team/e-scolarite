@@ -75,7 +75,7 @@ class DemandeController extends Controller {
                     $demande->setStatus(0);
                     $demande->setNotified(0);
                     //--------------------------------------------
-                    $this->setDateReponceOfDemande($demande);
+                    //$this->setDateReponceOfDemande($demande);
                     
                     //--------------------------------------------
                     $em->persist($demande);
@@ -106,13 +106,13 @@ class DemandeController extends Controller {
 
 public function setDateReponceOfDemande($demande)
 {     
-   if($this->container->get("esconfig_manager")->getAutoAnswersStatus()=='activate'){
+   if($this->container->get("esconfig_manager")->getAutoAnswersStatus()=='deactivate'){
         $lastDate=$this->getDoctrine()->getEntityManager()->getRepository("AppBackOfficeBundle:Demande")->getLastReponceDate();
-        $dateInterval=(\date_create($lastDate)->diff(new \DateTime('2014-04-02')));
+        $dateInterval=(\date_create($lastDate)->diff(new \DateTime('now')));
         $dateIntervalStr=$dateInterval->format('%R%a');
         $lastDate=(\substr($dateIntervalStr,0,1)=="+" ||\substr($dateIntervalStr,1,1)=="0" )?$this->getFirstDayButNotInWeekEnd():$lastDate;
         $date=$this->getAppropriateDate($lastDate);
-        $demande->setDateReponce(\date_create($lastDate));
+        $demande->setDateReponce($date);
         }
 
 }
@@ -137,7 +137,7 @@ public function getFirstDayButNotInWeekEnd()
   private function isFull($date)
   {
       $day=date("D",strtotime($date));  
-      $amountAnswers=($day=='Fri')?3:1;
+      $amountAnswers=($day=='Fri')?$this->container->get("esconfig_manager")->getAutoAnswersAmount()*3:$this->container->get("esconfig_manager")->getAutoAnswersAmount();
       $demandesCount=count($this->getDoctrine()->getEntityManager()->getRepository("AppBackOfficeBundle:Demande")->findByDateReponce(\date_create($date)));
         
       if($demandesCount>=$amountAnswers){

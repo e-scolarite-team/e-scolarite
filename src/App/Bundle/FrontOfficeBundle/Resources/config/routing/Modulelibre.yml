@@ -1,3 +1,7 @@
 module_libre:
     pattern: /verifAuto
     defaults: { _controller: AppFrontOfficeBundle:ModuleLibre:module5 }
+
+demande-module-libre:
+    pattern:  /demandemodulelibre
+    defaults: { _controller: AppFrontOfficeBundle:ModuleLibre:EnvoyerDemandeModule5 }

@@ -18,13 +18,71 @@ class DemandeController extends Controller {
 
     // --------------------------------------------------------------------
 
+public function getAutoDateReponce()
+{     
+        $lastDate=$this->getDoctrine()->getEntityManager()->getRepository("AppBackOfficeBundle:Demande")->getLastReponceDate();
+        $dateInterval=(\date_create($lastDate)->diff(new \DateTime('now')));
+        $dateIntervalStr=$dateInterval->format('%R%a');
+        $lastDate=(\substr($dateIntervalStr,0,1)=="+" ||\substr($dateIntervalStr,1,1)=="0" )?$this->getFirstDayButNotInWeekEnd():$lastDate;
+        $date=$this->getAppropriateDate($lastDate);
+        return $date;
+        
+
+}
+public function getFirstDayButNotInWeekEnd()
+{
+    $lastDate=\date_add(\date_create(\date("Y-m-d")), date_interval_create_from_date_string('1 days'));
+   $lastDate=($lastDate->format("D")=='Sat')?\date_add($lastDate, date_interval_create_from_date_string('2 days')):$lastDate;
+    $lastDate=($lastDate->format("D")=='Sun')?\date_add($lastDate, date_interval_create_from_date_string('1 days')):$lastDate;
+    return $lastDate->format("Y-m-d");
+    
+
+}
+ private function getAppropriateDate($date)
+   {
+    $appropriateDate=\date_create($date);
+    $test=$this->isFull($date);
+    if($test){
+        return (\date("D",strtotime($date))=='Fri')?\date_add($appropriateDate, date_interval_create_from_date_string('3 days')):\date_add($appropriateDate, date_interval_create_from_date_string('1 days'));
+    }
+    return $appropriateDate;
+  }
+  private function isFull($date)
+  {
+      $day=date("D",strtotime($date));  
+      //$amountAnswers=($day=='Fri')?$this->container->get("esconfig_manager")->getAutoAnswersAmount()*3:$this->container->get("esconfig_manager")->getAutoAnswersAmount();
+      $demandesCount=count($this->getDoctrine()->getEntityManager()->getRepository("AppBackOfficeBundle:Demande")->findByDateReponce(\date_create($date)));
+        
+      if($demandesCount){
+        return true;
+      }
+      return false;
+      //$this->container->get("esconfig_manager")->getAutoAnswersAmount();
+  }
 
     public function listedemandeAction() {
 
-        $admin = $this->getUser();
+        $date="none";
+        if($this->container->get("esconfig_manager")->getAutoAnswersStatus()=='activate'){
+         $date=$this->getAutoDateReponce();
+         $date=$date->format("d-m-Y");
+        }
+   
+        
+        $demandes = $this->getDemandeToList();
+        
+        return $this->render(
+            'AppBackOfficeBundle:Demande:listedemande.html.twig', 
+            array('demandes' => $demandes,"date"=>$date,"autoReponceAmount"=>($this->container->get("esconfig_manager")->getAutoAnswersAmount()>count($demandes))?count($demandes):$this->container->get("esconfig_manager")->getAutoAnswersAmount()
+            )
+            );
+    }
+    
+private function getDemandeToList()
+{ 
+     $admin = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
-
-        $td = $em->createQueryBuilder();
+    $td = $em->createQueryBuilder();
         $td->select('t')
         ->from('App\Bundle\BackOfficeBundle\Entity\TypeDemande', 't')
         ->Where($td->expr()->in('t.code', '?1'))
@@ -39,15 +97,8 @@ class DemandeController extends Controller {
         ->andWhere($qb->expr()->notIn('d.typeDemande', '?2'))
         ->setParameter(1, 0)
         ->setParameter(2, $typedemandes);
-        $demandes = $qb->getQuery()->getResult();
-        
-        return $this->render(
-            'AppBackOfficeBundle:Demande:listedemande.html.twig', 
-            array('demandes' => $demandes)
-            );
-    }
-    
-
+        return $qb->getQuery()->getResult();
+}
     
     public function traiterdemandeAction($id) {
 
@@ -84,6 +135,7 @@ class DemandeController extends Controller {
         $test = $qq->getQuery()->getResult();
 
         return $this->redirect($this->get('router')->generate('listedemande', array()));
+       
 
     } elseif ($this->get('request')->request->get('fixer') == 'fixer'){
           
@@ -146,7 +198,58 @@ class DemandeController extends Controller {
                 );
         }
        
-        
+        public function reponceAutoAction()
+        {
+            // $date=new \DateTime('now');
+
+            // $dateInterval=(\date_create("2014-04-01")->diff($date));
+            // $dateIntervalStr=$dateInterval->format('%R%a');
+            // return new Response($dateIntervalStr);     
+            //      ->set('d.status', '?1')
+                // ->set('d.updatedAt', '?3')
+                // ->set('d.dateReponce', '?4')
+
+                // ->set('d.notified', '?5')
+                // 
+                // ->setParameter(1, 1)
+                //
+                // ->setParameter(3, new \DateTime())
+                // ->setParameter(5, 0)
+                // ->setParameter(4, new \DateTime($rv));
+             $em = $this->getDoctrine()->getEntityManager();
+            $rv = \DateTime::createFromFormat('d-m-Y', $this->get('request')->request->get('rv'))->format('Y-m-d');
+           $demandeWithStatusZero=$em->getRepository("AppBackOfficeBundle:Demande")->findByStatus(0);
+           $lenght=($this->container->get("esconfig_manager")->getAutoAnswersAmount()>count($demandeWithStatusZero))?count($demandeWithStatusZero):$this->container->get("esconfig_manager")->getAutoAnswersAmount();
+            for($i=0;$i<$lenght;$i++){
+                $demandeWithStatusZero[$i]->setStatus(1);
+                $demandeWithStatusZero[$i]->setUpdatedAt(new \DateTime());
+                $demandeWithStatusZero[$i]->setDateReponce(\date_create($rv));
+                $demandeWithStatusZero[$i]->setNotified(0);
+                $em->persist($demandeWithStatusZero[$i]);
+                $em->flush();
+                $this->updateEtademande($demandeWithStatusZero[$i]);
+
+            }
+           //return new Response($demandeWithStatusZero[0]->getStatus());
+           // return \getType($rv);
+           return $this->redirect($this->generateUrl('listedemande'));
+         
+        }
+        public function updateEtademande($demande)
+        {  $em = $this->getDoctrine()->getEntityManager();
+
+            $admin=$this->getUser();
+            $qq = $em->createQueryBuilder();
+                $qq->update('App\Bundle\BackOfficeBundle\Entity\EtatDemande', 'e')
+                ->set('e.etat', '?1')
+                ->set('e.admin', '?2')
+                ->where($qq->expr()->eq('e.demande', '?3'))
+                ->setParameter(1, 'Traiter')
+                ->setParameter(2, $admin)
+                ->setParameter(3, $demande);
+
+            $qq->getQuery()->getResult();
+        }
 
     }
 

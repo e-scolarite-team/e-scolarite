@@ -52,6 +52,7 @@
 
 {% block content %}
 <div class="col-md-12">
+  
           <form id="basicForm" action="{{ path( 'traiterdemande', { id: demande.id } ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
           <div class="panel panel-default">
               <div class="panel-heading">
@@ -65,7 +66,7 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label"> CNE </label>
                   <div class="col-sm-9">
-                      <input type="text" name="cne" class="form-control"  readonly="true" required="" value="{{ demande.etudiant.cne }}" >
+                      <input type="text" name="cne" class="form-control"  readonly="true" required="" value="{{ demande.id }}" >
                   </div>
                 </div>
                 
@@ -103,7 +104,7 @@
                   <label class="col-sm-3 control-label"> Rendez-vous <span class="asterisk">*</span></label>
                  <div class="input-group">
 
-                <input type="text" class="form-control" placeholder="dd-mm-yy" id="datepicker" name="rv" >
+                <input type="text" class="form-control" placeholder="dd-mm-yy" rea id="datepicker" name="rv" value="{{demande.dateReponce|date("d-m-Y")}}">
 
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
               </div>
@@ -138,6 +139,7 @@
       // Date Picker
 
         jQuery('#datepicker').datepicker({ dateFormat: "dd-mm-yy" });
+         
       });
 
   </script>

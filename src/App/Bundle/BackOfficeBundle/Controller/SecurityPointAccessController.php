@@ -19,23 +19,25 @@ class SecurityPointAccessController extends Controller
     public function loginAction()
     {
 
-    	/****
-    	$enFactory = $this->get('security.encoder_factory');
+    	
+    	/*$enFactory = $this->get('security.encoder_factory');
 		
 		$admin = new Admin();
 		$admin->setEmail("fayssal@gmail.com")->setNom("fayssal")->setPrenom("fayssal");
+
 		$admin->addRole('ROLE_ADMIN');
 		
 		$encoder = $enFactory->getEncoder($admin);
-		
+
 		$admin->setPassword($encoder->encodePassword('fayssal',$admin->getSalt()));
+
 		
 		$em = $this->get("doctrine")->getEntityManager();
 		
 		$em->persist($admin);
 		
-		$em->flush();
-    	***/
+		$em->flush();*/
+    	
     	$request = $this->getRequest();
 		$session = $request->getSession();
 	
