@@ -93,13 +93,13 @@
       </ul>
       
       <div class="infosummary">
-        <h5 class="sidebartitle">Information sur le Compte</h5>    
+        <h5 class="sidebartitle">Informations sur le Compte</h5>    
         <ul>
             {% if is_granted('ROLE_SUPER_ADMIN') == false %}
             <li>
                 <div class="datainfo">
-                    <span class="text-muted">Dernier  Connection</span>
-                    <h4>{{ app.user.lastVisiteAt | date("Y/m/d H:i") }}</h4>
+                    <span class="text-muted">Dernière  connexion</span>
+                    <h4>{{ app.user.lastVisiteAt | date("d/m/Y H:i") }}</h4>
                 </div>
                 <div id="sidebar-chart" class="chart"></div>   
             </li>
@@ -116,8 +116,8 @@
       
       <a class="menutoggle"><i class="fa fa-bars"></i></a>
       
-      <form class="searchform" action="http://themepixels.com/demo/webpage/bracket/index.html" method="post">
-        <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+      <form class="searchform" action="#" method="post">
+        <input type="text" class="form-control" name="keyword" placeholder="Recherche..." />
       </form>
       
       <div class="header-right">
@@ -151,8 +151,8 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Account Settings</a></li>
-                <li><a href="{{ path('admin_logout') }}"><i class="glyphicon glyphicon-log-out"></i> Log Out</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Paramètres</a></li>
+                <li><a href="{{ path('admin_logout') }}"><i class="glyphicon glyphicon-log-out"></i> Déconnexion</a></li>
               </ul>
             </div>
           </li>

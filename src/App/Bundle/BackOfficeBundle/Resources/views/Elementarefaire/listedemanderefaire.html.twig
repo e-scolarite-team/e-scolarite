@@ -1,0 +1,125 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %} Element a refaire {% endblock %}
+
+{% block mainMenu %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
+    </li>
+    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
+    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
+    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
+    <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
+  </ul>
+</li>
+{% else %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent  active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children" style="display: block;">
+    <li>
+      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
+    </li>
+    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>Liste des demandes de refaire un élement </a></li>
+  </ul>
+</li>
+{% endif %}
+{% endblock %}
+{% block pageTitle %}
+        <i class="glyphicon glyphicon-refresh"> </i>Demande Refaire un élement
+      {% endblock %}
+       {% block breadcrumb %}
+          <li><a class="active">demande</a></li>
+          <li class="active">liste élement à refaire</li>
+          {% endblock %}
+{% block content %}
+<div class="col-md-12">
+          <form id="basicForm" action="{{ path( 'listeelementrefaire' ) }}" class="form-horizontal" novalidate="novalidate">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-btns">
+                  <a href="#" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title">Liste des demandes de refaire un élement</h4>
+              </div>
+              <div class="panel-body" >
+          <div class="table-responsive">
+          <table class="table  table-hidaction table-hover" id="list-type">
+            <thead>
+              <tr>
+                <th>CNE</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>élement à refaire</th>
+                <th>Etat</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for etatdemande in etatdemandes %}  
+                    <tr>
+                      <td>{{ etatdemande.demande.etudiant.cne }}</td>
+                      <td>{{ etatdemande.demande.etudiant.nom }}</td>
+                      <td>{{ etatdemande.demande.etudiant.prenom }}</td>
+                      <td>{{ etatdemande.demande.remarque }}</td>
+                      <td>{{ etatdemande.etat }}</td>  
+                      {% if etatdemande.etat == 'en attente' %}
+                      <td class="table-action">
+                           <a href="{{ path( 'traiterelementrefaire', { id: etatdemande.demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
+                      </td>
+                      {% else %} 
+                        <td class="table-action">
+                           
+                        </td>
+                      {% endif %}
+                    </tr>             
+            {% endfor %}
+            </tbody>
+          </table>
+          </div><!-- table-responsive -->  
+              
+          </div>
+        </div><!-- panel-body -->
+                       </div><!-- panel -->
+          </form>     
+        </div>
+  {% endblock %}
+        
+{% block javascripts %}
+   {{ parent() }}               
+  <script>
+    jQuery(document).ready(function() {
+      jQuery('#list-type').dataTable({
+        "sPaginationType": "full_numbers"
+      });
+    
+        // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+    });
+  </script>          
+{% endblock %}
