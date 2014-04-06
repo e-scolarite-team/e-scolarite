@@ -1,7 +1,13 @@
 parameters:
 #    app_front_office.example.class: App\Bundle\FrontOfficeBundle\Example
+    app_front_office.success_handler.class: App\Bundle\FrontOfficeBundle\DependencyInjection\Services\EtudiantSuccessHandler
 
 services:
+    front.success_handler:
+        class: %app_front_office.success_handler.class%
+        arguments: []
+        calls:
+            - [setContainer,[@service_container]]
 #    app_front_office.example:
 #        class: %app_front_office.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

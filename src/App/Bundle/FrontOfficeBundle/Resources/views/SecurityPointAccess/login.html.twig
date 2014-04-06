@@ -40,14 +40,8 @@
                 
                     <div class="mb20"></div>
                 
-                    <h5><strong>Bienvenue a l'espace etudiant de E-scolarite!</strong></h5>
-                    <ul>
-                        <li><i class="fa fa-arrow-circle-o-right mr5"></i> Fully Responsive Layout</li>
-                        <li><i class="fa fa-arrow-circle-o-right mr5"></i> HTML5/CSS3 Valid</li>
-                        <li><i class="fa fa-arrow-circle-o-right mr5"></i> Retina Ready</li>
-                        <li><i class="fa fa-arrow-circle-o-right mr5"></i> WYSIWYG CKEditor</li>
-                        <li><i class="fa fa-arrow-circle-o-right mr5"></i> and much more...</li>
-                    </ul>
+                    <h5><strong>Bienvenue a l'espace etudiant de E-scolarite</strong></h5>
+                    <img src="{{ asset('images/logo-fp.png') }}">
                     <div class="mb20"></div>
                 </div><!-- signin0-info -->
             
@@ -58,9 +52,10 @@
                 <form method="post" action="{{ path('front_login_check') }}" id="login" method="post">
                     <h4 class="nomargin">Point d'access</h4>
                     <p class="mt5 mb20">Espace etudiant de E-scolarite.</p>
-                
-                    <input type="text" class="form-control uname" name="_username" placeholder="Username" value="{{ last_username }}"/>
-                    <input type="password" class="form-control pword" name="_password" placeholder="Password" />
+                    <label for="username">Code national d'etudiant :</label>
+                    <input type="text" style="margin-top:0px !important;margin-bottom:10px" class="form-control uname" id="username" name="_username" placeholder="Username" value="{{ last_username }}"/>
+                    <label for="password">Code appogeé :</label>
+                    <input type="password" style="margin-top:0px !important;" class="form-control pword" id="password" name="_password" placeholder="Password" />
                     {% if errors %}
           					<div class="nNote nFailure">
           						<p>{{ errors.message }}</p>
@@ -75,10 +70,10 @@
         
         <div class="signup-footer">
             <div class="pull-left">
-                &copy; 2014. Tous les droits reserve a la faculte polydisciplinaire de Bni-melal. 
+                &copy; 2014. Tous droits réservés à la faculte polydisciplinaire de Bni-melal. 
             </div>
             <div class="pull-right">
-                Creer par : <a href="http://usms.ma/" target="_blank">Universite sultan molay soliman - Bni-melal</a>
+                Créer par : <a href="http://usms.ma/" target="_blank">Université Sultan Moulay Slimane - Bni-melal</a>
             </div>
         </div>
         

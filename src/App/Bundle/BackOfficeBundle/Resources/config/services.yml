@@ -1,6 +1,6 @@
 parameters:
     app_back_office.esconfig_manager.class: App\Bundle\BackOfficeBundle\DependencyInjection\Services\ConfigManagerService
-
+    app_back_office.admin_auth_success.class: App\Bundle\BackOfficeBundle\DependencyInjection\Services\AdminSuccessHandler
 services:
     esconfig_manager:
         class: %app_back_office.esconfig_manager.class%
@@ -8,6 +8,11 @@ services:
         calls:
             - [setContainer,[@service_container]]
             - [parseConfiguration,[]]
+    admin_success_auth:
+        class: %app_back_office.admin_auth_success.class%
+        arguments: []
+        calls:
+            - [setContainer,[@service_container]]
 
 
 #    app_back_office.example:

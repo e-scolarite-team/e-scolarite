@@ -1,12 +1,22 @@
 {% extends '::layout.html.twig' %}
 
-{% block title %}Ajouter un type de demande{% endblock %}
+{% block title %}Modification du type de demande{% endblock %}
+
+{% block pageTitle %}
+  <i class="fa fa-book"></i> Type de Demande <span>Modification</span>
+{% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('type-demande') }}">Type de demande</a></li>
+<li class="active">Modifier</li>
+{% endblock %}
 
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent  active nav-active">
   <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
   <ul class="children" style="display: block;">
+    <li><a href="{{ path('config_page') }}"><i class="fa fa-caret-right"></i>Automatisation</a></li>
     <li>
       <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
     </li>
