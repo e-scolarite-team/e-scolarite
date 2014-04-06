@@ -3,11 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-<<<<<<< HEAD
-    "hash": "6aec1f0de0ea46e22b1eb1a2fb65d339",
-=======
     "hash": "774cdb0e2231b11ec892eb662832fe77",
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
     "packages": [
         {
             "name": "codeplex/phpexcel",
@@ -1228,30 +1224,17 @@
         },
         {
             "name": "symfony/icu",
-<<<<<<< HEAD
-            "version": "v1.0.0",
-=======
             "version": "v1.0.1",
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-<<<<<<< HEAD
-                "reference": "cac3fdfb111adbe590155f491594636d45129783"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/cac3fdfb111adbe590155f491594636d45129783",
-                "reference": "cac3fdfb111adbe590155f491594636d45129783",
-=======
                 "reference": "fdba214b1e087c149843bde976263c53ac10c975"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/Icu/zipball/fdba214b1e087c149843bde976263c53ac10c975",
                 "reference": "fdba214b1e087c149843bde976263c53ac10c975",
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
                 "shasum": ""
             },
             "require": {
@@ -1284,11 +1267,7 @@
                 "icu",
                 "intl"
             ],
-<<<<<<< HEAD
-            "time": "2013-06-03 18:32:07"
-=======
             "time": "2013-10-04 09:12:07"
->>>>>>> 47028a69972708526fa634cf014e29f2bd12cb97
         },
         {
             "name": "symfony/monolog-bundle",

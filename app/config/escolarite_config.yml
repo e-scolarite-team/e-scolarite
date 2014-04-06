@@ -1,0 +1,9 @@
+escolarite:
+    date_format: d-m-Y
+    datetime_format: 'd-m-Y\TH:i'
+    current_semester: 2
+    current_academic_year: 2017
+    activate_service: yes
+    auto_demands_answers:
+        status: deactivate
+        amount: 10

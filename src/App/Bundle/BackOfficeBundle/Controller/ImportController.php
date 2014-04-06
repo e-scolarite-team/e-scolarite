@@ -42,7 +42,7 @@ class ImportController extends Controller
 
                 foreach ($errList as $err) {
                    // trans($id, array $parameters = array(), $domain = null, $locale = null)
-                 $errors[] =  $translator->trans($err->getMessage(),array('table' => "abdo fayssal"), 'messages', 'fr_FR');
+                 $errors[] =  $translator->trans($err->getMessage(),array(), 'messages', 'fr_FR');
 
              }
 

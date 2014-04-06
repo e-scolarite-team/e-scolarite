@@ -18,7 +18,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class Etudiant extends ContainerAware  implements AdvancedUserInterface, EquatableInterface
 {
-
+    public function __toString()
+    {
+        return "etudiant";
+    }
     /**
      * @var string
      * @ORM\Id

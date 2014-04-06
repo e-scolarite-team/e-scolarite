@@ -1,6 +1,15 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %} element a refaire {% endblock %}
+
+{% block title %} Elément à refaire {% endblock %}
+
+{% block pageTitle %}
+        <i class="glyphicon glyphicon-refresh"> </i>Demande Refaire un élement
+{% endblock %}
+{% block breadcrumb %}
+        <li><a class="active">demande</a></li>
+        <li class="active">liste élement à refaire</li>
+{% endblock %}
 
 {% block content %}
                     <div class="panel panel-default">
@@ -9,49 +18,67 @@
                   
                   <a href="#" class="minimize">&minus;</a>
                 </div>
-                <h4 class="panel-title">Element a refaire :</h4>
+                {% if err != "" %}
+                <div class="error" style="display:block;padding : 25px 50px;">
+                  <label class="error">{{ err }}</label>
+                  </div>
+                {% endif %}
                 
+                <h4 class="panel-title">Elément à refaire :</h4>
                 
+                {% if elements is empty %}
+                <div class="alert alert-danger" style="margin-top: 63px;margin-bottom: 63px;">
+                  <center><label>Vous n'avez aucun élément à refaire</lable><center>
+                </div>
+                {% else %}
                 
                 <div class="tab-content">
+                  <form method="post" action="">
                   <div class="tab-pane active" id="tab1">
                     <form class="form" action="data">
                       <div class="form-group">
-                        <label class="col-sm-3 control-label">Nom de mdule :</label>
-                        <div class="col-sm-6">
-                        <select class="form-control" name="module" >
-                        {% for module in modules %}
-                          <option value="{{module.code}}">{{module.lib}}</option>
-                          
-                          {% endfor %}
-                        </select>
-                      </div>
+                        <label class="col-sm-3 control-label">Module </label>
+                          <div class="col-sm-6">
+                            <label >Element </label>
+                          </div>
                       </div>
 
-                      </br></br>
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label">Nom d'element :</label>
-                        <div class="col-sm-6">
-                        <select class="form-control" >
-                          <option>element lang C</option>
-                          <option>element Lang Vb</option>
-                          
-
-                        </select>
-                      </div>
-                      </div>
                       
-                      <br><br>
+                      {% for el in elements %}
+
+                      <div class="form-group">
+                              <label class="col-sm-3 control-label"> {{el.element.parent.lib}}</label>                              
+                              <div class="col-md-6">                                
+                                  <div class="">
+                                    {% if el.etat == 0 %}
+                                    <span class="glyphicon glyphicon-check" title="deja demandé"></span>
+                                    {% else %}
+                                    <input type="checkbox" name="elements[]" value="{{el.element.code}}" id="checkboxDefault"  />
+                                    {% endif %}
+                                    <label for="checkboxDefault">{{el.element.lib}}</label>
+                                  </div>
+                                                                    
+                              </div>
+                      </div>
+
+                      {% endfor %}
+
+
+
+                      <br><br><br><br>
+                      {% if aucunElementDemande == false %}
                       <center>
                         <button class="btn btn-primary">Envoyer</button>&nbsp;
                       </center>
+                      {% endif %}
                       </div>
-                      </div>
+                      </form>
                       
-                    </form>
+                    
                   </div>
+                  {% endif %}
                   </div>
-                  </div>
+                  
                   
 
                   
@@ -61,18 +88,4 @@
              
 
 
-{% endblock %}
-{% block javascript %}
-<script>
-alert("dsfsdfsdf");
-$( "form-control" )
-  .change(function () {
-    
-    alert("heooooo");
-
-
-
-  })
-  .change();
-</script>
 {% endblock %}

@@ -23,17 +23,12 @@ class ResultatElpRepository extends EntityRepository
                 ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
                 ->join('r.element', 'e')
                 ->Where($qb->expr()->eq('r.status', '?1'))
-                ->andWhere($qb->expr()->eq('r.etudiant', '?2'))
-                //->andWhere($qb->expr()->eq('r.annee', '?4'))
-                ->andWhere($qb->expr()->isNotNull('r.note'))
-                //->andWhere($qb->expr()->eq('e.nature', '?3'))
+                ->andWhere($qb->expr()->eq('r.etudiant', '?2'))                
+                ->andWhere($qb->expr()->isNotNull('r.note'))                
                 ->andWhere($qb->expr()->eq('e.parent', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                //->setParameter(3, "SM03")  
-                //->setParameter(4, $annee) 
-                ->setParameter(3, $parent);  
-                //$tous_les_modules_valider = $qb->getQuery()->getResult();
+                ->setParameter(1, "NV")
+                ->setParameter(2, $etudiant)                
+                ->setParameter(3, $parent);                  
                 return $qb->getQuery()->getResult();
 
 	}
@@ -42,15 +37,13 @@ class ResultatElpRepository extends EntityRepository
                 $qb = $em->createQueryBuilder();
                 $qb->select('r')
                 ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->join('r.element', 'e')
-                //->Where($qb->expr()->eq('r.status', '?1'))
+                ->join('r.element', 'e')                
                 ->Where($qb->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($qb->expr()->eq('r.annee', '?4'))
-                //->andWhere($qb->expr()->isNotNull('r.note'))
+                ->andWhere($qb->expr()->eq('r.annee', '?4'))                
                 ->andWhere(("e.nature like 'SM".$op[0]."' or e.nature like 'SM".$op[1]."' or e.nature like 'SM".$op[2]."' "))                
-                
                 ->setParameter(2, $etudiant)                
-                ->setParameter(4, $annee);  
+                ->setParameter(4, $annee)
+                ->groupBy('e.code');  
                 return $qb->getQuery()->getResult();
 
         }
@@ -58,21 +51,15 @@ class ResultatElpRepository extends EntityRepository
         public function getElements( $etudiant, $em, $parent){
                 
                 $qb = $em->createQueryBuilder();
-                $qb->select('r', 'e')
+                $qb->select('r','max(r.note)')
                 ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
                 ->join('r.element', 'e')
-                //->Where($qb->expr()->eq('r.status', '?1'))
-                ->Where($qb->expr()->eq('r.etudiant', '?2'))
-                
+                ->Where($qb->expr()->eq('r.etudiant', '?2'))                
                 ->andWhere($qb->expr()->isNotNull('r.note'))
-                
                 ->andWhere($qb->expr()->eq('e.parent', '?3'))
-                
                 ->setParameter(2, $etudiant)
-                
-                
-                ->setParameter(3, $parent);  
-                
+                ->setParameter(3, $parent)
+                ->groupBy('e.code');  
                 return $qb->getQuery()->getResult();
 
         }

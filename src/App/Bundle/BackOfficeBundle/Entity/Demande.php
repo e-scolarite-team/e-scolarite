@@ -65,6 +65,12 @@ class Demande
     protected $notified;
 
     /**
+    * @var array $donnees
+    * @ORM\Column(name="donnees", type="array", nullable=true)
+    */
+    protected $donnees ;
+
+    /**
      * @var Etudiant
      *
      * @ORM\ManyToOne(targetEntity="Etudiant", inversedBy="demandes")
@@ -240,6 +246,30 @@ class Demande
     {
         return $this->notified;
     }
+
+    /**
+     * Set status
+     *
+     * @param boolean $status
+     * @return Demande
+     */
+    public function setDonnees($donnees)
+    {
+        $this->donnees = $donnees;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return boolean 
+     */
+    public function getDonnees()
+    {
+        return $this->donnees;
+    }
+
 
     /**
      * Set etudiant
