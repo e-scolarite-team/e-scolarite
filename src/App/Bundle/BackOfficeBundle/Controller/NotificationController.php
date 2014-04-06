@@ -110,6 +110,8 @@ public function todemandeAction($id){
         $route = 'traiterdemande';
         if($demande->getTypeDemande()->getCode() == 'CM')
             $route = 'traiterdemandechangement';
+        if($demande->getTypeDemande()->getCode() == 'ER')
+            $route = 'traiterelementrefaire';
 
         return $this->redirect($this->generateUrl($route,array('id' =>  trim($id) )));
     }

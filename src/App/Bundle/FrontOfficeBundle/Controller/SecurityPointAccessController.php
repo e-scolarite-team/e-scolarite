@@ -19,10 +19,10 @@ class SecurityPointAccessController extends Controller
     public function loginAction()
     {
 		
-		/**
-		$Etudiant = new Etudiant($this->container);
-		$Etudiant->setCne("2323232323")->setCodeAppogee("90000")->setId("11234");
-		$Etudiant->setCin("h34547")->setNom("90000")->setPrenom("11234");
+		
+		/*$Etudiant = new Etudiant($this->container);
+		$Etudiant->setCne("2927531476")->setCodeAppogee("30000")->setId("11234");
+		$Etudiant->setCin("h34547")->setNom("Kda")->setPrenom("karim");
 		$Etudiant->setDateNaissance(new \DateTime())->setVilleNaissance("safi")->setPrenomAr("11234");
 		$Etudiant->setAdresse("fshhs kks")->setAnneeInscription(2012)->setNomAr("11234")->setSexe("M");
 		$Etudiant->preparePassword();
@@ -32,7 +32,7 @@ class SecurityPointAccessController extends Controller
 		$em->persist($Etudiant);
 		
 		$em->flush();
-		**/
+		*/
 		
     	$request = $this->getRequest();
 		$session = $request->getSession();

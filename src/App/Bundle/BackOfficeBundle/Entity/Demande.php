@@ -91,7 +91,7 @@ class Demande
     *
     * @ORM\OneToMany(targetEntity="EtatDemande", mappedBy="demande", cascade={"persist"})
     */
-    protected $etatDemandes;
+    public $etatDemandes;
 
     public function __construct(){
         $this->createdAt = new \DateTime();

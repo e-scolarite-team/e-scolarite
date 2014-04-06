@@ -1,6 +1,17 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %} import data{% endblock %}
+{% block title %} Importation {% endblock %}
+{% block pageTitle %}
+    <i class="fa fa-table"></i>
+    Importation des données
+
+{% endblock %}
+{% block breadcrumb %}
+  
+          <li class="active">Importation</li>
+
+
+{% endblock %}
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent  active nav-active">
@@ -50,15 +61,18 @@
           <p>Cette interface permet de remplire les tables <code>Etudiant</code>, <code>Element</code> et <code>Note</code> de la base de donnee local via des fichiers Excel/CSV</p>
         </div>
 
-        <div class="panel-body panel-body-nopadding">
-          
-          
-            {% if errors %}
+        <div class="panel-body panel-body-nopadding">                         
+            
+            {% if errors == "errors.import.parse" %}
             <div class="error" style="display:block;padding : 25px 50px;">
               {% for err in errors %}
               <label class="error">{{ err | raw }}</label>
               {% endfor %}
             </div>
+            {% elseif errors == "data.fill.success" %}
+               <div class="alert alert-success">
+                <center>Les données sont bient chargées</center>
+              </div>
             {% endif %}
             <div class="form-group">
               <label class="col-sm-3 control-label" for="{{ form.table.vars.id }}">Table</label>

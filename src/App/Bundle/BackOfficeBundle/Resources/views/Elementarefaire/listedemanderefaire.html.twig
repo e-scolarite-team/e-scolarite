@@ -1,15 +1,6 @@
 {% extends "::layout.html.twig" %}
-{% block pageTitle %}
-    <i class="fa fa-file-text"></i>
-    Demande
 
-{% endblock %}
-{% block breadcrumb %}
-  <li><a href="{{ path('notification-admin') }}">Notification</a></li>
-          <li class="active">lister les demandes</li>
-
-{% endblock %}
-{% block title %} Demandes Reçus {% endblock %}
+{% block title %} Element a refaire {% endblock %}
 
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -42,45 +33,27 @@
     <li>
       <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
     </li>
-    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
+    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>Liste des demandes de refaire un élement </a></li>
   </ul>
 </li>
 {% endif %}
 {% endblock %}
-
+{% block pageTitle %}
+        <i class="glyphicon glyphicon-refresh"> </i>Demande Refaire un élement
+      {% endblock %}
+       {% block breadcrumb %}
+          <li><a class="active">demande</a></li>
+          <li class="active">liste élement à refaire</li>
+          {% endblock %}
 {% block content %}
 <div class="col-md-12">
-          
+          <form id="basicForm" action="{{ path( 'listeelementrefaire' ) }}" class="form-horizontal" novalidate="novalidate">
           <div class="panel panel-default">
               <div class="panel-heading">
                 <div class="panel-btns">
                   <a href="#" class="minimize">−</a>
                 </div>
-                <h4 class="panel-title">Liste des demandes Reçus</h4>
-                {% if date != "none" and autoReponceAmount != 0  %}
-               <form id="basicForm" action="{{ path( 'reponceAuto' ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
-                <div class="form-group">
-                  <div class="col-sm-5">
-                 <p>Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!, ou vous pouvez fixez les {{autoReponceAmount}} premiere demandes dans cette date en cliquant sur le boutton Fixer</p>
-                 </div>
-                 <div class="col-sm-3">
-                  <div class="input-group">
-
-                <input type="text" class="form-control" placeholder="dd-mm-yy" rea id="datepicker" name="rv" value="{{date}}">
-
-                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-              </div>
-                </div>
-                  <div class="col-sm-2">
-                      <button class="btn btn-primary" type="submit" name="fixer"  value="fixer" >Fixer</button>
-                      
-                  </div>
-                </div>
-                
-                </form>
-                {%  else %}
-                <p>Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!<p>
-                {% endif %}
+                <h4 class="panel-title">Liste des demandes de refaire un élement</h4>
               </div>
               <div class="panel-body" >
           <div class="table-responsive">
@@ -90,22 +63,30 @@
                 <th>CNE</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Type de Pièce</th>
+                <th>élement à refaire</th>
+                <th>Etat</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {% for demande in demandes %}  
-                    <tr>
-                      <td>{{ demande.etudiant.cne }}</td>
-                      <td>{{ demande.etudiant.nom }}</td>
-                      <td>{{ demande.etudiant.prenom }}</td>
-                      <td>{{ demande.typeDemande.libelle }}</td>
-                      <td class="table-action">
-                        <a href="{{ path( 'traiterdemande', { id: demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
-                      </td>
-                    </tr>              
 
+              {% for etatdemande in etatdemandes %}  
+                    <tr>
+                      <td>{{ etatdemande.demande.etudiant.cne }}</td>
+                      <td>{{ etatdemande.demande.etudiant.nom }}</td>
+                      <td>{{ etatdemande.demande.etudiant.prenom }}</td>
+                      <td>{{ etatdemande.demande.remarque }}</td>
+                      <td>{{ etatdemande.etat }}</td>  
+                      {% if etatdemande.etat == 'en attente' %}
+                      <td class="table-action">
+                           <a href="{{ path( 'traiterelementrefaire', { id: etatdemande.demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
+                      </td>
+                      {% else %} 
+                        <td class="table-action">
+                           
+                        </td>
+                      {% endif %}
+                    </tr>             
             {% endfor %}
             </tbody>
           </table>
@@ -140,12 +121,5 @@
       jQuery(this).find('.table-action-hide a').animate({opacity: 0});
     });
     });
-    jQuery(document).ready(function(){
-      
-      // Date Picker
-
-        jQuery('#datepicker').datepicker({ dateFormat: "dd-mm-yy" });
-         
-      });
   </script>          
 {% endblock %}

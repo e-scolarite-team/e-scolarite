@@ -86,9 +86,8 @@ class ReclamationController extends Controller
                    $errors[] =  $translator->trans($err->getMessage(),array(),'messages','fr_FR');
                 
             }else{
-                $entity->setReponse($reponse);
-                $entity->setNotified(0);
-                
+                $entity->setReponse($reponse["reponse"]);
+                $entity->setNotified(0);                
                 $em->persist($entity);
                 $em->flush();
                 return $this->redirect($this->generateUrl('listerReclamation'));

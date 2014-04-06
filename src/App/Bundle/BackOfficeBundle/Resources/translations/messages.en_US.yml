@@ -1,5 +1,15 @@
-errors.import.table: you must chose a table
-errors.import.attachment: you must chose a file
-errors.import.attachment.mimeTypes: type of file autorised are xsxl/csv
+errors.import.table: "you must chose a table"
+errors.import.attachment: "you must chose a file"
+errors.import.attachment.mimeTypes: "type of file autorised are xsxl/csv"
 errors.import.parse: 
-data.fill.success: Donnee inserer avec succes
+data.fill.success: "Donnee inserer avec succes"
+
+errors.config.auto.demandestate: "Verifier votre choix de l'etat de l'automatisation de la demande"
+errors.config.auto.amount: "la valeur saisi dans le champ nombre des demandes automatique doit etre superieur ou egale a {{ compared_value }}"
+
+errors.config.info.semester.invalidMessage: "la valeur saisi dans le champ semesttere doit etre numerique"
+errors.config.info.semester.maxMessage: "le semesttre n'est pas valide : {{limit}}"
+errors.config.info.semester.minMessage: "le semesttre n'est pas valide : {{limit}}"
+errors.config.info.dateformat: "Veuillez remplir le champ format de la date"
+errors.config.info.datetimeformat: "Veuillez remplir le champ format de la date/heur"
+errors.config.info.yearuniv: "l'annee universitaire n'est pas valide"

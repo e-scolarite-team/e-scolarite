@@ -80,14 +80,14 @@ class Etudiant extends ContainerAware  implements AdvancedUserInterface, Equatab
     /**
      * @var string
      *
-     * @ORM\Column(name="nom_ar", type="string", length=255)
+     * @ORM\Column(name="nom_ar", type="string", length=255, nullable=true)
      */
     protected $nomAr;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom_ar", type="string", length=255)
+     * @ORM\Column(name="prenom_ar", type="string", length=255, nullable=true)
      */
     protected $prenomAr;
 

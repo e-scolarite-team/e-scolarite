@@ -23,7 +23,6 @@ class ImportController extends Controller
 
     public function updateAction(Request $request)
     {
-        //abdellatif karroum todo here
         $errors = array();
         
         $form  = $this->createForm(new ImportFormType(),new ImportData());
@@ -241,7 +240,7 @@ class ImportController extends Controller
      */
     private function getWorkSheet($path,$sheetIndex)
     {
-        ini_set("max_execution_time", "200");
+        ini_set("max_execution_time", "100");
         $cacheMethod=\PHPExcel_CachedObjectStorageFactory::cache_to_sqlite;
         \PHPExcel_Settings::setCacheStorageMethod($cacheMethod); 
         $objPHPExcel = new \PHPExcel();

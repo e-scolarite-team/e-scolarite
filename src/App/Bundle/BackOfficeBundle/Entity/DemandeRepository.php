@@ -27,4 +27,13 @@ class DemandeRepository extends EntityRepository
                 return $qb->getQuery()->getResult();
 
         }
+	public function getLastReponceDate()
+	{
+		
+		$qb = $this->createQueryBuilder("d")->
+		select ("max(d.dateReponce)")->getQuery();
+		$resutls=$qb->getResult();
+		return $resutls[0][1];
+	}
+	
 }

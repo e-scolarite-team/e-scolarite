@@ -18,7 +18,7 @@ class ImportData
 
 	/**
 	* @var UploadedFile
-	* @Validator\File(
+	* Validator\File(
 	* 	uploadErrorMessage = "errors.import.attachment",
 	* 	maxSize = "100M",
 	* 	mimeTypesMessage = "errors.import.attachment.mimeTypes",
