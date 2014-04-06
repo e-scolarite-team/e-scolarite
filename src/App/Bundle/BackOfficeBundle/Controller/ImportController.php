@@ -41,7 +41,7 @@ class ImportController extends Controller
 
                 foreach ($errList as $err) {
                    // trans($id, array $parameters = array(), $domain = null, $locale = null)
-                 $errors[] =  $translator->trans($err->getMessage(),array('table' => "abdo fayssal"), 'messages', 'fr_FR');
+                 $errors[] =  $translator->trans($err->getMessage(),array(), 'messages', 'fr_FR');
 
              }
 
@@ -153,19 +153,21 @@ class ImportController extends Controller
         
         for ($i=2; $i <= $highestRow; $i++) { 
             $entity = new ResultatElp();
-
-            $etudiant = $em->getRepository("AppBackOfficeBundle:Etudiant")->find($sheet->getCellByColumnAndRow($metaData["COD_IND"], $i)->getValue());
-            $element = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());            
-            $entity->setEtudiant($etudiant);            
-            $entity->setElement($element);            
-            $entity->setAnnee($sheet->getCellByColumnAndRow($metaData["COD_ANU"], $i)->getValue());
-            $entity->setSession($sheet->getCellByColumnAndRow($metaData["COD_SES"], $i)->getValue());
-            $entity->setAdmissibilite($sheet->getCellByColumnAndRow($metaData["COD_ADM"], $i)->getValue());
-            $entity->setNote($sheet->getCellByColumnAndRow($metaData["NOT_ELP"], $i)->getValue());
-            $entity->setStatus($sheet->getCellByColumnAndRow($metaData["COD_TRE"], $i)->getValue());//$dateInsc);            
             
-            $em->merge($entity);  
-            $em->flush();           
+
+                $etudiant = $em->getRepository("AppBackOfficeBundle:Etudiant")->find($sheet->getCellByColumnAndRow($metaData["COD_IND"], $i)->getValue());
+                $element = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($sheet->getCellByColumnAndRow($metaData["COD_ELP"], $i)->getValue());            
+                $entity->setEtudiant($etudiant);            
+                $entity->setElement($element);            
+                $entity->setAnnee($sheet->getCellByColumnAndRow($metaData["COD_ANU"], $i)->getValue());
+                $entity->setSession($sheet->getCellByColumnAndRow($metaData["COD_SES"], $i)->getValue());
+                $entity->setAdmissibilite($sheet->getCellByColumnAndRow($metaData["COD_ADM"], $i)->getValue());
+                $entity->setNote($sheet->getCellByColumnAndRow($metaData["NOT_ELP"], $i)->getValue());
+                $entity->setStatus($sheet->getCellByColumnAndRow($metaData["COD_TRE"], $i)->getValue());//$dateInsc);            
+                
+                $em->merge($entity);  
+                $em->flush(); 
+            
         }
         
                 
@@ -238,7 +240,7 @@ class ImportController extends Controller
      */
     private function getWorkSheet($path,$sheetIndex)
     {
-        ini_set("max_execution_time", "200");
+        ini_set("max_execution_time", "100");
         $cacheMethod=\PHPExcel_CachedObjectStorageFactory::cache_to_sqlite;
         \PHPExcel_Settings::setCacheStorageMethod($cacheMethod); 
         $objPHPExcel = new \PHPExcel();

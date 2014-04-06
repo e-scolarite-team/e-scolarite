@@ -15,6 +15,53 @@ class ResultatElpRepository extends EntityRepository
 	public function deleteAll(){
 		$this->getEntityManager()->createQuery("delete from AppBackOfficeBundle:ResultatElp")->execute();
 	}
+
+	public function getModules( $etudiant, $em, $parent){
+		
+		$qb = $em->createQueryBuilder();
+                $qb->select('r', 'e')
+                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+                ->join('r.element', 'e')
+                ->Where($qb->expr()->eq('r.status', '?1'))
+                ->andWhere($qb->expr()->eq('r.etudiant', '?2'))                
+                ->andWhere($qb->expr()->isNotNull('r.note'))                
+                ->andWhere($qb->expr()->eq('e.parent', '?3'))
+                ->setParameter(1, "NV")
+                ->setParameter(2, $etudiant)                
+                ->setParameter(3, $parent);                  
+                return $qb->getQuery()->getResult();
+
+	}
+        public function getSemestres( $annee, $etudiant, $em, $op){
+                
+                $qb = $em->createQueryBuilder();
+                $qb->select('r')
+                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+                ->join('r.element', 'e')                
+                ->Where($qb->expr()->eq('r.etudiant', '?2'))
+                ->andWhere($qb->expr()->eq('r.annee', '?4'))                
+                ->andWhere(("e.nature like 'SM".$op[0]."' or e.nature like 'SM".$op[1]."' or e.nature like 'SM".$op[2]."' "))                
+                ->setParameter(2, $etudiant)                
+                ->setParameter(4, $annee)
+                ->groupBy('e.code');  
+                return $qb->getQuery()->getResult();
+
+        }
+
+        public function getElements( $etudiant, $em, $parent){
+                
+                $qb = $em->createQueryBuilder();
+                $qb->select('r','max(r.note)')
+                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+                ->join('r.element', 'e')
+                ->Where($qb->expr()->eq('r.etudiant', '?2'))                
+                ->andWhere($qb->expr()->isNotNull('r.note'))
+                ->andWhere($qb->expr()->eq('e.parent', '?3'))
+                ->setParameter(2, $etudiant)
+                ->setParameter(3, $parent)
+                ->groupBy('e.code');  
+                return $qb->getQuery()->getResult();
+        }
 //////////cette fonction retourne un objet permettant de savoir le semestre max contenu dans la base de données
         //pour  un étudiant donné          
           public function tousResultatEtudiant($id){

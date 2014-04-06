@@ -12,6 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class DemandeRepository extends EntityRepository
 {
+	public function getDemandes( $etudiant, $em, $elem ){
+                
+                $qb = $em->createQueryBuilder();
+                $qb->select('d')
+                ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
+                ->join('d.typeDemande', 't')
+                ->Where($qb->expr()->eq('d.etudiant', '?1'))                                
+                ->andWhere($qb->expr()->like('d.donnees', '?2'))
+                ->andWhere($qb->expr()->eq('t.code', '?3'))                
+                ->setParameter(1, $etudiant)
+                ->setParameter(2, "%".$elem."%")               
+                ->setParameter(3, "ER");                
+                return $qb->getQuery()->getResult();
+
+        }
 	public function getLastReponceDate()
 	{
 		
