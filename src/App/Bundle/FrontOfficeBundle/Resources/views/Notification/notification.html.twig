@@ -18,16 +18,18 @@
   <ul class="children">
     <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Consulter les rendez-vous</a></li>
     <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demande une piece</a></li>
+   {% if app.session.get('serviceState') == 'yes' %}
     <li><a href="{{ path('changer') }}"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
     <li><a href="{{ path('module_libre') }}"><i class="fa fa-caret-right"></i>Module libre</a></li>
-
+    <li><a href="{{ path('ElemRef') }}"><i class="fa fa-caret-right"></i>Elément à refaire</a></li>
+    {% endif %}
   </ul>
 </li>
 {% endblock %}
 
 {% block content %}
 {% block pageTitle %}
-        <i class="fa fa-bell"></i> Mes notifications
+        <i class="fa fa-bell"></i> Mes notifications 
 {% endblock %}
 <title>{% block title %}Notifications d'un etudiant{% endblock %}</title>
 
