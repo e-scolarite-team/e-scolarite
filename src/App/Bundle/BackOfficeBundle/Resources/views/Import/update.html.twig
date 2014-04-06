@@ -1,11 +1,21 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %} import data{% endblock %}
+{% block title %} Importation des donnees{% endblock %}
+
+{% block pageTitle %}
+  <i class="fa fa-cogs"></i> Importation
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="active">Importation</li>
+{% endblock %}
+
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent  active nav-active">
   <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
   <ul class="children" style="display: block;">
+    <li><a href="{{ path('config_page') }}"><i class="fa fa-caret-right"></i>Automatisation</a></li>
     <li>
       <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
     </li>
@@ -46,7 +56,7 @@
             <a href="#" class="panel-close">&times;</a>
             <a href="#" class="minimize">&minus;</a>
           </div>
-          <h4 class="panel-title">remplire la base de donnee</h4>
+          <h4 class="panel-title">Remplissage de la bases de données</h4>
           <p>Cette interface permet de remplire les tables <code>Etudiant</code>, <code>Element</code> et <code>Note</code> de la base de donnee local via des fichiers Excel/CSV</p>
         </div>
 

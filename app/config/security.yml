@@ -43,9 +43,11 @@ security:
             logout:
                 path: /back-office/logout
                 target: /back-office/login
+                success_handler: admin_success_auth
             form_login:
                 login_path: /back-office/login
                 check_path: /back-office/login_check
+                success_handler: admin_success_auth
                 default_target_path: /back-office/notification-admin/
                 target_path_parameter: _target_path
                 remember_me: false
@@ -58,9 +60,11 @@ security:
             logout:
                 path: /front-office/logout
                 target: /front-office/login
+                success_handler: front.success_handler
             form_login:
                 login_path: /front-office/login
                 check_path: /front-office/login_check
+                success_handler: front.success_handler
                 default_target_path: /front-office/notification-etudiant/
                 target_path_parameter: _target_path
                 remember_me: false

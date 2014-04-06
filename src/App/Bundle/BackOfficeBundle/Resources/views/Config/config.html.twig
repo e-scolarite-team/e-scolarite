@@ -2,11 +2,20 @@
 
 {% block title %}Configuration de l'application{% endblock %}
 
+{% block pageTitle %}
+  <i class="fa fa-cogs"></i> Configuration
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="active">Configuration</li>
+{% endblock %}
+
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent  active nav-active">
   <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
   <ul class="children" style="display: block;">
+    <li><a href="{{ path('config_page') }}"><i class="fa fa-caret-right"></i>Automatisation</a></li>
     <li>
       <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
     </li>
@@ -53,8 +62,8 @@
   </div>
   <div class="panel-body">
     <ul class="nav nav-tabs nav-justified">
-      <li class="active"><a href="#config-demande" data-toggle="tab"><i class="fa fa-pencil"></i> <strong>Automatisation de la demande</strong></a></li>
-      <li><a href="#config-univ" data-toggle="tab"><i class="fa fa-picture-o"></i> <strong>Informations universitaire</strong></a></li>
+      <li class="active"><a href="#config-demande" data-toggle="tab"><i class="fa fa-retweet"></i> <strong>Automatisation de la demande</strong></a></li>
+      <li><a href="#config-univ" data-toggle="tab"><i class="fa  fa-wrench"></i> <strong>Informations universitaire</strong></a></li>
     </ul>
     <div class="tab-content">
       <div id="config-demande" class="tab-pane active">
@@ -117,7 +126,7 @@
   <div class="panel-footer">
    <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-      <center><button type="submit" class="btn btn-primary">Valide</button></center>
+      <center><button type="submit" class="btn btn-primary">Valider</button></center>
     </div>
    </div>
   </div><!-- panel-footer -->

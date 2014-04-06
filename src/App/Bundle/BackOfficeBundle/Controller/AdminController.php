@@ -58,12 +58,14 @@ class AdminController extends Controller
             {
                 
                 $enFactory = $this->get('security.encoder_factory');
+
+                $entity = $form->getData();
         
                 $entity->addRole('ROLE_ADMIN');
         
                 $encoder = $enFactory->getEncoder($entity);
         
-                 $entity->setPassword($encoder->encodePassword($request->get('password'),$entity->getSalt()));
+                 $entity->setPassword($encoder->encodePassword($entity->getPassword(),$entity->getSalt()));
         
                  $em = $this->get("doctrine")->getEntityManager();
         
@@ -223,10 +225,10 @@ class AdminController extends Controller
             }else{
 
                 $enFactory = $this->get('security.encoder_factory');
-        
+                $entity = $form->getData();
                 $encoder = $enFactory->getEncoder($entity);
         
-                 $entity->setPassword($encoder->encodePassword($request->get('password'),$entity->getSalt()));
+                 $entity->setPassword($encoder->encodePassword($entity->getPassword(),$entity->getSalt()));
         
                  $em = $this->get("doctrine")->getEntityManager();
         

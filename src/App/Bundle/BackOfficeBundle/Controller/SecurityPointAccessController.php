@@ -23,12 +23,12 @@ class SecurityPointAccessController extends Controller
     	$enFactory = $this->get('security.encoder_factory');
 		
 		$admin = new Admin();
-		$admin->setEmail("abdo@gmail.com")->setNom("abdo")->setPrenom("abdo");
+		$admin->setEmail("fayssal@gmail.com")->setNom("fayssal")->setPrenom("fayssal");
 		$admin->addRole('ROLE_ADMIN');
 		
 		$encoder = $enFactory->getEncoder($admin);
 		
-		$admin->setPassword($encoder->encodePassword('abdo',$admin->getSalt()));
+		$admin->setPassword($encoder->encodePassword('fayssal',$admin->getSalt()));
 		
 		$em = $this->get("doctrine")->getEntityManager();
 		
