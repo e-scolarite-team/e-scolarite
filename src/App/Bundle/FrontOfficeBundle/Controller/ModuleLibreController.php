@@ -342,7 +342,13 @@ class ModuleLibreController extends Controller
                     ->setParameter(4, $date_fin)
                     ->setParameter(5, 2);
                     $Demandes = $qb->getQuery()->getResult();
-
+                     $count = count($Demandes);
+                    if( $count >= $typedemande->getMaxAutorise() ){
+                     return $this->render(
+                                'AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig', 
+                                array( 'count' => $typedemande->getMaxAutorise() )
+                            );
+                      }
                    
 
                     $demande->setStatus(0);
