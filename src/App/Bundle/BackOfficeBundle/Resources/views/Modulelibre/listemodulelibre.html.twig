@@ -66,7 +66,7 @@
                 <th>CNE</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Type</th>
+                <th>Nom du module</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -76,7 +76,7 @@
                       <td>{{ demande.etudiant.cne }}</td>
                       <td>{{ demande.etudiant.nom }}</td>
                       <td>{{ demande.etudiant.prenom }}</td>
-                      <td>{{ demande.typeDemande.libelle }}</td>
+                      <td>{{ demande.remarque }}</td>
                       <td class="table-action">
                            <a href="{{ path( 'traitermodulelibre', { id: demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
                       </td>
