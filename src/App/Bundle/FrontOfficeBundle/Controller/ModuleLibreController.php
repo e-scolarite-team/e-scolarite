@@ -296,15 +296,14 @@ class ModuleLibreController extends Controller
                }    
              }                  
      
-          public function EnvoyerDemandeModule5Action() {
+   public function EnvoyerDemandeModule5Action() {
 
            $em = $this->getDoctrine()->getEntityManager();
         
             if($this->get('request')->request->get('modulelibre') != ""){           
 
                     $em = $this->getDoctrine()->getEntityManager();
-
-
+                    $nommodulelibre=$this->get('request')->request->get('nommodulelibre');
                     $etudiant = $this->getUser();
                     
                     $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
@@ -341,18 +340,26 @@ class ModuleLibreController extends Controller
                     ->setParameter(3, $date_debut)
                     ->setParameter(4, $date_fin)
                     ->setParameter(5, 2);
+
                     $Demandes = $qb->getQuery()->getResult();
-                     $count = count($Demandes);
-                    if( $count >= $typedemande->getMaxAutorise() ){
-                     return $this->render(
+
+                    $count = count($Demandes);
+                   if( $count >= $typedemande->getMaxAutorise() ){
+                   return $this->render(
                                 'AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig', 
                                 array( 'count' => $typedemande->getMaxAutorise() )
                             );
-                      }
+            }
+                
+
                    
 
                     $demande->setStatus(0);
                     $demande->setNotified(0);
+                    $demande->setNotified(0);
+                    $demande->setRemarque($nommodulelibre);
+
+
                 
                     $em->persist($demande);
                     $etatDemandes = new EtatDemande();
@@ -369,6 +376,7 @@ class ModuleLibreController extends Controller
         
            
     }
+
 }
 
 
