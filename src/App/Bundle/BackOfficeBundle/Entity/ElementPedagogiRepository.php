@@ -15,4 +15,59 @@ class ElementPedagogiRepository extends EntityRepository
 	public function deleteAll(){
 		$this->getEntityManager()->createQuery("delete from AppBackOfficeBundle:ElementPedagogi")->execute();
 	}
+        
+         public function getNotEtudiedModules($filiere, $NVModules, $VModules, $SxM1, $SxM2, $SxM3, $SxM4, $SyM1, $SyM2, $SyM3, $SyM4){
+          
+               $em = $this->getEntityManager();
+               $query = $em->createQueryBuilder();
+               $query->select('e')
+               ->from('App\Bundle\BackOfficeBundle\Entity\ElementPedagogi', 'e')
+               ->Where($query->expr()->like('e.code', '?4'))
+               ->orWhere($query->expr()->like('e.code', '?5'))
+               ->orWhere($query->expr()->like('e.code', '?6'))
+               ->orWhere($query->expr()->like('e.code', '?7'))
+               ->orWhere($query->expr()->like('e.code', '?8'))
+               ->orWhere($query->expr()->like('e.code', '?9'))
+               ->orWhere($query->expr()->like('e.code', '?10'))
+               ->orWhere($query->expr()->like('e.code', '?11'))
+               ->andWhere($query->expr()->eq('e.nature', '?3'))
+               ->andWhere($query->expr()->like('e.code', '?1'))
+               ->andWhere($query->expr()->notIn('e.code', '?12'))
+               ->andWhere($query->expr()->notIn('e.code', '?13'))
+               ->setParameter(1, $filiere)
+               ->setParameter(12, $NVModules)
+               ->setParameter(13, $VModules)
+               ->setParameter(3, "MOD")
+               ->setParameter(4, $SxM1)
+               ->setParameter(5, $SxM2)
+               ->setParameter(6, $SxM3)
+               ->setParameter(7, $SxM4)
+               ->setParameter(8, $SyM1)
+               ->setParameter(9, $SyM2)
+               ->setParameter(10, $SyM3)
+               ->setParameter(11, $SyM4);
+               $ModulesNotEtudied = $query->getQuery()->getResult();
+               return $ModulesNotEtudied;          
+        }
+        
+        public function getCountNotEtudiedModulesS6M3M4($filiere, $NVModules, $VModules, $SxM1, $SxM2){ 
+               $em = $this->getEntityManager();
+               $query = $em->createQueryBuilder();
+               $query->select('e')
+               ->from('App\Bundle\BackOfficeBundle\Entity\ElementPedagogi', 'e')
+               ->Where($query->expr()->like('e.code', '?4'))
+               ->orWhere($query->expr()->like('e.code', '?5'))
+               ->andWhere($query->expr()->eq('e.nature', '?3'))
+               ->andWhere($query->expr()->like('e.code', '?1'))
+               ->andWhere($query->expr()->notIn('e.code', '?12'))
+               ->andWhere($query->expr()->notIn('e.code', '?13'))
+               ->setParameter(1, $filiere)
+               ->setParameter(12, $NVModules)
+               ->setParameter(13, $VModules)
+               ->setParameter(3, "MOD")
+               ->setParameter(4, $SxM1)
+               ->setParameter(5, $SxM2);
+               $ModulesNotEtudied = $query->getQuery()->getResult();
+               return count($ModulesNotEtudied);        
+        }
 }
