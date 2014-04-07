@@ -7,7 +7,7 @@
   <meta name="author" content="">
   <link rel="shortcut icon" href="{{ asset('images/favicon.png')}}" type="image/png">
 
-  <title>Point d'access securise</title>
+  <title>Point d'accès sécurisé</title>
 
   <link href="{{ asset('css/style.default.css')}}" rel="stylesheet">
 
@@ -40,7 +40,7 @@
                 
                     <div class="mb20"></div>
                 
-                    <h5><strong>Bienvenue a l'espace etudiant de E-scolarite</strong></h5>
+                    <h5><strong>Bienvenue à l'espace étudiant de E-scolarite</strong></h5>
                     <img src="{{ asset('images/logo-fp.png') }}">
                     <div class="mb20"></div>
                 </div><!-- signin0-info -->
@@ -50,18 +50,18 @@
             <div class="col-md-5">
                 
                 <form method="post" action="{{ path('front_login_check') }}" id="login" method="post">
-                    <h4 class="nomargin">Point d'access</h4>
-                    <p class="mt5 mb20">Espace etudiant de E-scolarite.</p>
-                    <label for="username">Code national d'etudiant :</label>
-                    <input type="text" style="margin-top:0px !important;margin-bottom:10px" class="form-control uname" id="username" name="_username" placeholder="Username" value="{{ last_username }}"/>
-                    <label for="password">Code appogeé :</label>
-                    <input type="password" style="margin-top:0px !important;" class="form-control pword" id="password" name="_password" placeholder="Password" />
+                    <h4 class="nomargin">Point d'accès</h4>
+                    <p class="mt5 mb20">Espace étudiant de E-scolarite.</p>
+                    <label for="username">Code national de l'étudiant :</label>
+                    <input type="text" style="margin-top:0px !important;margin-bottom:10px" class="form-control uname" id="username" name="_username" placeholder="CNE" value="{{ last_username }}"/>
+                    <label for="password">Code apogée :</label>
+                    <input type="password" style="margin-top:0px !important;" class="form-control pword" id="password" name="_password" placeholder="CODE APOGEE" />
                     {% if errors %}
           					<div class="nNote nFailure">
           						<p>{{ errors.message }}</p>
           					</div>
           					{% endif %}
-                    <button class="btn btn-success btn-block" type="submit">log in</button>
+                    <button class="btn btn-success btn-block" type="submit">Connexion</button>
                     
                 </form>
             </div><!-- col-sm-5 -->
@@ -70,10 +70,10 @@
         
         <div class="signup-footer">
             <div class="pull-left">
-                &copy; 2014. Tous droits réservés à la faculte polydisciplinaire de Bni-melal. 
+                &copy; 2014. Tous droits réservés à la faculté polydisciplinaire de Beni-mellal. 
             </div>
             <div class="pull-right">
-                Créer par : <a href="http://usms.ma/" target="_blank">Université Sultan Moulay Slimane - Bni-melal</a>
+                Crée par : <a href="http://usms.ma/" target="_blank">Université Sultan Moulay Slimane - Beni-mellal</a>
             </div>
         </div>
         
