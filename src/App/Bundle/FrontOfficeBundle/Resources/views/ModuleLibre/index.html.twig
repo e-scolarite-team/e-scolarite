@@ -54,7 +54,7 @@
                           {% for  module in moduleSemestre %}
                           <tr><td>&nbsp;&nbsp;<td>{{module.lib}}</td></tr>
                           {% endfor %}    
-                          <tr><td>{{nonValider.element.code}}&nbsp;&nbsp;</td><td>{{nonValider.element.lib}}</td></tr>   
+                          <tr>&nbsp;&nbsp;</td><td>{{nonValider.element.lib}}</td></tr>   
                        </table>
                       </div>
                       
@@ -64,7 +64,7 @@
                         <div class="col-sm-4">
                           <div >
                         <input type="checkbox" name="modulelibre" value="{{ moduleLibre.code}}" >
-                        --{{ moduleLibre.lic}}
+                        {{ moduleLibre.lic}}
                       </div>
                         </div>
                       </div>
