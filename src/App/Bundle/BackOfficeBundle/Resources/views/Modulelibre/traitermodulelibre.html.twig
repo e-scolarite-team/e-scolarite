@@ -51,7 +51,15 @@
 </li>
 {% endif %}
 {% endblock %}
+{% block pageTitle %}
+        <i class="glyphicon glyphicon-refresh"> </i>Demande Module libre
+      {% endblock %}
+       {% block breadcrumb %}
+          <li><a class="active">demande</a></li>
+          <li class="active">traitement module libre</li>
+          {% endblock %}
 
+{% block content %}
 {% block content %}
 <div class="col-md-12">
           <form id="basicForm" action="{{ path( 'traitermodulelibre', { id: demande.id } ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
@@ -61,7 +69,7 @@
                   <a href="#" class="minimize">−</a>
                 </div>
                 <h4 class="panel-title">Traitement d'un module libre</h4>
-                <p>Vous pouvez fixer un Rendez-vous pour cette demande!</p>
+                <p>Vous pouvez fixer un Rendez-vous pour cette demande</p>
               </div>
               <div class="panel-body">
                 <div class="form-group">

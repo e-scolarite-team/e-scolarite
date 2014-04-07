@@ -200,22 +200,7 @@ public function traiterdemandeAction($id) {
         
         public function reponceAutoAction()
         {
-            // $date=new \DateTime('now');
-
-            // $dateInterval=(\date_create("2014-04-01")->diff($date));
-            // $dateIntervalStr=$dateInterval->format('%R%a');
-            // return new Response($dateIntervalStr);     
-            //      ->set('d.status', '?1')
-                // ->set('d.updatedAt', '?3')
-                // ->set('d.dateReponce', '?4')
-
-                // ->set('d.notified', '?5')
-                // 
-                // ->setParameter(1, 1)
-                //
-                // ->setParameter(3, new \DateTime())
-                // ->setParameter(5, 0)
-                // ->setParameter(4, new \DateTime($rv));
+           
            $em = $this->getDoctrine()->getEntityManager();
            $rv = \DateTime::createFromFormat('d-m-Y', $this->get('request')->request->get('rv'))->format('Y-m-d');
            $demandeWithStatusZero=$em->getRepository("AppBackOfficeBundle:Demande")->findByStatus(0);
@@ -225,13 +210,13 @@ public function traiterdemandeAction($id) {
             $demandeWithStatusZero[$i]->setUpdatedAt(new \DateTime());
             $demandeWithStatusZero[$i]->setDateReponce(\date_create($rv));
             $demandeWithStatusZero[$i]->setNotified(0);
+            $demandeWithStatusZero[$i]->setRemarque($this->get('request')->request->get('remarque'));
             $em->persist($demandeWithStatusZero[$i]);
             $em->flush();
             $this->updateEtademande($demandeWithStatusZero[$i]);
 
         }
-           //return new Response($demandeWithStatusZero[0]->getStatus());
-           // return \getType($rv);
+           
         return $this->redirect($this->generateUrl('listedemande'));
         
     }

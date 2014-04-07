@@ -40,7 +40,14 @@
 </li>
 {% endif %}
 {% endblock %}
+{% block pageTitle %}
+  <i class="fa fa-book"></i> Type de Reclamation <span>Modification</span>
+{% endblock %}
 
+{% block breadcrumb %}
+<li><a href="{{ path('type-reclamation') }}">Type de Reclamation</a></li>
+<li class="active">Modifier</li>
+{% endblock %}
 {% block content %}
   <div class="panel panel-default">
         {{ form_start(edit_form,{'attr' : {'class' : 'form-horizontal form-bordered', 'novalidate':'novalidate'}})}}

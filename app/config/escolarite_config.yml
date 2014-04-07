@@ -6,4 +6,4 @@ escolarite:
     activate_service: yes
     auto_demands_answers:
         status: activate
-        amount: 1
+        amount: 10
