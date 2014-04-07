@@ -5,11 +5,12 @@
 
 {% endblock %}
 {% block breadcrumb %}
+  <li><a href="{{ path('notification-admin') }}">Notification</a></li>
           <li class="active">traiter une demande</li>
 
 {% endblock %}
 
-{% block title %} Traitement de la demande {% endblock %}
+{% block title %} Traitement des modules libre {% endblock %}
 
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -56,7 +57,7 @@
                 <div class="panel-btns">
                   <a href="#" class="minimize">−</a>
                 </div>
-                <h4 class="panel-title">Traitement de la demande</h4>
+                <h4 class="panel-title">Traitement d'un module libre</h4>
                 <p>Vous pouvez fixer un Rendez-vous pour cette demande!</p>
               </div>
               <div class="panel-body">
