@@ -1,14 +1,6 @@
 {% extends "::layout.html.twig" %}
-{% block pageTitle %}
-    <i class="fa fa-file-text"></i>
-    Demande
 
-{% endblock %}
-{% block breadcrumb %}
-          <li class="active">lister les demandes</li>
-
-{% endblock %}
-{% block title %} Demandes Reçus {% endblock %}
+{% block title %} Les modules libres {% endblock %}
 
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -49,7 +41,7 @@
 
 {% block content %}
 <div class="col-md-12">
-          <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate">
+          <form id="basicForm" action="" class="form-horizontal" novalidate="novalidate">
           <div class="panel panel-default">
               <div class="panel-heading">
                 <div class="panel-btns">
