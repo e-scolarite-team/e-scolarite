@@ -41,7 +41,13 @@
 </li>
 {% endif %}
 {% endblock %}
-
+{% block pageTitle %}
+        <i class="glyphicon glyphicon-refresh"> </i>Demande Module Libre
+      {% endblock %}
+       {% block breadcrumb %}
+          <li><a class="active">demande</a></li>
+          <li class="active">liste module libre</li>
+          {% endblock %}
 {% block content %}
 <div class="col-md-12">
           <form id="basicForm" action="" class="form-horizontal" novalidate="novalidate">
