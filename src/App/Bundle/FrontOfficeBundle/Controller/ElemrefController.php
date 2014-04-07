@@ -55,6 +55,7 @@ class ElemrefController extends Controller {
                 $entity->setEtudiant($etudiant);
                 $entity->setDonnees($elementsARef);
                 $entity->setTypeDemande($typeDem[0]);
+                $entity->setNotified(0);
                 //$entity->setReponse($reponse);
                 
                 
