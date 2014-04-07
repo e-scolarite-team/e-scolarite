@@ -19,8 +19,8 @@ errors.config.auto.demandestate: "Verifier votre choix de l'etat de l'automatisa
 errors.config.auto.amount: "la valeur saisi dans le champ nombre des demandes automatique doit etre superieur ou egale a {{ compared_value }}"
 
 errors.config.info.semester.invalidMessage: "la valeur saisi dans le champ semesttere doit etre numerique"
-errors.config.info.semester.maxMessage: "le semesttre n'est pas valide : {{limit}}"
-errors.config.info.semester.minMessage: "le semesttre n'est pas valide : {{limit}}"
+errors.config.info.semester.maxMessage: "la semesttre n'est pas valide"
+errors.config.info.semester.minMessage: "la semesttre n'est pas valide"
 errors.config.info.dateformat: "Veuillez remplir le champ format de la date"
 errors.config.info.datetimeformat: "Veuillez remplir le champ format de la date/heur"
 errors.config.info.yearuniv: "l'annee universitaire n'est pas valide"

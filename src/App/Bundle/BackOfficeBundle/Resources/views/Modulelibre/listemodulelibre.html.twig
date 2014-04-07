@@ -1,6 +1,6 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %} Element a refaire {% endblock %}
+{% block title %} Les modules libres {% endblock %}
 
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -34,27 +34,20 @@
       <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
     </li>
     <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
-    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>liste ele à refaire</a></li>
   </ul>
 </li>
 {% endif %}
 {% endblock %}
-{% block pageTitle %}
-        <i class="glyphicon glyphicon-refresh"> </i>Demande Refaire un élement
-      {% endblock %}
-       {% block breadcrumb %}
-          <li><a class="active">demande</a></li>
-          <li class="active">liste élement à refaire</li>
-          {% endblock %}
+
 {% block content %}
 <div class="col-md-12">
-          <form id="basicForm" action="{{ path( 'listeelementrefaire' ) }}" class="form-horizontal" novalidate="novalidate">
+          <form id="basicForm" action="" class="form-horizontal" novalidate="novalidate">
           <div class="panel panel-default">
               <div class="panel-heading">
                 <div class="panel-btns">
                   <a href="#" class="minimize">−</a>
                 </div>
-                <h4 class="panel-title">Liste des demandes de refaire un élement</h4>
+                <h4 class="panel-title">Liste des demandes reçus pour obtenir un module libre </h4>
               </div>
               <div class="panel-body" >
           <div class="table-responsive">
@@ -64,30 +57,22 @@
                 <th>CNE</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>élement à refaire</th>
-                <th>Etat</th>
+                <th>Type</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-
-              {% for etatdemande in etatdemandes %}  
+              {% for demande in demandes %}  
                     <tr>
-                      <td>{{ etatdemande.demande.etudiant.cne }}</td>
-                      <td>{{ etatdemande.demande.etudiant.nom }}</td>
-                      <td>{{ etatdemande.demande.etudiant.prenom }}</td>
-                      <td>{{ etatdemande.demande.remarque }}</td>
-                      <td>{{ etatdemande.etat }}</td>  
-                      {% if etatdemande.etat == 'en attente' %}
+                      <td>{{ demande.etudiant.cne }}</td>
+                      <td>{{ demande.etudiant.nom }}</td>
+                      <td>{{ demande.etudiant.prenom }}</td>
+                      <td>{{ demande.typeDemande.libelle }}</td>
                       <td class="table-action">
-                           <a href="{{ path( 'traiterelementrefaire', { id: etatdemande.demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
+                           <a href="{{ path( 'traitermodulelibre', { id: demande.id } ) }}" class="btn btn-success" id="growl-primary">Traiter</a>
                       </td>
-                      {% else %} 
-                        <td class="table-action">
-                           
-                        </td>
-                      {% endif %}
-                    </tr>             
+                    </tr>              
+
             {% endfor %}
             </tbody>
           </table>

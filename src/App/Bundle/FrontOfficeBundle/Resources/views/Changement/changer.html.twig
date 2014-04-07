@@ -1,9 +1,9 @@
 {% extends "::frontend.html.twig" %}
 {% block breadcrumb %}
-  <li>changement de module</li>
-          <li class="active">changer</li>
-
+    <li>changement de module</li>
+    <li class="active">changer</li>
 {% endblock %}
+
 {% block mainMenu %}
 <li class="nav-parent">
   <a href="#"><i class="fa fa-maxcdn"></i> <span>Reclamations</span></a>
@@ -19,9 +19,11 @@
   <ul class="children" style="display: block;">
     <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Consulter les rendez-vous</a></li>
     <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demande une piece</a></li>
+    {% if app.session.get('serviceState') == 'yes' %}
     <li><a href="{{ path('changer') }}"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
     <li><a href="{{ path('module_libre') }}"><i class="fa fa-caret-right"></i>Module libre</a></li>
-
+    <li><a href="{{ path('ElemRef') }}"><i class="fa fa-caret-right"></i>Elément à refaire</a></li>
+    {% endif %}
   </ul>
 </li>
 {% endblock %}

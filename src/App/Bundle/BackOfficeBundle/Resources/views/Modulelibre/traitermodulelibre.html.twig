@@ -10,14 +10,13 @@
 
 {% endblock %}
 
-{% block title %} Traitement de la demande {% endblock %}
+{% block title %} Traitement des modules libre {% endblock %}
 
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
 <li class="nav-parent">
   <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
   <ul class="children">
-    <li><a href="{{ path('config_page') }}"><i class="fa fa-caret-right"></i>Automatisation</a></li>
     <li>
       <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
     </li>
@@ -45,7 +44,6 @@
       <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
     </li>
     <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
-    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>liste ele à refaire</a></li>
   </ul>
 </li>
 {% endif %}
@@ -53,21 +51,20 @@
 
 {% block content %}
 <div class="col-md-12">
-  
           <form id="basicForm" action="{{ path( 'traiterdemande', { id: demande.id } ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
           <div class="panel panel-default">
               <div class="panel-heading">
                 <div class="panel-btns">
                   <a href="#" class="minimize">−</a>
                 </div>
-                <h4 class="panel-title">Traitement de la demande</h4>
+                <h4 class="panel-title">Traitement d'un module libre</h4>
                 <p>Vous pouvez fixer un Rendez-vous pour cette demande!</p>
               </div>
               <div class="panel-body">
                 <div class="form-group">
                   <label class="col-sm-3 control-label"> CNE </label>
                   <div class="col-sm-9">
-                      <input type="text" name="cne" class="form-control"  readonly="true" required="" value="{{ demande.id }}" >
+                      <input type="text" name="cne" class="form-control"  readonly="true" required="" value="{{ demande.etudiant.cne }}" >
                   </div>
                 </div>
                 
@@ -84,7 +81,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label"> Type de pièce </label>
+                  <label class="col-sm-3 control-label"> Type de la demande </label>
                   <div class="col-sm-9">
                     <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.typeDemande.libelle }}" >
                   </div>
@@ -97,15 +94,12 @@
 
 </div>
 </div>
-             {% if error %}
-                <div class="form-group has-error">
-             {% else %}
+             
               <div class="form-group">
-              {% endif %}
                   <label class="col-sm-3 control-label"> Rendez-vous <span class="asterisk">*</span></label>
                  <div class="input-group">
 
-                <input type="text" class="form-control" placeholder="dd-mm-yy" rea id="datepicker" name="rv" value="{{demande.dateReponce|date("d-m-Y")}}">
+                <input type="text" class="form-control" placeholder="dd-mm-yy" id="datepicker" name="rv" >
 
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
               </div>
@@ -140,7 +134,6 @@
       // Date Picker
 
         jQuery('#datepicker').datepicker({ dateFormat: "dd-mm-yy" });
-         
       });
 
   </script>
