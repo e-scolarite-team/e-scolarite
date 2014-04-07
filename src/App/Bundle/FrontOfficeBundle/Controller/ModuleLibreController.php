@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Bundle\BackOfficeBundle\Entity\Etudiant;
 use App\Bundle\BackOfficeBundle\Entity\ResultatElp;
 use App\Bundle\BackOfficeBundle\Entity\Demande;
+use App\Bundle\BackOfficeBundle\Entity\EtatDemande;
 use App\Bundle\BackOfficeBundle\Entity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
