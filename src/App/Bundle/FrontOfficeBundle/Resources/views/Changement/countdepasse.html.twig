@@ -1,9 +1,15 @@
 {% extends "::frontend.html.twig" %}
-{% block breadcrumb %}
-  <li>changement de module</li>
-          <li class="active">changer</li>
 
+{% block pageTitle %}
+    <i class="fa fa-file-text"></i>
+    Changement de Module
 {% endblock %}
+{% block breadcrumb %}
+  <li>Changement de Module</li>
+{% endblock %}
+      
+{% block title %} Changement de Module : Refuser {% endblock %}
+
 {% block mainMenu %}
 <li class="nav-parent">
   <a href="#"><i class="fa fa-maxcdn"></i> <span>Reclamations</span></a>
@@ -29,7 +35,7 @@
 {% endblock %}
 
 
-{% block title %} Changement de Module : Refuser {% endblock %}
+
 
 {% block content %}
 

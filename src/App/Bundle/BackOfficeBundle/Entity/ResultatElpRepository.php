@@ -128,4 +128,189 @@ class ResultatElpRepository extends EntityRepository
              return $qb->getResult();
             
         }
+        
+         public function getAllValideModulesforEtudiant ($etudiant){
+            $em = $this->getEntityManager();
+            $query = $em->createQueryBuilder();
+            $query->select('r', 'e')
+            ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+            ->leftJoin('r.element', 'e')
+            ->Where($query->expr()->eq('r.status', '?1'))
+            ->andWhere($query->expr()->eq('r.etudiant', '?2'))
+            ->andWhere($query->expr()->eq('e.nature', '?3'))
+            ->setParameter(1, "V")
+            ->setParameter(2, $etudiant)
+            ->setParameter(3, "MOD");  
+            $tous_les_modules_valider = $query->getQuery()->getResult();
+            return $tous_les_modules_valider;
+        }
+        
+        
+        public function getCountPrerequisiteModules($etudiant, $M1, $M2){
+            $em = $this->getEntityManager();
+            $query = $em->createQueryBuilder();
+            $query->select('r', 'e')
+            ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+            ->leftJoin('r.element', 'e')
+            ->Where($query->expr()->like('e.code', '?4'))
+            ->orWhere($query->expr()->like('e.code', '?5'))
+            ->andWhere($query->expr()->eq('r.status', '?1'))
+            ->andWhere($query->expr()->eq('r.etudiant', '?2'))
+            ->andWhere($query->expr()->eq('e.nature', '?3'))
+            ->setParameter(1, "V")
+            ->setParameter(2, $etudiant)
+            ->setParameter(3, "MOD")
+            ->setParameter(4, $M1)
+            ->setParameter(5, $M2);  
+            $CountPrerequisiteModules = $query->getQuery()->getResult();    
+            return $CountPrerequisiteModules;
+        }
+        
+        
+        public function getMaxYearForEtudiant($etudiant){
+            $em = $this->getEntityManager();
+            $query = $em->createQueryBuilder();
+            $query->select('r')
+            ->addSelect($query->expr()->max('r.annee'))
+            ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+            ->andWhere($query->expr()->eq('r.etudiant', '?2'))
+            ->setParameter(2, $etudiant);
+            $max = $query->getQuery()->getResult();
+            $maxYear = (int) $max[0][1];
+            return $maxYear;
+        }
+        
+        
+        public function getNVModulesInLastYearforEtudiant($etudiant, $year, $SxM1, $SxM2, $SxM3, $SxM4, $SyM1, $SyM2, $SyM3, $SyM4){
+               $em = $this->getEntityManager();
+               $query = $em->createQueryBuilder();
+               $query->select('r', 'e')
+               ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+               ->leftJoin('r.element', 'e')
+               ->Where($query->expr()->like('e.code', '?4'))
+               ->orWhere($query->expr()->like('e.code', '?5'))
+               ->orWhere($query->expr()->like('e.code', '?6'))
+               ->orWhere($query->expr()->like('e.code', '?7'))
+               ->orWhere($query->expr()->like('e.code', '?8'))
+               ->orWhere($query->expr()->like('e.code', '?9'))
+               ->orWhere($query->expr()->like('e.code', '?10'))
+               ->orWhere($query->expr()->like('e.code', '?11'))
+               ->andWhere($query->expr()->eq('r.status', '?1'))
+               ->andWhere($query->expr()->eq('r.etudiant', '?2'))
+               ->andWhere($query->expr()->eq('e.nature', '?3'))
+               ->andWhere($query->expr()->eq('r.annee', '?12'))
+               ->setParameter(1, "NV")
+               ->setParameter(2, $etudiant)
+               ->setParameter(3, "MOD")
+               ->setParameter(4, $SxM1)
+               ->setParameter(5, $SxM2)
+               ->setParameter(6, $SxM3)
+               ->setParameter(7, $SxM4)
+               ->setParameter(8, $SyM1)
+               ->setParameter(9, $SyM2)
+               ->setParameter(10, $SyM3)
+               ->setParameter(11, $SyM4)
+               ->setParameter(12, $year);
+               $NVModules = $query->getQuery()->getResult();
+               return $NVModules;
+        }
+        
+         public function getVModulesforEtudiant($etudiant, $SxM1, $SxM2, $SxM3, $SxM4, $SyM1, $SyM2, $SyM3, $SyM4){
+               $em = $this->getEntityManager();
+               $query = $em->createQueryBuilder();
+               $query->select('r', 'e')
+               ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+               ->leftJoin('r.element', 'e')
+               ->Where($query->expr()->like('e.code', '?4'))
+               ->orWhere($query->expr()->like('e.code', '?5'))
+               ->orWhere($query->expr()->like('e.code', '?6'))
+               ->orWhere($query->expr()->like('e.code', '?7'))
+               ->orWhere($query->expr()->like('e.code', '?8'))
+               ->orWhere($query->expr()->like('e.code', '?9'))
+               ->orWhere($query->expr()->like('e.code', '?10'))
+               ->orWhere($query->expr()->like('e.code', '?11'))
+               ->andWhere($query->expr()->eq('r.status', '?1'))
+               ->andWhere($query->expr()->eq('r.etudiant', '?2'))
+               ->andWhere($query->expr()->eq('e.nature', '?3'))
+               ->setParameter(1, "V")
+               ->setParameter(2, $etudiant)
+               ->setParameter(3, "MOD")
+               ->setParameter(4, $SxM1)
+               ->setParameter(5, $SxM2)
+               ->setParameter(6, $SxM3)
+               ->setParameter(7, $SxM4)
+               ->setParameter(8, $SyM1)
+               ->setParameter(9, $SyM2)
+               ->setParameter(10, $SyM3)
+               ->setParameter(11, $SyM4);
+               $VModules = $query->getQuery()->getResult();
+               return $VModules;
+        }
+        
+        public function getPositionOf($pos, $etudiant, $SxM1, $SxM2, $SxM3, $SxM4, $SyM1, $SyM2, $SyM3, $SyM4){
+               $em = $this->getEntityManager();
+               $query = $em->createQueryBuilder();
+               $query->select('r', 'e')
+               ->addSelect("MAX(LOCATE('$pos', e.code))")
+               ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+               ->leftJoin('r.element', 'e')
+               ->Where($query->expr()->like('e.code', '?4'))
+               ->orWhere($query->expr()->like('e.code', '?5'))
+               ->orWhere($query->expr()->like('e.code', '?6'))
+               ->orWhere($query->expr()->like('e.code', '?7'))
+               ->orWhere($query->expr()->like('e.code', '?8'))
+               ->orWhere($query->expr()->like('e.code', '?9'))
+               ->orWhere($query->expr()->like('e.code', '?10'))
+               ->orWhere($query->expr()->like('e.code', '?11'))
+               ->andWhere($query->expr()->eq('r.status', '?1'))
+               ->andWhere($query->expr()->eq('r.etudiant', '?2'))
+               ->andWhere($query->expr()->eq('e.nature', '?3'))
+               ->setParameter(1, "V")
+               ->setParameter(2, $etudiant)
+               ->setParameter(3, "MOD")
+               ->setParameter(4, $SxM1)
+               ->setParameter(5, $SxM2)
+               ->setParameter(6, $SxM3)
+               ->setParameter(7, $SxM4)
+               ->setParameter(8, $SyM1)
+               ->setParameter(9, $SyM2)
+               ->setParameter(10, $SyM3)
+               ->setParameter(11, $SyM4);
+               $positionof = $query->getQuery()->getResult();
+               $pos = (int) $positionof[0][1];
+               return $pos;
+        }
+        
+        public function getFiliere($pos, $etudiant){
+              $em = $this->getEntityManager();
+               $Qr = $em->createQueryBuilder();
+               $Qr->select('r', 'e')
+               ->addSelect("SUBSTRING(e.code, 1, $pos)")
+               ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+               ->leftJoin('r.element', 'e')
+               ->Where($Qr->expr()->eq('r.etudiant', '?2'))
+               ->andWhere($Qr->expr()->eq('e.nature', '?3'))
+               ->setParameter(2, $etudiant)
+               ->setParameter(3, "MOD");
+               $FLR = $Qr->getQuery()->getResult();
+               $flr = $FLR[0][1];
+               $filiere = $flr . '%';
+               return $filiere;
+        }
+        
+        public function getVSemestreNumber($etudiant){
+            $em = $this->getEntityManager();
+            $query = $em->createQueryBuilder();
+            $query->select('r', 'e')
+            ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
+            ->leftJoin('r.element', 'e')
+            ->Where($query->expr()->eq('r.etudiant', '?2'))
+            ->andWhere($query->expr()->in('e.nature', '?3')) 
+            ->andWhere($query->expr()->eq('r.status', '?1'))
+            ->setParameter(1, "V")
+            ->setParameter(2, $etudiant)
+            ->setParameter(3, array ( "SM01" , "SM02", "SM03", "SM04"));  
+            $VSemestre = $query->getQuery()->getResult();
+            return count($VSemestre);
+        }
 }
