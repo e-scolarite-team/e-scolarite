@@ -45,12 +45,13 @@
                   <a href="#" class="minimize">−</a>
                 </div>
                 <h4 class="panel-title">Demande de Pièces</h4>
-                <p>Vous pouvez faire votre demande pour la pièce que vous voulez récuprérer auprès du service de scolartié.</p>
+                <p>Vous pouvez faire votre demande pour la pièce que vous voulez récupérer auprès du service de scolartié.</p>
               </div>
               <div class="panel-body">
           <div class="form-group">
             <div class="col-md-6">
-              <label class="col-sm-3 control-label">Type de Pièce</label>
+              <label class=" col-sm-3 control-label">Type de Pièce</label>
+              <div class="col-sm-6">
               <select name="demande" class="form-control mb15">
                {% for  typedemande in typesdemandes %} 
                  
@@ -58,9 +59,31 @@
               
                {% endfor %}
                </select>
-               <button class="btn btn-primary">Envoyer</button>
+               </div>
+ 
+               
           </div>
-          </div>        
+          </div>
+           {% if error %}
+                <div class="form-group has-error">
+             {% else %}
+              <div class="form-group">
+              {% endif %}
+            <div class="col-md-6">
+                  <label class="col-sm-3 control-label"> Motif <span class="asterisk">*</span></label>
+                  <div class="col-sm-6">
+                    <input type="text" name="motif" class="form-control"  >
+                  </div>
+                </div>  
+              </div>
+           <div class="row">
+            <div class="col-sm-10 col-sm-offset-3">
+                   
+                    <button class="btn btn-primary">Envoyer</button>
+                  
+                </div>
+                 </div>
+
         </div><!-- panel-body -->
       </div><!-- panel -->
     </form>     

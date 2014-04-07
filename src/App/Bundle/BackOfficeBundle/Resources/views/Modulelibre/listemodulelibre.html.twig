@@ -1,6 +1,6 @@
 {% extends "::layout.html.twig" %}
 
-{% block title %} Les modules libres {% endblock %}
+{% block title %} Demandes pour un module libre Reçus {% endblock %}
 
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -8,22 +8,22 @@
   <a href="#"><i class="fa fa-home"></i> <span>Configuration</span></a>
   <ul class="children">
     <li>
-      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
+      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter un type de réclamations</a>
     </li>
-    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
-    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
-    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
+    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste des types de réclamations</a></li>
+    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i> Ajouter un type de demandes</a></li>
+    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste des types de demandes</a></li>
     <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
     <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
-    <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Créer un Administrateur</a></li>
   </ul>
 </li>
 {% else %}
 <li class="nav-parent">
-  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <a href="#"><i class="fa fa-home"></i> <span>Réclamations</span></a>
   <ul class="children">
     <li>
-      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des réclamations</a>
     </li>
   </ul>
 </li>
@@ -31,14 +31,23 @@
   <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
   <ul class="children" style="display: block;">
     <li>
-      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
+      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Demandes de pièces</a>
     </li>
-    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
+    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Changement de module</a></li>
+    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>Elément à refaire</a></li>
+    <li><a href="{{ path('listemodulelibre') }}"><i class="fa fa-caret-right"></i> Module libre</a></li>
+
   </ul>
 </li>
 {% endif %}
 {% endblock %}
-
+{% block pageTitle %}
+        <i class="glyphicon glyphicon-refresh"> </i>Demandes Module Libre
+      {% endblock %}
+       {% block breadcrumb %}
+          <li><a class="active">demande</a></li>
+          <li class="active">liste module libre</li>
+          {% endblock %}
 {% block content %}
 <div class="col-md-12">
           <form id="basicForm" action="" class="form-horizontal" novalidate="novalidate">
@@ -47,7 +56,7 @@
                 <div class="panel-btns">
                   <a href="#" class="minimize">−</a>
                 </div>
-                <h4 class="panel-title">Liste des demandes reçus pour obtenir un module libre </h4>
+                <h4 class="panel-title">Liste des demandes de module libre </h4>
               </div>
               <div class="panel-body" >
           <div class="table-responsive">

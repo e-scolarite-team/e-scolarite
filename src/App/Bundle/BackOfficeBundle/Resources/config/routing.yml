@@ -67,14 +67,13 @@ config_page:
     
 listemodulelibre:
     pattern:  /listemodulelibre
-    defaults: { _controller: AppBackOfficeBundle:Modulelibre:listemodulelibre }
+    defaults: { _controller: AppBackOfficeBundle:ModuleLibre:listemodulelibre }
 
 traitermodulelibre:
     pattern:  /traitermodulelibre/{id}
-    defaults: { _controller: AppBackOfficeBundle:Modulelibre:traitermodulelibre }
+    defaults: { _controller: AppBackOfficeBundle:ModuleLibre:traitermodulelibre }
     requirements:
           id: \d+
-
 
 
 

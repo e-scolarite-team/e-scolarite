@@ -1,4 +1,10 @@
 {% extends "::frontend.html.twig" %}
+
+{% block pageTitle %}
+    <i class="fa fa-file-text"></i>
+    Changement de Module
+{% endblock %}
+
 {% block breadcrumb %}
     <li>changement de module</li>
     <li class="active">changer</li>
@@ -6,19 +12,19 @@
 
 {% block mainMenu %}
 <li class="nav-parent">
-  <a href="#"><i class="fa fa-maxcdn"></i> <span>Reclamations</span></a>
+  <a href="#"><i class="fa fa-maxcdn"></i> <span>Réclamations</span></a>
   <ul class="children">
     <li>
-      <a href="{{ path('listerReclamationEtud') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
-      <a href="{{ path('reclamationEtud') }}"><i class="fa fa-caret-right"></i>Envoyer une reclamation</a>
+      <a href="{{ path('listerReclamationEtud') }}"><i class="fa fa-caret-right"></i>Liste des réclamations</a>
+      <a href="{{ path('reclamationEtud') }}"><i class="fa fa-caret-right"></i>Envoyer une réclamation</a>
     </li>
   </ul>
 </li>
 <li class="nav-parent  active nav-active">
   <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
   <ul class="children" style="display: block;">
-    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Consulter les rendez-vous</a></li>
-    <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demande une piece</a></li>
+    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i> Mes rendez-vous</a></li>
+    <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demander une pièce</a></li>
     {% if app.session.get('serviceState') == 'yes' %}
     <li><a href="{{ path('changer') }}"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
     <li><a href="{{ path('module_libre') }}"><i class="fa fa-caret-right"></i>Module libre</a></li>
@@ -43,65 +49,72 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-md-6">
-                        
+                        <div style="float:left; margin-right: 5em;margin-left: 1em;">
                         {% if modules_non_etudierS1S3 != "" %}
-                            <h3>Premiere Semestre</h3>
-                            <h4>Module a etudier</h4>
+                            <h3>Première Session</h3>
+                            <h5>Modules a étudier</h5>
                             <ul>
                                 {% for mnv in modules_non_validerS1S3 %}
-                                <li>{{ mnv.element.code }} &nbsp; : &nbsp;&nbsp; {{ mnv.element.lib }}</li>
+                                <li>{{ mnv.element.lib }}</li>
                                 {% endfor %}
                             </ul>
                             <label >Choix de Module</label><br />
                                 {% for mnv in modules_non_etudierS1S3 %}
-                            <input  type="radio" name="module1s" value="{{ mnv.code }}" checked />&nbsp;{{ mnv.lib }} &nbsp;({{ mnv.code }})<br />
+                            <input  type="radio" name="module1s" value="{{ mnv.code }}" checked />&nbsp;{{ mnv.lib }}<br />
                                 {% endfor %}
                         {% endif %}
-                                    
+                       </div>
+                       <div style="float:left">
                         {% if modules_non_etudierS2S4 != "" %}
-                            <h3>Deuxieme Semestre</h3>
-                            <h4>Module a etudier</h4>
+                            <h3>Deuxième Session</h3>
+                            <h5>Modules a étudier</h5>
                             <ul>
                             {% for mnv in modules_non_validerS2S4 %}
-                            <li>{{ mnv.element.code }} &nbsp; : &nbsp;&nbsp; {{ mnv.element.lib }}</li>
+                            <li>{{ mnv.element.lib }}</li>
                             {% endfor %}
                             </ul>
                             <label >Choix de Module</label><br />
                             {% for mnv in modules_non_etudierS2S4 %}
-                             <input  type="radio" name="module2s" value="{{ mnv.code }}" checked />&nbsp;{{ mnv.lib }} &nbsp;({{ mnv.code }})<br />
+                             <input  type="radio" name="module2s" value="{{ mnv.code }}" checked />&nbsp;{{ mnv.lib }}<br />
                             {% endfor %}  
                         {% endif %}
-                             
+                        </div>
+                        <div style="float:left; margin-right: 5em;margin-left: 1em;">
                         {% if modules_non_etudierS3S5 != "" %}
-                            <h3>Premiere Semestre</h3>
-                            <h4>Module a etudier</h4>
+                            <h3>Première Session</h3>
+                            <h5>Modules a étudier</h5>
                             <ul>
                             {% for mnv in modules_non_validerS3S5 %}
-                            <li>{{ mnv.element.code }} &nbsp; : &nbsp;&nbsp; {{ mnv.element.lib }}</li>
+                            <li>{{ mnv.element.lib }}</li>
                             {% endfor %}
                             </ul>
                             <label >Choix de Module</label><br />
                             {% for mnv in modules_non_etudierS3S5 %}
-                             <input  type="radio" name="module1s" value="{{ mnv.code }}" checked />&nbsp;{{ mnv.lib }} &nbsp;({{ mnv.code }})<br />
+                             <input  type="radio" name="module1s" value="{{ mnv.code }}" checked />&nbsp;{{ mnv.lib }}<br />
                             {% endfor %}  
                         {% endif %}
-                             
+                        </div>  
+                       <div style="float:left">
                         {% if modules_non_etudierS4S6 != "" %}
-                            <h3>Deuxieme Semestre</h3>
-                            <h4>Module a etudier</h4>
+                            <h3>Deuxième Session</h3>
+                            <h5>Modules a étudier</h5>
                             <ul>
                             {% for mnv in modules_non_validerS4S6 %}
-                            <li>{{ mnv.element.code }} &nbsp; : &nbsp;&nbsp; {{ mnv.element.lib }}</li>
+                            <li>{{ mnv.element.lib }}</li>
                             {% endfor %}
                             </ul>
                             <label >Choix de Module</label><br />
                             {% for mnv in modules_non_etudierS4S6 %}
-                             <input  type="radio" name="module2s" value="{{ mnv.code }}" checked />&nbsp;{{ mnv.lib }} &nbsp;({{ mnv.code }})<br />
+                             <input  type="radio" name="module2s" value="{{ mnv.code }}" checked />&nbsp;{{ mnv.lib }}<br />
                             {% endfor %}  
                         {% endif %}
-                                
+                        </div>        
                               
-                        <br /><input class="btn btn-primary" name='envoyer' type='submit' value='Envoyer' />  
+                      
+                        <div style="clear:both">
+                              <br />
+                        <input  class="btn btn-primary" name='envoyer' type='submit' value='Envoyer' />  
+                        </div>
                     </div>
                 </div>        
             </div><!-- panel-body -->
@@ -109,4 +122,3 @@
     </form>
 </div>
 {% endblock %}
-

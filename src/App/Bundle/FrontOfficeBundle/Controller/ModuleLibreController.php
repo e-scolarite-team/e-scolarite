@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Bundle\BackOfficeBundle\Entity\Etudiant;
 use App\Bundle\BackOfficeBundle\Entity\ResultatElp;
 use App\Bundle\BackOfficeBundle\Entity\Demande;
-use App\Bundle\BackOfficeBundle\Entity;
+use App\Bundle\BackOfficeBundle\Entity\EtatDemande;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -41,7 +41,7 @@ class ModuleLibreController extends Controller
              elseif ($session==1){//la session 1
                   if(!in_array($semestre, array(1,3,5))){
                       
-                  return $this->render('AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig');
+                  return $this->render('AppFrontOfficeBundle:ModuleLibre:nonautoriseSession.html.twig');
                  }
                  else{//le semestre est 1,3 ou 5
        /// ici on va regarder l'etat des modules de ce semestre //
@@ -169,7 +169,7 @@ class ModuleLibreController extends Controller
                  
                  if(!in_array($semestre, array(2,4,6))){
                      
-                  return $this->render('AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig');
+                  return $this->render('AppFrontOfficeBundle:ModuleLibre:nonautoriseSession.html.twig');
                  
                   
                  }
@@ -342,7 +342,13 @@ class ModuleLibreController extends Controller
                     ->setParameter(4, $date_fin)
                     ->setParameter(5, 2);
                     $Demandes = $qb->getQuery()->getResult();
-
+                     $count = count($Demandes);
+                    if( $count >= $typedemande->getMaxAutorise() ){
+                     return $this->render(
+                                'AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig', 
+                                array( 'count' => $typedemande->getMaxAutorise() )
+                            );
+                      }
                    
 
                     $demande->setStatus(0);

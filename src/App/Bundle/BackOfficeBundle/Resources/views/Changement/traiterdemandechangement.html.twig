@@ -1,6 +1,16 @@
 {% extends "::layout.html.twig" %}
+{% block pageTitle %}
+    <i class="fa fa-file-text"></i>
+   Changement de Module
 
-{% block title %} Traitement de la demande Changement de Module{% endblock %}
+{% endblock %}
+{% block breadcrumb %}
+  <li><a href="{{ path('notification-admin') }}">Notification</a></li>
+          <li class="active">Changement de Module</li>
+
+{% endblock %}
+
+{% block title %} Changement de Module{% endblock %}
 
 {% block mainMenu %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -9,22 +19,22 @@
   <ul class="children">
     <li><a href="{{ path('config_page') }}"><i class="fa fa-caret-right"></i>Automatisation</a></li>
     <li>
-      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
+      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter un type de réclamations</a>
     </li>
-    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
-    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
-    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
+    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste des types de réclamations</a></li>
+    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter un type de demandes</a></li>
+    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste des types de demandes</a></li>
     <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
     <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
-    <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Créer un Administrateur</a></li>
   </ul>
 </li>
 {% else %}
 <li class="nav-parent">
-  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <a href="#"><i class="fa fa-home"></i> <span>Réclamations</span></a>
   <ul class="children">
     <li>
-      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des Réclamations</a>
     </li>
   </ul>
 </li>
@@ -32,10 +42,12 @@
   <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
   <ul class="children" style="display: block;">
     <li>
-      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
+      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Demandes de pièces</a>
     </li>
-    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
-    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>liste ele à refaire</a></li>
+    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Changement de module</a></li>
+    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>Elément à refaire</a></li>
+    <li><a href="{{ path('listemodulelibre') }}"><i class="fa fa-caret-right"></i> Module libre</a></li>
+
   </ul>
 </li>
 {% endif %}
@@ -48,35 +60,35 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-btns">
-                <a href="#" class="minimize">−</a>
+                <a href="#" class="minimize">âˆ’</a>
             </div>
             <h4 class="panel-title">Traitement de la demande Changement de Module</h4>
         </div>
         <div class="panel-body">
             
             <div class="form-group">
-                <label class="col-sm-3 control-label"> CNE <span class="asterisk">*</span></label>
+                <label class="col-sm-3 control-label"> CNE </label>
                 <div class="col-sm-9">
                     <input type="text" name="cne" class="form-control"  readonly="true" required="" value="{{ demande.etudiant.cne }}" >
                 </div>
             </div>
             
             <div class="form-group">
-                <label class="col-sm-3 control-label"> Nom <span class="asterisk">*</span></label>
+                <label class="col-sm-3 control-label"> Nom </label>
                 <div class="col-sm-9">
                     <input type="email" name="nom" class="form-control"  readonly="true" required="" value="{{ demande.etudiant.nom }}" >
                 </div>
             </div>
             
             <div class="form-group">
-                <label class="col-sm-3 control-label"> Prénom <span class="asterisk">*</span></label>
+                <label class="col-sm-3 control-label"> Prénom </label>
                 <div class="col-sm-9">
                     <input type="email" name="prenom" class="form-control"  readonly="true" required="" value="{{ demande.etudiant.prenom }}">
                 </div>
             </div>
             
             <div class="form-group">
-                <label class="col-sm-3 control-label"> Type de pièce <span class="asterisk">*</span></label>
+                <label class="col-sm-3 control-label"> Type de pièce </label>
                 <div class="col-sm-9">
                     <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.typeDemande.libelle }}" >
                 </div>
@@ -101,17 +113,27 @@
         
 {% endblock %}
 
-
 {% block javascripts %}
-  {{ parent()}}
+   {{ parent() }}               
   <script>
-
-    jQuery(document).ready(function(){
-      
-      // Date Picker
-
-        jQuery('#datepicker').datepicker({ dateFormat: "dd-mm-yy" });
+    jQuery(document).ready(function() {
+      jQuery('#list-type').dataTable({
+        "sPaginationType": "full_numbers"
       });
-
-  </script>
+    
+        // Chosen Select
+    jQuery("select").chosen({
+      'min-width': '100px',
+      'white-space': 'nowrap',
+      disable_search_threshold: 10
+    });
+    
+    // Show aciton upon row hover
+    jQuery('.table-hidaction tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+    });
+  </script>          
 {% endblock %}

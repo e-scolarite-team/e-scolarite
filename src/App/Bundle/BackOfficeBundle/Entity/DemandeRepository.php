@@ -35,5 +35,25 @@ class DemandeRepository extends EntityRepository
 		$resutls=$qb->getResult();
 		return $resutls[0][1];
 	}
+        
+         public function getDemandess ($etudiant, $typedemande, $date_debut, $date_fin){
+
+            $em = $this->getEntityManager();
+            $query = $em->createQueryBuilder();
+            $query->select('d')
+            ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
+            ->where($query->expr()->eq('d.etudiant', '?1'))
+            ->andWhere($query->expr()->eq('d.typeDemande', '?2'))
+            ->andWhere($query->expr()->neq('d.status', '?5'))
+            ->andWhere($query->expr()->between('d.createdAt', '?3', '?4'))
+            ->setParameter(1, $etudiant)
+            ->setParameter(2, $typedemande)
+            ->setParameter(3, $date_debut)
+            ->setParameter(4, $date_fin)
+            ->setParameter(5, 2);
+            $Demandes = $query->getQuery()->getResult();
+            return $Demandes;
+
+        }
 	
 }

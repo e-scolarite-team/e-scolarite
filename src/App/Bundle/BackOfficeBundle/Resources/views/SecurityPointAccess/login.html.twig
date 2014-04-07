@@ -7,7 +7,7 @@
   <meta name="author" content="">
   <link rel="shortcut icon" href="{{ asset('images/favicon.png')}}" type="image/png">
 
-  <title>Point d'access securise</title>
+  <title>Point d'accès sécurisé</title>
 
   <link href="{{ asset('css/style.default.css')}}" rel="stylesheet">
 
@@ -40,7 +40,7 @@
                 
                     <div class="mb20"></div>
                 
-                    <h5><strong>Bienvenue a l'espace d'administration de E-scolarite</strong></h5>
+                    <h5><strong>Bienvenue à l'espace d'administration de E-scolarite</strong></h5>
                     <img src="{{ asset('images/logo-fp.png') }}">
                     <div class="mb20"></div>
                 </div><!-- signin0-info -->
@@ -50,17 +50,17 @@
             <div class="col-md-5">
                 
                 <form method="post" action="{{ path('admin_login_check') }}" id="login" method="post">
-                    <h4 class="nomargin">Point d'access</h4>
+                    <h4 class="nomargin">Point d'accès</h4>
                     <p class="mt5 mb20">Espace d'administration E-scolarite.</p>
                 
-                    <input type="text" class="form-control uname" name="_username" placeholder="Username" value="{{ last_username }}"/>
-                    <input type="password" class="form-control pword" name="_password" placeholder="Password" />
+                    <input type="text" class="form-control uname" name="_username" placeholder="Utilisateur" value="{{ last_username }}"/>
+                    <input type="password" class="form-control pword" name="_password" placeholder="Mot de passe" />
                     {% if errors %}
 					<div class="nNote nFailure">
 						<p>{{ errors.message }}</p>
 					</div>
 					{% endif %}
-                    <button class="btn btn-success btn-block" type="submit">log in</button>
+                    <button class="btn btn-success btn-block" type="submit">Connexion</button>
                     
                 </form>
             </div><!-- col-sm-5 -->
@@ -69,10 +69,10 @@
         
         <div class="signup-footer">
             <div class="pull-left">
-                &copy; 2014. Tous droits réservés à la faculte polydisciplinaire de Bni-melal.
+               &copy; 2014. Tous droits réservés à la faculté polydisciplinaire de Beni-mellal. 
             </div>
             <div class="pull-right">
-                Créer par : <a href="http://usms.ma/" target="_blank">Université Sultan Moulay Slimane - Bni-melal</a>
+                Crée par : <a href="http://usms.ma/" target="_blank">Université Sultan Moulay Slimane - Beni-mellal</a>
             </div>
         </div>
         
