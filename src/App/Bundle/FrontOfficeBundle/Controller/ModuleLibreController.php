@@ -30,8 +30,7 @@ class ModuleLibreController extends Controller
          
      $LastSemestreObjet=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //objet representant le dernier semestre
                      ->tousResultatEtudiant($idUser);
-        
-    
+
 //::::::::::::  Ce code permet de determiner le dernier semestre d'un étudiant ::::::::::::::::::::::::::::::::::::
        
                $codeSemetre = $LastSemestreObjet->getElement()->getCode() ;
