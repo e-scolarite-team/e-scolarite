@@ -25,7 +25,9 @@ class DemandeController extends Controller {
         $em = $this->getDoctrine()->getEntityManager();
         
             if($this->get('request')->request->get('demande') != ""){           
-
+                 if($this->get('request')->get("motif")==""){
+                      return $this->renderDemandePiece(1);
+                 }
                     $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
                     $typedemande = $repTypeDemande->findOneByCode($this->get('request')->request->get('demande')); 
 
@@ -35,6 +37,7 @@ class DemandeController extends Controller {
                     $demande->setEtudiant($etudiant);
                     $demande->setTypeDemande($typedemande);
                     $demande->setCreatedAt(new \DateTime());
+                    $demande->setDonnees(array($this->get('request')->get("motif")));
                     $d =  $demande->getCreatedAt()->format('Y-m-d');
                     $year = substr($d, 0, 4);
                     $month = substr($d, 5, 2);
@@ -91,7 +94,12 @@ class DemandeController extends Controller {
                                     );
             }       
         
-            $qb = $em->createQueryBuilder();
+          return $this->renderDemandePiece(0);
+    }
+    public function renderDemandePiece($error)
+    { 
+        $em=$this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
             $qb->select('t')
             ->from('App\Bundle\BackOfficeBundle\Entity\TypeDemande', 't')
             ->where($qb->expr()->notIn('t.code', '?1'))
@@ -100,7 +108,7 @@ class DemandeController extends Controller {
             $typesdemandes = $qb->getQuery()->getResult();
             return $this->render(
                                 'AppFrontOfficeBundle:Demande:demandepiece.html.twig', 
-                                array( 'typesdemandes' => $typesdemandes )
+                                array( 'typesdemandes' => $typesdemandes ,"error"=>$error)
                             );
     }
 
@@ -210,7 +218,10 @@ public function getFirstDayButNotInWeekEnd()
             
                    ));
     }
-   
+   public function testAction()
+   {
+       return $this->get('request')->get("motif");
+   }
 
 }
 
