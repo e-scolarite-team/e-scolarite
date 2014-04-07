@@ -35,6 +35,8 @@
     </li>
     <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
     <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>liste ele à refaire</a></li>
+        <li><a href="{{ path('listemodulelibre') }}"><i class="fa fa-caret-right"></i>Liste des demandes pour un module libre</a></li>
+
   </ul>
 </li>
 {% endif %}
@@ -87,7 +89,12 @@
                     <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.typeDemande.libelle }}" >
                 </div>
             </div>
-                
+             <div class="form-group">
+                <label class="col-sm-3 control-label"> Element choisi <span class="asterisk"></span></label>
+                <div class="col-sm-9">
+                    <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.donnees }}" >
+                </div>
+            </div>   
           
                 
         </div><!-- panel-body -->

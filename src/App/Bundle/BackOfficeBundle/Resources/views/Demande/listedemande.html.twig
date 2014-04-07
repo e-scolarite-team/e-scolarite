@@ -45,6 +45,8 @@
     </li>
     <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
     <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>liste ele à refaire</a></li>
+   <li><a href="{{ path('listemodulelibre') }}"><i class="fa fa-caret-right"></i>Liste des demandes pour un module libre</a></li>
+
   </ul>
 </li>
 {% endif %}
@@ -63,7 +65,7 @@
                <form id="basicForm" action="{{ path( 'reponceAuto' ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
                 <div class="form-group">
                   <div class="col-sm-5">
-                 <p>Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!, ou vous pouvez fixez les {{autoReponceAmount}} premiere demandes dans cette date en cliquant sur le boutton Fixer</p>
+                 <p>Vous pouvez traiter les demandes en cliquant sur le boutton Traiter!, ou vous pouvez fixez {% if autoReponceAmount >1 %}les {{autoReponceAmount}} premieres demandes {% else %} la premiere demande {% endif %} dans cette date en cliquant sur le boutton Fixer</p>
                  </div>
                  <div class="col-sm-3">
                   <div class="input-group">

@@ -55,6 +55,7 @@ class ElemrefController extends Controller {
                 $entity->setEtudiant($etudiant);
                 $entity->setDonnees($elementsARef);
                 $entity->setTypeDemande($typeDem[0]);
+                $entity->setNotified(0);
                 //$entity->setReponse($reponse);
                 
                 
@@ -65,7 +66,7 @@ class ElemrefController extends Controller {
                  $etatDemandes->setDemande($entity);
                  $em->persist($etatDemandes);
                  $em->flush();
-                return $this->redirect($this->generateUrl('AppFrontOfficeBundle_notification-etudiant'));
+                return $this->redirect($this->generateUrl('notification-etudiant'));
             }
         }
 

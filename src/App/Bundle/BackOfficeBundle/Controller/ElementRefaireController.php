@@ -10,6 +10,7 @@ use App\Bundle\BackOfficeBundle\Entity\TypeDemande;
 use App\Bundle\BackOfficeBundle\Entity\Etudiant;
 use App\Bundle\BackOfficeBundle\Entity\EtatDemande;
 use App\Bundle\BackOfficeBundle\Entity\Admin;
+use App\Bundle\BackOfficeBundle\Entity\ElementPedagogi;
 use App\Bundle\BackOfficeBundle\Form\Data\ImportData;
 use App\Bundle\BackOfficeBundle\Form\ImportFormType;
 
@@ -28,13 +29,28 @@ class ElementRefaireController extends Controller
             
              $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
              $demande = $repDemande->findByTypeDemande($typedemande);
+                        // var_dump($demande);
+              $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
+             
+            for($i=0;$i<count($demande);$i++){
+              $element = $elem->findOneByCode($demande[$i]->getDonnees()['0']);
+              $demande[$i]->setDonnees($element->getLib());
+            }
+             
+
+            /* $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
+             
+             for($i=0;$i<count($demande);$i++){
+              $element = $elem->findOneByCode($demande->getDonnees()['0']);
+              $demande->setDonnees($element->getLib());
+             }*/
         $qb = $em->createQueryBuilder();
             $qb->select('e')
             ->from('App\Bundle\BackOfficeBundle\Entity\EtatDemande', 'e')
             ->where($qb->expr()->in('e.demande', '?1'))
             ->setParameter(1, $demande);
             $etatdemandes = $qb->getQuery()->getResult();
-           //var_dump($etatdemandes);
+
             return $this->render(
                                 'AppBackOfficeBundle:Elementarefaire:listedemanderefaire.html.twig', 
                                 array('etatdemandes' => $etatdemandes)
@@ -50,6 +66,13 @@ public function traiterelementrefaireAction($id) {
           $repDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande');
           $demande = $repDemande->findOneById($id);
           
+          $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
+             
+            
+              $element = $elem->findOneByCode($demande->getDonnees()['0']);
+              $demande->setDonnees($element->getLib());
+            
+            //var_dump($demande);
           if($this->get('request')->request->get('rejeter') == 'rejeter'){
               // return new Response("Rejeter");
               
