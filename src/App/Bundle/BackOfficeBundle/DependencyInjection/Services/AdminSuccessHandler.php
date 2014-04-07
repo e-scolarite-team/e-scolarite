@@ -55,19 +55,21 @@ class AdminSuccessHandler extends ContainerAware implements AuthenticationSucces
 
       $referer = $request->headers->get('referer');
 
-      $user = $this->container->get('security.context')->getToken()->getUser();
+      $token = $this->container->get('security.context')->getToken();
+      if($token){
+        $user = $token->getUser();
 
-      if($user instanceof Admin){
-        $em = $this->container->get('doctrine')->getManager();
+        if($user instanceof Admin){
+          $em = $this->container->get('doctrine')->getManager();
 
-        $admin = $em->getRepository('AppBackOfficeBundle:Admin')->find($user->getId());
-        
-        $admin->setLastVisiteAt(new \DateTime());
+          $admin = $em->getRepository('AppBackOfficeBundle:Admin')->find($user->getId());
+          
+          $admin->setLastVisiteAt(new \DateTime());
 
-        $em->persist($admin);
-        $em->flush();
+          $em->persist($admin);
+          $em->flush();
+        }
       }
-
 
       return new RedirectResponse($referer);
    }

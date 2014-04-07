@@ -55,18 +55,22 @@ class EtudiantSuccessHandler extends ContainerAware implements AuthenticationSuc
 
       $referer = $request->headers->get('referer');
 
-      $user = $this->container->get('security.context')->getToken()->getUser();
+      $token = $this->container->get('security.context')->getToken();
+      if($token){
+        $user = $token->getUser();
 
-      if($user instanceof Etudiant){
-        $em = $this->container->get('doctrine')->getManager();
+        if($user instanceof Etudiant){
+          $em = $this->container->get('doctrine')->getManager();
 
-        $etudiant = $em->getRepository('AppBackOfficeBundle:Etudiant')->find($user->getId());
-        
-        $etudiant->setLastVisiteAt(new \DateTime());
+          $etudiant = $em->getRepository('AppBackOfficeBundle:Etudiant')->find($user->getId());
+          
+          $etudiant->setLastVisiteAt(new \DateTime());
 
-        $em->persist($etudiant);
-        $em->flush();
+          $em->persist($etudiant);
+          $em->flush();
+        }
       }
+      
 
 
       return new RedirectResponse($referer);
