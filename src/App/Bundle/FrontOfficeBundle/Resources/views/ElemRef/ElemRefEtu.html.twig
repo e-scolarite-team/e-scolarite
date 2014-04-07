@@ -50,7 +50,7 @@
                 
                 <h4 class="panel-title">Elément à refaire :</h4>
                 
-                {% if elements is empty %}
+                {% if modules is empty %}
                 <div class="alert alert-danger" style="margin-top: 63px;margin-bottom: 63px;">
                   <center><label>Vous n'avez aucun élément à refaire</lable><center>
                 </div>
@@ -59,45 +59,43 @@
                 <div class="tab-content">
                   <form method="post" action="">
                   <div class="tab-pane active" id="tab1">
-                    <form class="form" action="data">
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label">Module </label>
-                          <div class="col-sm-6">
-                            <label >Element </label>
-                          </div>
-                      </div>
-
-                      
-                      {% for el in elements %}
-
-                      <div class="form-group">
-                              <label class="col-sm-3 control-label"> {{el.element.parent.lib}}</label>                              
-                              <div class="col-md-6">                                
-                                  <div class="">
-                                    {% if el.etat == 0 %}
-                                    <span class="glyphicon glyphicon-check" title="deja demandé"></span>
-                                    {% else %}
-                                    <input type="checkbox" name="elements[]" value="{{el.element.code}}" id="checkboxDefault"  />
-                                    {% endif %}
-                                    <label for="checkboxDefault">{{el.element.lib}}</label>
-                                  </div>
-                                                                    
-                              </div>
-                      </div>
-
-                      {% endfor %}
+                    <div style="margin-left:288px">
+                      <form class="form" action="data">
+                        <br/><br/>
+                        {% for mod in modules %}
+                                <ul>
+                                      <li>{{mod[0].lib}}</li>
+                                      <br>
+                                      <ul>
+                                {% for el in mod[1] %}
+                                          <li>
+                                              {% if el.etat == 0 %}
+                                                  <span class="glyphicon glyphicon-check" title="deja demandé"></span>
+                                                  {% else %}
+                                                  <input type="checkbox" name="elements[]" value="{{el.element.code}}" id="checkboxDefault"  />
+                                              {% endif %}                       
+                                              {{el.element.lib}}
+                                              {% if el.etat == 0 %}
+                                                <label style="color:red">(déjà demandé)<label> 
+                                              {% endif %}  
+                                          </li>
+            
+                                {% endfor %}
+                                      </ul>
+                                </ul>
+                        {% endfor %}
 
 
 
-                      <br><br><br><br>
-                      {% if aucunElementDemande == false %}
-                      <center>
-                        <button class="btn btn-primary">Envoyer</button>&nbsp;
-                      </center>
-                      {% endif %}
+                        <br><br>
+                        {% if aucunElementDemande == false %}
+                        
+                          <button class="btn btn-primary" style="margin-left: 64px;">Envoyer</button>&nbsp;
+                        
+                        {% endif %}
                       </div>
                       </form>
-                      
+                    </div>  
                     
                   </div>
                   {% endif %}

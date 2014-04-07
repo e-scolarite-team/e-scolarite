@@ -19,13 +19,15 @@ class ElemrefController extends Controller {
 
         $etudiant = $this->getUser();
 
-        $session = 1;//$this->container->get("esconfig_manager")->getCurrentSemester();
+        $session = $this->container->get("esconfig_manager")->getCurrentSemester();
 
-        $annee = 2013-1;//$this->container->get("esconfig_manager")->getCurrentAcademicYear()-1;
+        $annee = $this->container->get("esconfig_manager")->getCurrentAcademicYear()-1;
 
         $aucunElementDemande = true;
 
         $op = array();
+
+        $moduleElements = array();
 
         $err = "";
 
@@ -55,6 +57,7 @@ class ElemrefController extends Controller {
                 $entity->setEtudiant($etudiant);
                 $entity->setDonnees($elementsARef);
                 $entity->setTypeDemande($typeDem[0]);
+                $entity->setNotified(0);
                 //$entity->setReponse($reponse);
                 
                 
@@ -83,52 +86,53 @@ class ElemrefController extends Controller {
                 foreach($modules as $module){
 
                     $elements = $em->getRepository("AppBackOfficeBundle:ResultatElp")->getElements( $etudiant, $em, $module->getElement());
-                    //return new Response(gettype($elements[1][1]));
+                    
+                    $elementRef = array();
                     foreach ($elements as $element) {
 
                         $etat = -1;
 
                         $note = $element[1];                        
-                        
+                        //return new Response(var_dump($element->getElement()->getNote()));
                         if($note >= 10) {
 
                             $d = $em->getRepository("AppBackOfficeBundle:Demande")->getDemandes( $etudiant, $em, $element[0]->getElement()->getCode());
 
-                        if(count($d) != 0){
+                            if(count($d) != 0){
 
-                            $etat = $d[0]->getLastEtatDemande()->getEtat();
+                                $etat = $d[0]->getLastEtatDemande()->getEtat();
 
-                            switch ($etat) {
-                                case 'en attente':
-                                    $etat = 0;
-                                    break;
-                                case 'traiter':
-                                    $etat = 1;
-                                    break;
-                                case 'rejeter':
-                                    $etat = 2;
-                                    break;
-                                case 'valide':
-                                    $etat = 3;
-                                    break;
+                                switch ($etat) {
+                                    case 'en attente':
+                                        $etat = 0;
+                                        break;
+                                    case 'traiter':
+                                        $etat = 1;
+                                        break;
+                                    case 'rejeter':
+                                        $etat = 2;
+                                        break;
+                                    case 'valide':
+                                        $etat = 3;
+                                        break;
+                                }
+                                
                             }
-                            
-                        }
-                        else $aucunElementDemande = false;
+                            else $aucunElementDemande = false;
 
                             $elementRef[] = array("element"=>$element[0]->getElement(),"etat"=>$etat);
 
-
-                            break;
                         }
                     }
+                    if(count($elementRef > 0))// si le module contient des elements a refaire
+                        $moduleElements[] = array($module->getElement(),$elementRef);
                 }
             }
             //return new Response(var_dump(($elementRef[0]["etat"])));
-            //return new Response(gettype($elementRef[2]["etat"]));
+            //return new Response(count($moduleElements[0][1]));
         return $this->render(
                                 'AppFrontOfficeBundle:ElemRef:ElemRefEtu.html.twig', 
-                                array('elements'            => $elementRef,
+                                array('modules'             => $moduleElements,
                                       'err'                 => $err,
                                       'aucunElementDemande' => $aucunElementDemande,
                                       //'ex'=>9
