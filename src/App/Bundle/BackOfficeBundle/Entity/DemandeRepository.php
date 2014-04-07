@@ -55,5 +55,17 @@ class DemandeRepository extends EntityRepository
             return $Demandes;
 
         }
+        
+           public function CountDemande($id){
+            $qb = $this->_em->createQuery(
+                    'SELECT d FROM AppBackOfficeBundle:Demande d '
+                    . 'JOIN d.etudiant etud '
+                    . 'JOIN d.typeDemande type '
+                    . 'Where etud.id =:etu '
+                    . "AND type.code='5M'"
+                    )
+                     ->setParameter('etu',$id);
+             return $qb->getResult();
+       }
 	
 }
