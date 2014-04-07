@@ -64,6 +64,17 @@ reponceAuto:
 config_page:
     pattern: /configuration/config/e-scolarite
     defaults: {_controller: AppBackOfficeBundle:Config:config}
+    
+listemodulelibre:
+    pattern:  /listemodulelibre
+    defaults: { _controller: AppBackOfficeBundle:Modulelibre:listemodulelibre }
+
+traitermodulelibre:
+    pattern:  /traitermodulelibre/{id}
+    defaults: { _controller: AppBackOfficeBundle:Modulelibre:traitermodulelibre }
+    requirements:
+          id: \d+
+
 
 
 
