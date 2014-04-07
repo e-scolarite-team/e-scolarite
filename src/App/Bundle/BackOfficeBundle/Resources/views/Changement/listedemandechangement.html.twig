@@ -1,5 +1,15 @@
 {% extends "::layout.html.twig" %}
 
+{% block pageTitle %}
+    <i class="fa fa-file-text"></i>
+    Demandes de Changement de module
+{% endblock %}
+    
+{% block breadcrumb %}
+  <li><a href="{{ path('notification-admin') }}">Notification</a></li>
+  <li class="active">Demandes de Changement de module</li>
+{% endblock %}
+
 {% block title %} Changement de Module {% endblock %}
 
 {% block mainMenu %}
@@ -51,7 +61,7 @@
                 <div class="panel-btns">
                   <a href="#" class="minimize">−</a>
                 </div>
-                <h4 class="panel-title">Liste des demandes de changement du Module</h4>
+                <h4 class="panel-title">Liste des demandes de changement de module</h4>
               </div>
               <div class="panel-body" >
           <div class="table-responsive">

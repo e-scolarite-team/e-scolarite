@@ -19,68 +19,19 @@ class ChangementController extends Controller {
     public function changerAction(){
         
         $em = $this->getDoctrine()->getEntityManager();
-
-
-        $etudiant = $this->getUser();
         
-        $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
-        $typedemande = $repTypeDemande->findOneByCode('CM');
+        $etudiant = $this->getUser();
+     
+        $typedemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande')->findOneByCode('CM');
         
         $modules1 = null;
         $modules2 = null;
         
          if($this->get('request')->request->get('envoyer') == "Envoyer" ){   
-                       
-              //return new Response(var_dump($typedemande));
-              
-             $demande = new Demande();
-             $demande->setEtudiant($etudiant);
-             $demande->setTypeDemande($typedemande);
-             $demande->setCreatedAt(new \DateTime());
-             $d =  $demande->getCreatedAt()->format('Y-m-d');
-             $year = substr($d, 0, 4);
-             $month = substr($d, 5, 2);
-             if($month == "09" || $month == "10" || $month == "11" || $month == "12"){
-                       $debut =  $year . "-09-01 00:00:00"; 
-                       $date_debut = new \DateTime($debut);
-                       $fin = ($year + 1) . "-08-30 00:00:00";
-                       $date_fin  = new \DateTime($fin);                      
-             } elseif ($month == "01" || $month == "02" || $month == "03" || $month == "04" || $month == "05" || $month == "06" || $month == "07" || $month == "08"){
-                        $debut =  ($year - 1) . "-09-01 00:00:00"; 
-                        $date_debut = new \DateTime($debut);
-                        $fin = $year . "-08-30 00:00:00";
-                        $date_fin = new \DateTime($fin);
-             }
              
-            $qb = $em->createQueryBuilder();
-            $qb->select('d')
-            ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
-            ->where($qb->expr()->eq('d.etudiant', '?1'))
-            ->andWhere($qb->expr()->eq('d.typeDemande', '?2'))
-            ->andWhere($qb->expr()->neq('d.status', '?5'))
-            ->andWhere($qb->expr()->between('d.createdAt', '?3', '?4'))
-            ->setParameter(1, $etudiant)
-            ->setParameter(2, $typedemande)
-            ->setParameter(3, $date_debut)
-            ->setParameter(4, $date_fin)
-            ->setParameter(5, 2);
-
-            $Demandes = $qb->getQuery()->getResult();
-           
-            $count = count($Demandes);
-            if( $count >= $typedemande->getMaxAutorise() ){
-                return $this->render(
-                                'AppFrontOfficeBundle:Changement:countdepasse.html.twig', 
-                                array( 'count' => $typedemande->getMaxAutorise(),  'demande' => $demande )
-                            );
-            }
-            //return new Response(var_dump($count));
-            
              if($this->get('request')->request->get('module1s')) {
                 $modules1 = $this->get('request')->request->get('module1s');
-             }
-             
-             
+             }                  
              if($this->get('request')->request->get('module2s')) {
                 $modules2 = $this->get('request')->request->get('module2s');
              }
@@ -88,1419 +39,359 @@ class ChangementController extends Controller {
              $remarque = "";
              if($modules1 != null) { 
                  $remarque = $remarque . "Session 1  : " . $modules1;
-             }
-             
+             }  
              if($modules2 != null) { 
                  $remarque = $remarque . " /   Session 2  : " . $modules2;
              }
+                                  
+             $demande = new Demande();
+             $demande->setEtudiant($etudiant);
+             $demande->setTypeDemande($typedemande);
+             $demande->setCreatedAt(new \DateTime());
              $demande->setRemarque($remarque);
              $demande->setStatus(0);
              $demande->setNotified(0);
              $em->persist($demande);
-             $etatDemandes =new EtatDemande();
+             $etatDemandes = new EtatDemande();
              $etatDemandes->setEtat("en attente");
              $etatDemandes->setDemande($demande);
              $em->persist($etatDemandes);
              $em->flush();
             
-             return $this->render(
-                                'AppFrontOfficeBundle:Changement:demandeautorise.html.twig', 
-                                 array(  'demande' => $demande )
-                            );
-             //return new Response(var_dump($modules3));
-             
-             
-
+             return $this->render( 'AppFrontOfficeBundle:Changement:demandeautorise.html.twig',  array(  'demande' => $demande ) );
+            
          }
         
-             $da =  new \DateTime();
-             $dd = $da->format('Y-m-d');
-             $year = substr($dd, 0, 4);
-             $month = substr($dd, 5, 2);
-             if($month == "09" || $month == "10" || $month == "11" || $month == "12"){
-                       $debut =  $year . "-09-01 00:00:00"; 
-                       $date_debut = new \DateTime($debut);
-                       $fin = ($year + 1) . "-08-30 00:00:00";
-                       $date_fin  = new \DateTime($fin);                      
-             } elseif ($month == "01" || $month == "02" || $month == "03" || $month == "04" || $month == "05" || $month == "06" || $month == "07" || $month == "08"){
-                        $debut =  ($year - 1) . "-09-01 00:00:00"; 
-                        $date_debut = new \DateTime($debut);
-                        $fin = $year . "-08-30 00:00:00";
-                        $date_fin = new \DateTime($fin);
-             }
-             
-            $qb = $em->createQueryBuilder();
-            $qb->select('d')
-            ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
-            ->where($qb->expr()->eq('d.etudiant', '?1'))
-            ->andWhere($qb->expr()->eq('d.typeDemande', '?2'))
-            ->andWhere($qb->expr()->neq('d.status', '?5'))
-            ->andWhere($qb->expr()->between('d.createdAt', '?3', '?4'))
-            ->setParameter(1, $etudiant)
-            ->setParameter(2, $typedemande)
-            ->setParameter(3, $date_debut)
-            ->setParameter(4, $date_fin)
-            ->setParameter(5, 2);
+        $da =  new \DateTime();
+        $dd = $da->format('Y-m-d');
+        $year = substr($dd, 0, 4);
+        $month = substr($dd, 5, 2);
+        if($month == "09" || $month == "10" || $month == "11" || $month == "12"){
+                  $debut =  $year . "-09-01 00:00:00"; 
+                  $date_debut = new \DateTime($debut);
+                  $fin = ($year + 1) . "-08-30 00:00:00";
+                  $date_fin  = new \DateTime($fin);                      
+        } elseif ($month == "01" || $month == "02" || $month == "03" || $month == "04" || $month == "05" || $month == "06" || $month == "07" || $month == "08"){
+                   $debut =  ($year - 1) . "-09-01 00:00:00"; 
+                   $date_debut = new \DateTime($debut);
+                   $fin = $year . "-08-30 00:00:00";
+                   $date_fin = new \DateTime($fin);
+        }
+        
+        $Demandes = $this->getDoctrine()->getRepository('AppBackOfficeBundle:Demande')->getDemandess ($etudiant, $typedemande, $date_debut, $date_fin);
+        $count = count($Demandes);
+        if( $count >= $typedemande->getMaxAutorise() ) {
+           return $this->render( 'AppFrontOfficeBundle:Changement:counterdepasse.html.twig', array( 'count' => $typedemande->getMaxAutorise() ) );
+        }
 
-            $Demandes = $qb->getQuery()->getResult();
+        $NVModulesForS1S3 = "";
+        $NVModulesForS1S3Tab = null;
+        $ModulesNotEtudiedS1S3  = "";
+        $ModulesNotEtudiedS1S3Tab = null;
+
+        $NVModulesForS2S4 = "";
+        $NVModulesForS2S4Tab = null;
+        $ModulesNotEtudiedS2S4  = "";
+        $ModulesNotEtudiedS2S4Tab = null;
+
+
+        $NVModulesForS3S5 = "";
+        $NVModulesForS3S5Tab = null;
+        $ModulesNotEtudiedS3S5  = "";
+        $ModulesNotEtudiedS3S5Tab = null;
+
+        $NVModulesForS4S6 = "";
+        $NVModulesForS4S6Tab = null;
+        $ModulesNotEtudiedS4S6  = "";
+        $ModulesNotEtudiedS4S6Tab = null;
            
-            $count = count($Demandes);
-            // return new Response(var_dump($count));
-            if( $count >= $typedemande->getMaxAutorise() ){
-                return $this->render(
-                                'AppFrontOfficeBundle:Changement:counterdepasse.html.twig', 
-                                array( 'count' => $typedemande->getMaxAutorise() )
-                            );
+        $countS3S5M1 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%3%1%", "%5%1%");
+        $countS3S5M2 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%3%2%", "%5%2%");
+        $countS3S5M3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%3%3%", "%5%3%");
+        $countS3S5M4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%3%4%", "%5%4%");
+
+        $maxYear = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getMaxYearForEtudiant($etudiant);
+
+      
+        $somme = 0; 
+        if ( count($countS3S5M1) == 2 )  { 
+           $somme +=  2;          
+        }
+        if ( count($countS3S5M2) == 2 )  { 
+           $somme +=  2;          
+        }
+        if ( count($countS3S5M3) == 2 )  { 
+           $somme +=  2;          
+        }
+        if ( count($countS3S5M4) == 2 )  { 
+            $somme +=  2;          
+        }
+
+        if($somme == 2 || $somme == 4){
+            
+            $NVModulesForS3S5 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            ->getNVModulesInLastYearforEtudiant($etudiant, $maxYear, "%3%1%", "%3%2%", "%3%3%", "%3%4%", "%5%1%", "%5%2%", "%5%3%", "%5%4%");
+                
+            foreach($NVModulesForS3S5 as $m){
+                $NVModulesForS3S5Tab[] = $m->getElement()->getCode();
             }
-                
-                $modules_non_valider_pour_der_anneeS1S3 = "";
-                $module_non_validerS1S3 = null;
-                $module_non_etudierS1S3  = "";
-                $modules_non_etudierS1S3 = null;
+            
+            $VModulesForS3S5 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            ->getVModulesforEtudiant($etudiant, "%3%1%", "%3%2%", "%3%3%", "%3%4%", "%5%1%", "%5%2%", "%5%3%", "%5%4%");
+            
+            foreach($VModulesForS3S5 as $m){
+                $VModulesForS3S5Tab[] = $m->getElement()->getCode();
+            }
+            
+            $pos3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            -> getPositionOf("3", $etudiant, "%3%1%", "%3%2%", "%3%3%", "%3%4%", "%5%1%", "%5%2%", "%5%3%", "%5%4%");
+            $pos5 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            -> getPositionOf("5", $etudiant, "%3%1%", "%3%2%", "%3%3%", "%3%4%", "%5%1%", "%5%2%", "%5%3%", "%5%4%");
 
-                $modules_non_valider_pour_der_anneeS2S4 = "";
-                $module_non_validerS2S4 = null;
-                $module_non_etudierS2S4  = "";
-                $modules_non_etudierS2S4 = null;
-
-
-                $modules_non_valider_pour_der_anneeS3S5 = "";
-                $module_non_validerS3S5 = null;
-                $module_non_etudierS3S5  = "";
-                $modules_non_etudierS3S5 = null;
-
-                $modules_non_valider_pour_der_anneeS4S6 = "";
-                $module_non_validerS4S6 = null;
-                $module_non_etudierS4S6  = "";
-                $modules_non_etudierS4S6 = null;
-
-
-                // --------------- Tous les Modules Valider 
-                $qb = $em->createQueryBuilder();
-                $qb->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($qb->expr()->eq('r.status', '?1'))
-                ->andWhere($qb->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($qb->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD");  
-                $tous_les_modules_valider = $qb->getQuery()->getResult();
-
-
-                // ------------- est ce que  prer module 1 valider 2---> OUI
-
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%3%1%")
-                ->setParameter(5, "%5%1%");  
-                $modules_prerequisS3S5M1 = $Qr->getQuery()->getResult();
-               
-                 // ----------------- est ce que  prer module 2 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%3%2%")
-                ->setParameter(5, "%5%2%");  
-                $modules_prerequisS3S5M2 = $Qr->getQuery()->getResult();
-                
-
-                 // ------------------- est ce que  prer module 3 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%3%3%")
-                ->setParameter(5, "%5%3%");  
-                $modules_prerequisS3S5M3 = $Qr->getQuery()->getResult();
-
-                 // ---------------------- est ce que  prer module 4 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%3%4%")
-                ->setParameter(5, "%5%4%");
-                $modules_prerequisS3S5M4 = $Qr->getQuery()->getResult();
-                //return new Response(var_dump($modules_prerequisS3S5M4));
-                
-               $somme = 0; 
-               if ( count($modules_prerequisS3S5M1) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS3S5M2) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS3S5M3) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS3S5M4) == 2 )  { 
-                   $somme +=  2;          
-               }
-                  //return new Response(var_dump($somme));
-                // return new Response(var_dump($somme));
-                if($somme == 2 || $somme == 4){
-                    // ------------------------------------  Max year 
-                    $qb = $em->createQueryBuilder();
-                    $qb->select('r')
-                    ->addSelect($qb->expr()->max('r.annee'))
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->andWhere($qb->expr()->eq('r.etudiant', '?2'))
-                    ->setParameter(2, $etudiant);
-                    $max = $qb->getQuery()->getResult();
-                    $max_yearS3S5 = (int) $max[0][1];
-                    //return new Response(var_dump($max_yearS3S5));
-
-
-                    // ------------------------   Modules non valider pour la derniere annee
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->andWhere($Qr->expr()->eq('r.annee', '?12'))
-                    ->setParameter(1, "NV")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%3%1%")
-                    ->setParameter(5, "%3%2%")
-                    ->setParameter(6, "%3%3%")
-                    ->setParameter(7, "%3%4%")
-                    ->setParameter(8, "%5%1%")
-                    ->setParameter(9, "%5%2%")
-                    ->setParameter(10, "%5%3%")
-                    ->setParameter(11, "%5%4%")
-                    ->setParameter(12, $max_yearS3S5);
-                    $modules_non_valider_pour_der_anneeS3S5 = $Qr->getQuery()->getResult();
-
-                    foreach($modules_non_valider_pour_der_anneeS3S5 as $m){
-                        $module_non_validerS3S5[] = $m->getElement()->getCode();
-                    }
-
-                    // ------------- Module valider pour S1S3
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%3%1%")
-                    ->setParameter(5, "%3%2%")
-                    ->setParameter(6, "%3%3%")
-                    ->setParameter(7, "%3%4%")
-                    ->setParameter(8, "%5%1%")
-                    ->setParameter(9, "%5%2%")
-                    ->setParameter(10, "%5%3%")
-                    ->setParameter(11, "%5%4%");
-                    $modules_valider_S3S5 = $Qr->getQuery()->getResult();
-
-                    foreach($modules_valider_S3S5 as $m){
-                        $module_validerS3S5[] = $m->getElement()->getCode();
-                    }
-
-                    // -------------- Position de prmier 1 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("MAX(LOCATE('3', e.code))")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%3%1%")
-                    ->setParameter(5, "%3%2%")
-                    ->setParameter(6, "%3%3%")
-                    ->setParameter(7, "%3%4%")
-                    ->setParameter(8, "%5%1%")
-                    ->setParameter(9, "%5%2%")
-                    ->setParameter(10, "%5%3%")
-                    ->setParameter(11, "%5%4%");
-                    $positionof3 = $Qr->getQuery()->getResult();
-                    $pos3 = (int) $positionof3[0][1];
-
-                     // -------------- Position de prmier 3 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("MAX(LOCATE('5', e.code))")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%3%1%")
-                    ->setParameter(5, "%3%2%")
-                    ->setParameter(6, "%3%3%")
-                    ->setParameter(7, "%3%4%")
-                    ->setParameter(8, "%5%1%")
-                    ->setParameter(9, "%5%2%")
-                    ->setParameter(10, "%5%3%")
-                    ->setParameter(11, "%5%4%");
-                    $positionof5 = $Qr->getQuery()->getResult();
-                    $pos5 = (int) $positionof5[0][1];
-
-
-                    if($pos5 < $pos3 ){
-                        $pos = $pos5;
-                    } else {
-                        $pos = $pos3;
-                    }
-                    if($pos5 == 0 & $pos == 0){
-                        $pos = $pos3;
-                    }
-                    if($pos3 == 0 & $pos == 0){
-                        $pos = $pos5;
-                    }
-                    $pos--;
-
-                    //    get filier 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("SUBSTRING(e.code, 1, $pos)")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%3%1%")
-                    ->setParameter(5, "%3%2%")
-                    ->setParameter(6, "%3%3%")
-                    ->setParameter(7, "%3%4%")
-                    ->setParameter(8, "%5%1%")
-                    ->setParameter(9, "%5%2%")
-                    ->setParameter(10, "%5%3%")
-                    ->setParameter(11, "%5%4%");
-                    $FLR = $Qr->getQuery()->getResult();
-                    $flr = $FLR[0][1];
-                    $filiere = $flr . '%';
-
-                    // MODULE NON Etudier 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ElementPedagogi', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->andWhere($Qr->expr()->like('e.code', '?1'))
-                    ->andWhere($Qr->expr()->notIn('e.code', '?12'))
-                    ->andWhere($Qr->expr()->notIn('e.code', '?13'))
-                    ->setParameter(1, $filiere)
-                    ->setParameter(12, $module_non_validerS3S5)
-                    ->setParameter(13, $module_validerS3S5)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%3%1%")
-                    ->setParameter(5, "%3%2%")
-                    ->setParameter(6, "%3%3%")
-                    ->setParameter(7, "%3%4%")
-                    ->setParameter(8, "%5%1%")
-                    ->setParameter(9, "%5%2%")
-                    ->setParameter(10, "%5%3%")
-                    ->setParameter(11, "%5%4%");
-                    $module_non_etudierS3S5 = $Qr->getQuery()->getResult();
-
-                    foreach($module_non_etudierS3S5 as $m){
-                        $modules_non_etudierS3S5[] = $m->getCode();
-                    }
-                }
-
-                    // -------------------------------------------------------------------------------------------
-                                   // S4 ---------------- S6
-
-                     // ------------- est ce que  prer module 1 valider 2---> OUI
-
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%4%1%")
-                ->setParameter(5, "%6%1%");  
-                $modules_prerequisS4S6M1 = $Qr->getQuery()->getResult();
-
-
-                 // ----------------- est ce que  prer module 2 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%4%2%")
-                ->setParameter(5, "%6%2%");  
-                $modules_prerequisS4S6M2 = $Qr->getQuery()->getResult();
-
-
-                 // ------------------- est ce que  prer module 3 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%4%3%")
-                ->setParameter(5, "%6%3%");  
-                $modules_prerequisS4S6M3 = $Qr->getQuery()->getResult();
-
-                 // ---------------------- est ce que  prer module 4 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%4%4%")
-                ->setParameter(5, "%6%4%");
-                $modules_prerequisS4S6M4 = $Qr->getQuery()->getResult();
-
-               $somme = 0; 
-               if ( count($modules_prerequisS4S6M1) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS4S6M2) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS4S6M3) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS4S6M4) == 2 )  { 
-                   $somme +=  2;          
-               }
-                  //return new Response(var_dump($somme));
-
-                if($somme == 2 or $somme == 4){
-                    // ------------------------------------  Max year 
-                    $qb = $em->createQueryBuilder();
-                    $qb->select('r')
-                    ->addSelect($qb->expr()->max('r.annee'))
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->andWhere($qb->expr()->eq('r.etudiant', '?2'))
-                    ->setParameter(2, $etudiant);
-                    $max = $qb->getQuery()->getResult();
-                    $max_yearS4S6 = (int) $max[0][1];
-                    //echo $max_year;
-
-
-                    // ------------------------   Modules non valider pour la derniere annee
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->andWhere($Qr->expr()->eq('r.annee', '?12'))
-                    ->setParameter(1, "NV")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%4%1%")
-                    ->setParameter(5, "%4%2%")
-                    ->setParameter(6, "%4%3%")
-                    ->setParameter(7, "%4%4%")
-                    ->setParameter(8, "%6%1%")
-                    ->setParameter(9, "%6%2%")
-                    ->setParameter(10, "%6%3%")
-                    ->setParameter(11, "%6%4%")
-                    ->setParameter(12, $max_yearS4S6);
-                    $modules_non_valider_pour_der_anneeS4S6 = $Qr->getQuery()->getResult();
-
-                    foreach($modules_non_valider_pour_der_anneeS4S6 as $m){
-                        $module_non_validerS4S6[] = $m->getElement()->getCode();
-                    }
-
-                    // ------------- Module valider pour S1S3
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%4%1%")
-                    ->setParameter(5, "%4%2%")
-                    ->setParameter(6, "%4%3%")
-                    ->setParameter(7, "%4%4%")
-                    ->setParameter(8, "%6%1%")
-                    ->setParameter(9, "%6%2%")
-                    ->setParameter(10, "%6%3%")
-                    ->setParameter(11, "%6%4%");
-                    $modules_valider_S4S6 = $Qr->getQuery()->getResult();
-
-                    foreach($modules_valider_S4S6 as $m){
-                        $module_validerS4S6[] = $m->getElement()->getCode();
-                    }
-
-                    // -------------- Position de prmier 1 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("MAX(LOCATE('4', e.code))")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%4%1%")
-                    ->setParameter(5, "%4%2%")
-                    ->setParameter(6, "%4%3%")
-                    ->setParameter(7, "%4%4%")
-                    ->setParameter(8, "%6%1%")
-                    ->setParameter(9, "%6%2%")
-                    ->setParameter(10, "%6%3%")
-                    ->setParameter(11, "%6%4%");
-                    $positionof4 = $Qr->getQuery()->getResult();
-                    $pos4 = (int) $positionof4[0][1];
-
-                     // -------------- Position de prmier 3 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("MAX(LOCATE('6', e.code))")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%4%1%")
-                    ->setParameter(5, "%4%2%")
-                    ->setParameter(6, "%4%3%")
-                    ->setParameter(7, "%4%4%")
-                    ->setParameter(8, "%6%1%")
-                    ->setParameter(9, "%6%2%")
-                    ->setParameter(10, "%6%3%")
-                    ->setParameter(11, "%6%4%");
-                    $positionof6 = $Qr->getQuery()->getResult();
-                    $pos6 = (int) $positionof6[0][1];
-
-
-                    if($pos6 < $pos4 ){
-                        $pos = $pos6;
-                    } else {
-                        $pos = $pos4;
-                    }
-                    if($pos6 == 0 & $pos == 0){
-                        $pos = $pos4;
-                    }
-                    if($pos4 == 0 & $pos == 0){
-                        $pos = $pos6;
-                    }
-                    $pos--;
-
-                    //    get filier 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("SUBSTRING(e.code, 1, $pos)")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%4%1%")
-                    ->setParameter(5, "%4%2%")
-                    ->setParameter(6, "%4%3%")
-                    ->setParameter(7, "%4%4%")
-                    ->setParameter(8, "%6%1%")
-                    ->setParameter(9, "%6%2%")
-                    ->setParameter(10, "%6%3%")
-                    ->setParameter(11, "%6%4%");
-                    $FLR = $Qr->getQuery()->getResult();
-                    $flr = $FLR[0][1];
-                    $filiere = $flr . '%';
-
-                    // MODULE NON Etudier 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ElementPedagogi', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->andWhere($Qr->expr()->like('e.code', '?1'))
-                    ->andWhere($Qr->expr()->notIn('e.code', '?12'))
-                    ->andWhere($Qr->expr()->notIn('e.code', '?13'))
-                    ->setParameter(1, $filiere)
-                    ->setParameter(12, $module_non_validerS4S6)
-                    ->setParameter(13, $module_validerS4S6)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%4%1%")
-                    ->setParameter(5, "%4%2%")
-                    ->setParameter(6, "%4%3%")
-                    ->setParameter(7, "%4%4%")
-                    ->setParameter(8, "%6%1%")
-                    ->setParameter(9, "%6%2%")
-                    ->setParameter(10, "%6%3%")
-                    ->setParameter(11, "%6%4%");
-                    $module_non_etudierS4S6 = $Qr->getQuery()->getResult();
-
-                    foreach($module_non_etudierS4S6 as $m){
-                        $modules_non_etudierS4S6[] = $m->getCode();
-                    }
-                }
-                    //---------------------------------------------------------------------------------------------
-
-                    //  $module_non_valider
-                    //  $modules_non_etudier
-                    //  $module_valider
-                    //return new Response(var_dump($modules_non_etudier));
-                    
-                    if(count($module_non_validerS3S5) + count($modules_non_etudierS3S5) > 4 | count($module_non_validerS4S6) + count($modules_non_etudierS4S6) > 4){
-                        
-                        return $this->render('AppFrontOfficeBundle:Changement:changer.html.twig', 
-                                              array( 
-                                                     "modules_non_validerS1S3" => $modules_non_valider_pour_der_anneeS1S3 ,
-                                                     "modules_non_etudierS1S3" => $module_non_etudierS1S3 ,
-                                                     "modules_non_validerS2S4" => $modules_non_valider_pour_der_anneeS2S4 ,
-                                                     "modules_non_etudierS2S4" => $module_non_etudierS2S4 ,
-                                                     "modules_non_validerS3S5" => $modules_non_valider_pour_der_anneeS3S5 ,
-                                                     "modules_non_etudierS3S5" => $module_non_etudierS3S5 ,
-                                                     "modules_non_validerS4S6" => $modules_non_valider_pour_der_anneeS4S6 ,
-                                                     "modules_non_etudierS4S6" => $module_non_etudierS4S6
-                                                   ));
-                    }
-                
-
-                //return $this->render('AppFrontOfficeBundle:Changement:changer.html.twig', array());
-             
-                 
-        // -------------------------------- S1/S3 -----   S2/S4 -----
+            if($pos5 < $pos3 ){
+                $pos = $pos5;
+            } else {
+                $pos = $pos3;
+            }
+            if($pos5 == 0 & $pos == 0){
+                $pos = $pos3;
+            }
+            if($pos3 == 0 & $pos == 0){
+                $pos = $pos5;
+            }
+            $pos--;
+            
+            $filiere = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')-> getFiliere($pos, $etudiant);
+            
+            $ModulesNotEtudiedS3S5 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi')
+            ->getNotEtudiedModules($filiere, $NVModulesForS3S5Tab, $VModulesForS3S5Tab, "%3%1%", "%3%2%", "%3%3%", "%3%4%", "%5%1%", "%5%2%", "%5%3%", "%5%4%");
+            foreach($ModulesNotEtudiedS3S5 as $m){
+                $ModulesNotEtudiedS3S5Tab[] = $m->getCode();
+            }
+        }
+        
+        $countS4S6M1 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%4%1%", "%6%1%");
+        $countS4S6M2 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%4%2%", "%6%2%");
+        $countS4S6M3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%4%3%", "%6%3%");
+        $countS4S6M4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%4%4%", "%6%4%");
+        
+        $somme = 0; 
+        if ( count($countS4S6M1) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS4S6M2) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS4S6M3) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS4S6M4) == 2 )  { 
+            $somme +=  2;          
+        }
        
-                
-                // --------------- Tous les Modules Valider 
-                $qb = $em->createQueryBuilder();
-                $qb->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($qb->expr()->eq('r.status', '?1'))
-                ->andWhere($qb->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($qb->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD");  
-                $tous_les_modules_valider = $qb->getQuery()->getResult();
+        if($somme == 2 or $somme == 4){
+            
+            $NVModulesForS4S6 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            ->getNVModulesInLastYearforEtudiant($etudiant, $maxYear, "%4%1%", "%4%2%", "%4%3%", "%4%4%", "%6%1%", "%6%2%", "%6%3%", "%6%4%");
+            
+            foreach($NVModulesForS4S6 as $m){
+                $NVModulesForS4S6Tab[] = $m->getElement()->getCode();
+            }
+            
+            $VModulesForS4S6 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            ->getVModulesforEtudiant($etudiant, "%4%1%", "%4%2%", "%4%3%", "%4%4%", "%6%1%", "%6%2%", "%6%3%", "%6%4%");
+            
+            foreach($VModulesForS4S6 as $m){
+                $VModulesForS4S6Tab[] = $m->getElement()->getCode();
+            }
+           
+            $pos4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            -> getPositionOf("4", $etudiant, "%4%1%", "%4%2%", "%4%3%", "%4%4%", "%6%1%", "%6%2%", "%6%3%", "%6%4%");
+            $pos6 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            -> getPositionOf("6", $etudiant, "%4%1%", "%4%2%", "%4%3%", "%4%4%", "%6%1%", "%6%2%", "%6%3%", "%6%4%");
+            
+            if($pos6 < $pos4 ){
+                $pos = $pos6;
+            } else {
+                $pos = $pos4;
+            }
+            if($pos6 == 0 & $pos == 0){
+                $pos = $pos4;
+            }
+            if($pos4 == 0 & $pos == 0){
+                $pos = $pos6;
+            }
+            $pos--;
+            $filiere = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')-> getFiliere($pos, $etudiant);
+             //return new Response(var_dump($filiere));
+            $ModulesNotEtudiedS4S6 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi')
+            ->getNotEtudiedModules($filiere, $NVModulesForS4S6Tab, $VModulesForS4S6Tab, "%4%1%", "%4%2%", "%4%3%", "%4%4%", "%6%1%", "%6%2%", "%6%3%", "%6%4%");
+            
+            foreach($ModulesNotEtudiedS4S6 as $m){
+                $ModulesNotEtudiedS4S6Tab[] = $m->getCode();
+            }
+            
+            $CountNotS6M3M4= $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi')
+            ->getCountNotEtudiedModulesS6M3M4($filiere, $NVModulesForS4S6Tab, $VModulesForS4S6Tab, "%6%3%", "%6%4%");
+            
+            $countVS = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getVSemestreNumber($etudiant);
+            if( ($CountNotS6M3M4 == 1 | $CountNotS6M3M4 == 2) & $countVS < 4)  {
+                 return $this->render( 'AppFrontOfficeBundle:Changement:checkvalide.html.twig',  array( ) );
+            }
+        }
+              
+        if(count($NVModulesForS3S5Tab) + count($ModulesNotEtudiedS3S5Tab) > 4 | count($NVModulesForS4S6Tab) + count($ModulesNotEtudiedS4S6Tab) > 4){
 
+                   return $this->render('AppFrontOfficeBundle:Changement:changer.html.twig', 
+                                         array( 
+                                                "modules_non_validerS1S3" => $NVModulesForS1S3 ,
+                                                "modules_non_etudierS1S3" => $ModulesNotEtudiedS1S3 ,
+                                                "modules_non_validerS2S4" => $NVModulesForS2S4 ,
+                                                "modules_non_etudierS2S4" => $ModulesNotEtudiedS2S4 ,
+                                                "modules_non_validerS3S5" => $NVModulesForS3S5 ,
+                                                "modules_non_etudierS3S5" => $ModulesNotEtudiedS3S5 ,
+                                                "modules_non_validerS4S6" => $NVModulesForS4S6 ,
+                                                "modules_non_etudierS4S6" => $ModulesNotEtudiedS4S6
+                                              ));
+         }
+         
+        $countS1S3M1 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%1%1%", "%3%1%");
+        $countS1S3M2 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%1%2%", "%3%2%");
+        $countS1S3M3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%1%3%", "%3%3%");
+        $countS1S3M4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%1%4%", "%3%4%");
 
-                // ------------- est ce que  prer module 1 valider 2---> OUI
+        $somme = 0; 
+        if ( count($countS1S3M1) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS1S3M2) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS1S3M3) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS1S3M4) == 2 )  { 
+            $somme +=  2;          
+        }
 
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%1%1%")
-                ->setParameter(5, "%3%1%");  
-                $modules_prerequisS1S3M1 = $Qr->getQuery()->getResult();
-
-
-                 // ----------------- est ce que  prer module 2 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%1%2%")
-                ->setParameter(5, "%3%2%");  
-                $modules_prerequisS1S3M2 = $Qr->getQuery()->getResult();
-
-
-                 // ------------------- est ce que  prer module 3 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%1%3%")
-                ->setParameter(5, "%3%3%");  
-                $modules_prerequisS1S3M3 = $Qr->getQuery()->getResult();
-
-                 // ---------------------- est ce que  prer module 4 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%1%4%")
-                ->setParameter(5, "%3%4%");
-                $modules_prerequisS1S3M4 = $Qr->getQuery()->getResult();
-
-               $somme = 0; 
-               if ( count($modules_prerequisS1S3M1) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS1S3M2) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS1S3M3) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS1S3M4) == 2 )  { 
-                   $somme +=  2;          
-               }
-                  //return new Response(var_dump($somme));
-
-                if($somme == 2 or $somme == 4){
-                    // ------------------------------------  Max year 
-                    $qb = $em->createQueryBuilder();
-                    $qb->select('r')
-                    ->addSelect($qb->expr()->max('r.annee'))
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->andWhere($qb->expr()->eq('r.etudiant', '?2'))
-                    ->setParameter(2, $etudiant);
-                    $max = $qb->getQuery()->getResult();
-                    $max_yearS1S3 = (int) $max[0][1];
-                    //echo $max_year;
-
-
-                    // ------------------------   Modules non valider pour la derniere annee
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->andWhere($Qr->expr()->eq('r.annee', '?12'))
-                    ->setParameter(1, "NV")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%1%1%")
-                    ->setParameter(5, "%1%2%")
-                    ->setParameter(6, "%1%3%")
-                    ->setParameter(7, "%1%4%")
-                    ->setParameter(8, "%3%1%")
-                    ->setParameter(9, "%3%2%")
-                    ->setParameter(10, "%3%3%")
-                    ->setParameter(11, "%3%4%")
-                    ->setParameter(12, $max_yearS1S3);
-                    $modules_non_valider_pour_der_anneeS1S3 = $Qr->getQuery()->getResult();
-
-                    foreach($modules_non_valider_pour_der_anneeS1S3 as $m){
-                        $module_non_validerS1S3[] = $m->getElement()->getCode();
-                    }
-
-                    // ------------- Module valider pour S1S3
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%1%1%")
-                    ->setParameter(5, "%1%2%")
-                    ->setParameter(6, "%1%3%")
-                    ->setParameter(7, "%1%4%")
-                    ->setParameter(8, "%3%1%")
-                    ->setParameter(9, "%3%2%")
-                    ->setParameter(10, "%3%3%")
-                    ->setParameter(11, "%3%4%");
-                    $modules_valider_S1S3 = $Qr->getQuery()->getResult();
-
-                    foreach($modules_valider_S1S3 as $m){
-                        $module_validerS1S3[] = $m->getElement()->getCode();
-                    }
-
-                    // -------------- Position de prmier 1 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("MAX(LOCATE('1', e.code))")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%1%1%")
-                    ->setParameter(5, "%1%2%")
-                    ->setParameter(6, "%1%3%")
-                    ->setParameter(7, "%1%4%")
-                    ->setParameter(8, "%3%1%")
-                    ->setParameter(9, "%3%2%")
-                    ->setParameter(10, "%3%3%")
-                    ->setParameter(11, "%3%4%");
-                    $positionof1 = $Qr->getQuery()->getResult();
-                    $pos1 = (int) $positionof1[0][1];
-
-                     // -------------- Position de prmier 3 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("MAX(LOCATE('3', e.code))")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%1%1%")
-                    ->setParameter(5, "%1%2%")
-                    ->setParameter(6, "%1%3%")
-                    ->setParameter(7, "%1%4%")
-                    ->setParameter(8, "%3%1%")
-                    ->setParameter(9, "%3%2%")
-                    ->setParameter(10, "%3%3%")
-                    ->setParameter(11, "%3%4%");
-                    $positionof3 = $Qr->getQuery()->getResult();
-                    $pos3 = (int) $positionof3[0][1];
-
-
-                    if($pos3 < $pos1 ){
-                        $pos = $pos3;
-                    } else {
-                        $pos = $pos1;
-                    }
-                    if($pos3 == 0 & $pos == 0){
-                        $pos = $pos1;
-                    }
-                    if($pos1 == 0 & $pos == 0){
-                        $pos = $pos3;
-                    }
-                    $pos--;
-
-                    //    get filier 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("SUBSTRING(e.code, 1, $pos)")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%1%1%")
-                    ->setParameter(5, "%1%2%")
-                    ->setParameter(6, "%1%3%")
-                    ->setParameter(7, "%1%4%")
-                    ->setParameter(8, "%3%1%")
-                    ->setParameter(9, "%3%2%")
-                    ->setParameter(10, "%3%3%")
-                    ->setParameter(11, "%3%4%");
-                    $FLR = $Qr->getQuery()->getResult();
-                    $flr = $FLR[0][1];
-                    $filiere = $flr . '%';
-
-                    // MODULE NON Etudier 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ElementPedagogi', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->andWhere($Qr->expr()->like('e.code', '?1'))
-                    ->andWhere($Qr->expr()->notIn('e.code', '?12'))
-                    ->andWhere($Qr->expr()->notIn('e.code', '?13'))
-                    ->setParameter(1, $filiere)
-                    ->setParameter(12, $module_non_validerS1S3)
-                    ->setParameter(13, $module_validerS1S3)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%1%1%")
-                    ->setParameter(5, "%1%2%")
-                    ->setParameter(6, "%1%3%")
-                    ->setParameter(7, "%1%4%")
-                    ->setParameter(8, "%3%1%")
-                    ->setParameter(9, "%3%2%")
-                    ->setParameter(10, "%3%3%")
-                    ->setParameter(11, "%3%4%");
-                    $module_non_etudierS1S3 = $Qr->getQuery()->getResult();
-
-                    foreach($module_non_etudierS1S3 as $m){
-                        $modules_non_etudierS1S3[] = $m->getCode();
-                    }
-                }
-
-
-                    // -------------------------------------------------------------------------------------------
-                                   // S2 ---------------- S4
-
-                     // ------------- est ce que  prer module 1 valider 2---> OUI
-
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%2%1%")
-                ->setParameter(5, "%4%1%");  
-                $modules_prerequisS2S4M1 = $Qr->getQuery()->getResult();
-
-
-                 // ----------------- est ce que  prer module 2 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%2%2%")
-                ->setParameter(5, "%4%2%");  
-                $modules_prerequisS2S4M2 = $Qr->getQuery()->getResult();
-
-
-                 // ------------------- est ce que  prer module 3 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%2%3%")
-                ->setParameter(5, "%4%3%");  
-                $modules_prerequisS2S4M3 = $Qr->getQuery()->getResult();
-
-                 // ---------------------- est ce que  prer module 4 valider 2---> OUI
-                $Qr = $em->createQueryBuilder();
-                $Qr->select('r', 'e')
-                ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                ->leftJoin('r.element', 'e')
-                ->Where($Qr->expr()->like('e.code', '?4'))
-                ->orWhere($Qr->expr()->like('e.code', '?5'))
-                ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                ->setParameter(1, "V")
-                ->setParameter(2, $etudiant)
-                ->setParameter(3, "MOD")
-                ->setParameter(4, "%2%4%")
-                ->setParameter(5, "%4%4%");
-                $modules_prerequisS2S4M4 = $Qr->getQuery()->getResult();
-
-               $somme = 0; 
-               if ( count($modules_prerequisS2S4M1) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS2S4M2) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS2S4M3) == 2 )  { 
-                   $somme +=  2;          
-               }
-               if ( count($modules_prerequisS2S4M4) == 2 )  { 
-                   $somme +=  2;          
-               }
-                  //return new Response(var_dump($somme));
-
-                if($somme == 2 or $somme == 4){
-                    // ------------------------------------  Max year 
-                    $qb = $em->createQueryBuilder();
-                    $qb->select('r')
-                    ->addSelect($qb->expr()->max('r.annee'))
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->andWhere($qb->expr()->eq('r.etudiant', '?2'))
-                    ->setParameter(2, $etudiant);
-                    $max = $qb->getQuery()->getResult();
-                    $max_yearS2S4 = (int) $max[0][1];
-                    //echo $max_year;
-
-
-                    // ------------------------   Modules non valider pour la derniere annee
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->andWhere($Qr->expr()->eq('r.annee', '?12'))
-                    ->setParameter(1, "NV")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%2%1%")
-                    ->setParameter(5, "%2%2%")
-                    ->setParameter(6, "%2%3%")
-                    ->setParameter(7, "%2%4%")
-                    ->setParameter(8, "%4%1%")
-                    ->setParameter(9, "%4%2%")
-                    ->setParameter(10, "%4%3%")
-                    ->setParameter(11, "%4%4%")
-                    ->setParameter(12, $max_yearS2S4);
-                    $modules_non_valider_pour_der_anneeS2S4 = $Qr->getQuery()->getResult();
-
-                    foreach($modules_non_valider_pour_der_anneeS2S4 as $m){
-                        $module_non_validerS2S4[] = $m->getElement()->getCode();
-                    }
-
-                    // ------------- Module valider pour S1S3
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%2%1%")
-                    ->setParameter(5, "%2%2%")
-                    ->setParameter(6, "%2%3%")
-                    ->setParameter(7, "%2%4%")
-                    ->setParameter(8, "%4%1%")
-                    ->setParameter(9, "%4%2%")
-                    ->setParameter(10, "%4%3%")
-                    ->setParameter(11, "%4%4%");
-                    $modules_valider_S2S4 = $Qr->getQuery()->getResult();
-
-                    foreach($modules_valider_S2S4 as $m){
-                        $module_validerS2S4[] = $m->getElement()->getCode();
-                    }
-
-                    // -------------- Position de prmier 1 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("MAX(LOCATE('2', e.code))")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%2%1%")
-                    ->setParameter(5, "%2%2%")
-                    ->setParameter(6, "%2%3%")
-                    ->setParameter(7, "%2%4%")
-                    ->setParameter(8, "%4%1%")
-                    ->setParameter(9, "%4%2%")
-                    ->setParameter(10, "%4%3%")
-                    ->setParameter(11, "%4%4%");
-                    $positionof2 = $Qr->getQuery()->getResult();
-                    $pos2 = (int) $positionof2[0][1];
-
-                     // -------------- Position de prmier 3 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("MAX(LOCATE('4', e.code))")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%2%1%")
-                    ->setParameter(5, "%2%2%")
-                    ->setParameter(6, "%2%3%")
-                    ->setParameter(7, "%2%4%")
-                    ->setParameter(8, "%4%1%")
-                    ->setParameter(9, "%4%2%")
-                    ->setParameter(10, "%4%3%")
-                    ->setParameter(11, "%4%4%");
-                    $positionof4 = $Qr->getQuery()->getResult();
-                    $pos4 = (int) $positionof4[0][1];
-
-
-                    if($pos4 < $pos2 ){
-                        $pos = $pos4;
-                    } else {
-                        $pos = $pos2;
-                    }
-                    if($pos4 == 0 & $pos == 0){
-                        $pos = $pos2;
-                    }
-                    if($pos2 == 0 & $pos == 0){
-                        $pos = $pos4;
-                    }
-                    $pos--;
-
-                    //    get filier 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('r', 'e')
-                    ->addSelect("SUBSTRING(e.code, 1, $pos)")
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ResultatElp', 'r')
-                    ->leftJoin('r.element', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('r.status', '?1'))
-                    ->andWhere($Qr->expr()->eq('r.etudiant', '?2'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->setParameter(1, "V")
-                    ->setParameter(2, $etudiant)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%2%1%")
-                    ->setParameter(5, "%2%2%")
-                    ->setParameter(6, "%2%3%")
-                    ->setParameter(7, "%2%4%")
-                    ->setParameter(8, "%4%1%")
-                    ->setParameter(9, "%4%2%")
-                    ->setParameter(10, "%4%3%")
-                    ->setParameter(11, "%4%4%");
-                    $FLR = $Qr->getQuery()->getResult();
-                    $flr = $FLR[0][1];
-                    $filiere = $flr . '%';
-
-                    // MODULE NON Etudier 
-                    $Qr = $em->createQueryBuilder();
-                    $Qr->select('e')
-                    ->from('App\Bundle\BackOfficeBundle\Entity\ElementPedagogi', 'e')
-                    ->Where($Qr->expr()->like('e.code', '?4'))
-                    ->orWhere($Qr->expr()->like('e.code', '?5'))
-                    ->orWhere($Qr->expr()->like('e.code', '?6'))
-                    ->orWhere($Qr->expr()->like('e.code', '?7'))
-                    ->orWhere($Qr->expr()->like('e.code', '?8'))
-                    ->orWhere($Qr->expr()->like('e.code', '?9'))
-                    ->orWhere($Qr->expr()->like('e.code', '?10'))
-                    ->orWhere($Qr->expr()->like('e.code', '?11'))
-                    ->andWhere($Qr->expr()->eq('e.nature', '?3'))
-                    ->andWhere($Qr->expr()->like('e.code', '?1'))
-                    ->andWhere($Qr->expr()->notIn('e.code', '?12'))
-                    ->andWhere($Qr->expr()->notIn('e.code', '?13'))
-                    ->setParameter(1, $filiere)
-                    ->setParameter(12, $module_non_validerS2S4)
-                    ->setParameter(13, $module_validerS2S4)
-                    ->setParameter(3, "MOD")
-                    ->setParameter(4, "%2%1%")
-                    ->setParameter(5, "%2%2%")
-                    ->setParameter(6, "%2%3%")
-                    ->setParameter(7, "%2%4%")
-                    ->setParameter(8, "%4%1%")
-                    ->setParameter(9, "%4%2%")
-                    ->setParameter(10, "%4%3%")
-                    ->setParameter(11, "%4%4%");
-                    $module_non_etudierS2S4 = $Qr->getQuery()->getResult();
-
-                    foreach($module_non_etudierS2S4 as $m){
-                        $modules_non_etudierS2S4[] = $m->getCode();
-                    }
-                }
-                    //---------------------------------------------------------------------------------------------
-
-                    //  $module_non_valider
-                    //  $modules_non_etudier
-                    //  $module_valider
-                    //return new Response(var_dump($modules_non_etudier));
-                    if(count($module_non_validerS1S3) + count($modules_non_etudierS1S3) > 4 | count($module_non_validerS2S4) + count($modules_non_etudierS2S4) > 4){
-                        return $this->render('AppFrontOfficeBundle:Changement:changer.html.twig', 
-                                              array( 
-                                                     "modules_non_validerS1S3" => $modules_non_valider_pour_der_anneeS1S3 ,
-                                                     "modules_non_etudierS1S3" => $module_non_etudierS1S3 ,
-                                                     "modules_non_validerS2S4" => $modules_non_valider_pour_der_anneeS2S4 ,
-                                                     "modules_non_etudierS2S4" => $module_non_etudierS2S4 ,
-                                                     "modules_non_validerS3S5" => $modules_non_valider_pour_der_anneeS3S5 ,
-                                                     "modules_non_etudierS3S5" => $module_non_etudierS3S5 ,
-                                                     "modules_non_validerS4S6" => $modules_non_valider_pour_der_anneeS4S6 ,
-                                                     "modules_non_etudierS4S6" => $module_non_etudierS4S6
-                                                   ));
-                    }
-                
-
-                
+        if($somme == 2 or $somme == 4){
              
-             
-            return $this->render('AppFrontOfficeBundle:Changement:pasdemoduleachanger.html.twig', array());
+            $NVModulesForS1S3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            ->getNVModulesInLastYearforEtudiant($etudiant, $maxYear, "%1%1%", "%1%2%", "%1%3%", "%1%4%", "%3%1%", "%3%2%", "%3%3%", "%3%4%");
+
+            foreach($NVModulesForS1S3 as $m){
+                $NVModulesForS1S3Tab[] = $m->getElement()->getCode();
+            }  
+            
+            $VModulesForS1S3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            ->getVModulesforEtudiant($etudiant, "%1%1%", "%1%2%", "%1%3%", "%1%4%", "%3%1%", "%3%2%", "%3%3%", "%3%4%");
+
+            foreach($VModulesForS1S3 as $m){ 
+                $VModulesForS1S3Tab[] = $m->getElement()->getCode();
+            }
+            
+            $pos1 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            -> getPositionOf("1", $etudiant, "%1%1%", "%1%2%", "%1%3%", "%1%4%", "%3%1%", "%3%2%", "%3%3%", "%3%4%");
+            $pos3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            -> getPositionOf("3", $etudiant, "%1%1%", "%1%2%", "%1%3%", "%1%4%", "%3%1%", "%3%2%", "%3%3%", "%3%4%");
+            
+            if($pos3 < $pos1 ){
+                $pos = $pos3;
+            } else {
+                $pos = $pos1;
+            }
+            if($pos3 == 0 & $pos == 0){
+                $pos = $pos1;
+            }
+            if($pos1 == 0 & $pos == 0){
+                $pos = $pos3;
+            }
+            $pos--;
+            $filiere = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')-> getFiliere($pos, $etudiant);
+            $ModulesNotEtudiedS1S3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi')
+            ->getNotEtudiedModules($filiere, $NVModulesForS1S3Tab, $VModulesForS1S3Tab, "%1%1%", "%1%2%", "%1%3%", "%1%4%", "%3%1%", "%3%2%", "%3%3%", "%3%4%");
+            
+            foreach($ModulesNotEtudiedS1S3 as $m){
+                $ModulesNotEtudiedS1S3Tab[] = $m->getCode();
+            }
+        }
+        
+        $countS2S4M1 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%2%1%", "%4%1%");
+        $countS2S4M2 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%2%2%", "%4%2%");
+        $countS2S4M3 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%2%3%", "%4%3%");
+        $countS2S4M4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')->getCountPrerequisiteModules($etudiant, "%2%4%", "%4%4%");
+
+        $somme = 0; 
+        if ( count($countS2S4M1) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS2S4M2) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS2S4M3) == 2 )  { 
+            $somme +=  2;          
+        }
+        if ( count($countS2S4M4) == 2 )  { 
+            $somme +=  2;          
+        }
+        if($somme == 2 or $somme == 4){ 
+            
+            $NVModulesForS2S4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            ->getNVModulesInLastYearforEtudiant($etudiant, $maxYear, "%2%1%", "%2%2%", "%2%3%", "%2%4%", "%4%1%", "%4%2%", "%4%3%", "%4%4%");
+
+            foreach($NVModulesForS2S4 as $m){
+                $NVModulesForS2S4Tab[] = $m->getElement()->getCode();
+            }
+
+            $VModulesForS2S4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            ->getVModulesforEtudiant($etudiant, "%2%1%", "%2%2%", "%2%3%", "%2%4%", "%4%1%", "%4%2%", "%4%3%", "%4%4%");
+
+            foreach($VModulesForS2S4 as $m){ 
+               $VModulesForS2S4Tab[] = $m->getElement()->getCode();
+            }
+
+            $pos2 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            -> getPositionOf("2", $etudiant, "%2%1%", "%2%2%", "%2%3%", "%2%4%", "%4%1%", "%4%2%", "%4%3%", "%4%4%");
+
+            $pos4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')
+            -> getPositionOf("4", $etudiant, "%2%1%", "%2%2%", "%2%3%", "%2%4%", "%4%1%", "%4%2%", "%4%3%", "%4%4%");
+
+            if($pos4 < $pos2 ){
+                $pos = $pos4;
+            } else {
+                $pos = $pos2;
+            }
+            if($pos4 == 0 & $pos == 0){
+                $pos = $pos2;
+            }
+            if($pos2 == 0 & $pos == 0){
+                $pos = $pos4;
+            }
+            $pos--;
+
+            $filiere = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ResultatElp')-> getFiliere($pos, $etudiant);
+
+            $ModulesNotEtudiedS2S4 = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi')
+            ->getNotEtudiedModules($filiere, $NVModulesForS2S4Tab, $VModulesForS2S4Tab, "%2%1%", "%2%2%", "%2%3%", "%2%4%", "%4%1%", "%4%2%", "%4%3%", "%4%4%");
+
+            foreach($ModulesNotEtudiedS2S4 as $m){
+                $ModulesNotEtudiedS2S4Tab[] = $m->getCode();
+            }
+        }
+        
+        if(count($NVModulesForS1S3Tab) + count($ModulesNotEtudiedS1S3Tab) > 4 | count($NVModulesForS2S4Tab) + count($ModulesNotEtudiedS2S4Tab) > 4){
+            return $this->render('AppFrontOfficeBundle:Changement:changer.html.twig', 
+                                  array( 
+                                         "modules_non_validerS1S3" => $NVModulesForS1S3 ,
+                                         "modules_non_etudierS1S3" => $ModulesNotEtudiedS1S3 ,
+                                         "modules_non_validerS2S4" => $NVModulesForS2S4 ,
+                                         "modules_non_etudierS2S4" => $ModulesNotEtudiedS2S4 ,
+                                         "modules_non_validerS3S5" => $NVModulesForS3S5 ,
+                                         "modules_non_etudierS3S5" => $ModulesNotEtudiedS3S5 ,
+                                         "modules_non_validerS4S6" => $NVModulesForS4S6 ,
+                                         "modules_non_etudierS4S6" => $ModulesNotEtudiedS4S6
+                                       ));
+        }
+        return $this->render('AppFrontOfficeBundle:Changement:pasdemoduleachanger.html.twig', array());
     }
 }
