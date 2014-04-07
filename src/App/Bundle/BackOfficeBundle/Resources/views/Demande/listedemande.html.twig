@@ -18,22 +18,22 @@
   <ul class="children">
     <li><a href="{{ path('config_page') }}"><i class="fa fa-caret-right"></i>Automatisation</a></li>
     <li>
-      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ reclamation</a>
+      <a href="{{ path('type-reclamation_new') }}"><i class="fa fa-caret-right"></i>Ajouter un type de réclamations</a>
     </li>
-    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste typ de reclamation</a></li>
-    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter typ demande</a></li>
-    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste typ demande</a></li>
+    <li><a href="{{ path('type-reclamation') }}"><i class="fa fa-caret-right"></i>Liste des types de réclamations</a></li>
+    <li><a href="{{ path('type-demande_new') }}"><i class="fa fa-caret-right"></i>Ajouter un type de demandes</a></li>
+    <li><a href="{{ path('type-demande') }}"><i class="fa fa-caret-right"></i>Liste des types de demandes</a></li>
     <li><a href="{{ path('import_data') }}"><i class="fa fa-caret-right"></i>Importation</a></li>
     <li><a href="#"><i class="fa fa-caret-right"></i>Listes des administrateurs</a></li>
-    <li><a href="#"><i class="fa fa-caret-right"></i>Creer un Administrateur</a></li>
+    <li><a href="#"><i class="fa fa-caret-right"></i>Créer un Administrateur</a></li>
   </ul>
 </li>
 {% else %}
 <li class="nav-parent">
-  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <a href="#"><i class="fa fa-home"></i> <span>Réclamations</span></a>
   <ul class="children">
     <li>
-      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+      <a href="{{ path('listerReclamation') }}"><i class="fa fa-caret-right"></i>Liste des réclamations</a>
     </li>
   </ul>
 </li>
@@ -41,11 +41,11 @@
   <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
   <ul class="children" style="display: block;">
     <li>
-      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Liste des demandes</a>
+      <a href="{{ path('listedemande') }}"><i class="fa fa-caret-right"></i>Demandes de pièces</a>
     </li>
-    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Liste des changements</a></li>
-    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>liste ele à refaire</a></li>
-   <li><a href="{{ path('listemodulelibre') }}"><i class="fa fa-caret-right"></i>Liste des demandes pour un module libre</a></li>
+    <li><a href="{{ path('listedemandechangement') }}"><i class="fa fa-caret-right"></i>Changement de module</a></li>
+    <li><a href="{{ path('listeelementrefaire') }}"><i class="fa fa-caret-right"></i>Elément à refaire</a></li>
+   <li><a href="{{ path('listemodulelibre') }}"><i class="fa fa-caret-right"></i>Module libre</a></li>
 
   </ul>
 </li>
