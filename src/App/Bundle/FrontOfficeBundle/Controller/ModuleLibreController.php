@@ -16,7 +16,7 @@ class ModuleLibreController extends Controller
       $session =$this->container->get("esconfig_manager")->getCurrentSemester();
    
       $idUser=$this->getUser()->getId() ;
-    	 $rep= $this->getDoctrine()->getManager();  
+       $rep= $this->getDoctrine()->getManager();  
          
      $LastSemestreObjet=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //objet representant le dernier semestre
                      ->tousResultatEtudiant($idUser);
@@ -48,7 +48,6 @@ class ModuleLibreController extends Controller
               $Modules=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //tableau de modules
                                -> ModuleDeSemestreEtud($codeSemetre,$idUser); 
                
-                       echo '<br/>';
                         //echo count($Modules);
                          // '<br/>';
                          
@@ -87,7 +86,6 @@ class ModuleLibreController extends Controller
                   
              
                          if($cptValider1==3 && $cptNonValide1==1){
-                             echo $ModNonvalide1->getElement()->getCode().' <br/>';
                          
                            if($semestre==1 || $semestre==3){
 ///////////// dans le code ci dessous on remplace le semestre1 par le semestre3  ou sem3 par sem6
@@ -178,7 +176,6 @@ class ModuleLibreController extends Controller
               $Modules=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //tableau de modules
                                -> ModuleDeSemestreEtud($codeSemetre,$idUser); 
                
-                       echo '<br/>';
                         //echo count($Modules);
                          // '<br/>';
                          
@@ -217,7 +214,6 @@ class ModuleLibreController extends Controller
                   
              
                          if($cptValider2==3 && $cptNonValide2==1){
-                             echo $ModNonvalide2->getElement()->getCode().' <br/>';
                          
                            if($semestre==2 || $semestre==4){
 ///////////// dans le code ci dessous on remplace le semestre1 par le semestre3  ou sem3 par sem6
