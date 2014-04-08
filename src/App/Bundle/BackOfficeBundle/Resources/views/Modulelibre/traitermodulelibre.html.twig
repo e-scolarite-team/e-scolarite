@@ -51,15 +51,7 @@
 </li>
 {% endif %}
 {% endblock %}
-{% block pageTitle %}
-        <i class="glyphicon glyphicon-refresh"> </i>Demande Module libre
-      {% endblock %}
-       {% block breadcrumb %}
-          <li><a class="active">demande</a></li>
-          <li class="active">traitement module libre</li>
-          {% endblock %}
 
-{% block content %}
 {% block content %}
 <div class="col-md-12">
           <form id="basicForm" action="{{ path( 'traitermodulelibre', { id: demande.id } ) }}" class="form-horizontal" novalidate="novalidate" method="POST">
