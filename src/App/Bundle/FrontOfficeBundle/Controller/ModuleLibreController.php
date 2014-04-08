@@ -7,17 +7,26 @@ use App\Bundle\BackOfficeBundle\Entity\Etudiant;
 use App\Bundle\BackOfficeBundle\Entity\ResultatElp;
 use App\Bundle\BackOfficeBundle\Entity\Demande;
 use App\Bundle\BackOfficeBundle\Entity\EtatDemande;
+use App\Bundle\BackOfficeBundle\Entity\TypeDemande;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class ModuleLibreController extends Controller
 {
     public function module5Action(){
+        
+         $rep= $this->getDoctrine()->getManager();
+          $idUser=$this->getUser()->getId() ;
+          
+         $ObjmaxMod5= $rep->getRepository('AppBackOfficeBundle:TypeDemande')
+                      ->findByCode('5M');
+         $max5=$ObjmaxMod5[0]->getMaxAutorise();
+         $cptMax=$rep->getRepository('AppBackOfficeBundle:Demande') //objet representant le dernier semestre
+                     ->CountDemande($idUser);
+         $maxetud=  count($cptMax);
+             
+     if($maxetud < $max5){    
       $session =$this->container->get("esconfig_manager")->getCurrentSemester();
-   
-      $idUser=$this->getUser()->getId() ;
-       $rep= $this->getDoctrine()->getManager();  
-         
      $LastSemestreObjet=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //objet representant le dernier semestre
                      ->tousResultatEtudiant($idUser);
 
@@ -33,7 +42,9 @@ class ModuleLibreController extends Controller
                         $semestre = (int)$tab[$i];
                           $i++;
                     }
-                      
+
+                 
+                    
              if( $status=='V'){//le status du semestre
              return $this->render('AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig');
              }
@@ -47,7 +58,6 @@ class ModuleLibreController extends Controller
                      
               $Modules=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //tableau de modules
                                -> ModuleDeSemestreEtud($codeSemetre,$idUser); 
-               
                         //echo count($Modules);
                          // '<br/>';
                          
@@ -143,14 +153,17 @@ class ModuleLibreController extends Controller
               }
                 
               
-              return $this->render('AppFrontOfficeBundle:ModuleLibre:index.html.twig', 
+      return $this->render('AppFrontOfficeBundle:ModuleLibre:index.html.twig', 
                       array('moduleLibre'=>$libre,
                              'semestre'=>$semprochain,
                              'nonValider'=> $ModNonvalide1,
-                             'moduleSemestre'=>$sementreARendre));
+                             'moduleSemestre'=>$sementreARendre,
+                             'max'=>$maxetud
+              ));
                                 /* foreach($ModSemLibre as $libre){
                                     echo $libre->getCode().'<br/>';
                                  }*/
+               
                           }
                     }
                     else{
@@ -273,7 +286,7 @@ class ModuleLibreController extends Controller
               }
                 
               
-              return $this->render('AppFrontOfficeBundle:ModuleLibre:index.html.twig', 
+            return $this->render('AppFrontOfficeBundle:ModuleLibre:index.html.twig', 
                       array('moduleLibre'=>$libre,
                             'nonValider'=> $ModNonvalide2,
                              'semestre'=> $semprochain2,
@@ -281,6 +294,7 @@ class ModuleLibreController extends Controller
                                 /* foreach($ModSemLibre as $libre){
                                     echo $libre->getCode().'<br/>';
                                  }*/
+                             
                           }
                     }
                     else{
@@ -288,7 +302,12 @@ class ModuleLibreController extends Controller
                     }
                     
                  }
-               }    
+               }
+     }
+ else {
+       return $this->render('AppFrontOfficeBundle:ModuleLibre:DejaAccorde5M.html.twig');    
+     }
+ 
              }                  
      
    public function EnvoyerDemandeModule5Action() {
@@ -296,7 +315,9 @@ class ModuleLibreController extends Controller
            $em = $this->getDoctrine()->getEntityManager();
         
             if($this->get('request')->request->get('modulelibre') != ""){           
-
+                   $libelle=$this->get('request')->request->get('module5Lib'); 
+                   $code=$this->get('request')->request->get('module5Code').'  comme module libre'; 
+                   $donnees=array($code,$libelle);
                     $em = $this->getDoctrine()->getEntityManager();
                     $nommodulelibre=$this->get('request')->request->get('nommodulelibre');
                     $etudiant = $this->getUser();
@@ -308,6 +329,7 @@ class ModuleLibreController extends Controller
                     $demande->setEtudiant($etudiant);
                     $demande->setTypeDemande($typedemande);
                     $demande->setCreatedAt(new \DateTime());
+                    $demande->setDonnees($donnees);
                     $d =  $demande->getCreatedAt()->format('Y-m-d');
                     $year = substr($d, 0, 4);
                     $month = substr($d, 5, 2);
