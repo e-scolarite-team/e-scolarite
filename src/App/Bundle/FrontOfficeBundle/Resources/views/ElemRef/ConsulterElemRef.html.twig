@@ -1,0 +1,97 @@
+{% extends "::frontend.html.twig" %}
+
+{% block title %} la demande de refaire un élement {% endblock %}
+
+
+{% block pageTitle %}
+        <i class="glyphicon glyphicon-refresh"> </i>Demande Refaire un élément
+      {% endblock %}
+       {% block breadcrumb %}
+          <li><a class="active">demande</a></li>
+          <li class="active">traitement élément à refaire</li>
+          {% endblock %}
+{% block mainMenu %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-home"></i> <span>Reclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamationEtud') }}"><i class="fa fa-caret-right"></i>Liste des reclamations</a>
+      <a href="{{ path('reclamationEtud') }}"><i class="fa fa-caret-right"></i>Envoyer une reclamation</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent   active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children" style="display: block;">
+    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i>Consulter les rendez-vous</a></li>
+    <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demande une piece</a></li>
+    {% if app.session.get('serviceState') == 'yes' %}
+    <li><a href="{{ path('changer') }}"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
+    <li><a href="{{ path('module_libre') }}"><i class="fa fa-caret-right"></i>Module libre</a></li>
+    <li><a href="{{ path('ElemRef') }}"><i class="fa fa-caret-right"></i>Elément à refaire</a></li>
+    {% endif %}
+  </ul>
+</li>
+{% endblock %}
+{% block content %}
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-btns">
+                <a href="#" class="minimize">−</a>
+            </div>
+            <h4 class="panel-title">Consulter une demande de refaire un élément</h4>
+            {% if demande.getLastEtatDemande().etat == "Valider" %}
+              <div class="alert alert-success">
+                Votre demande a été validée
+              </div>
+            {% elseif demande.getLastEtatDemande().etat == "Rejeter" %}
+            <div class="alert alert-danger">
+                Votre demande a été refusée
+              </div>
+            {% else %}
+           
+            {% endif %}
+        </div>
+        <div class="panel-body">
+            
+            
+            
+            <div class="form-group">
+                <label class="col-sm-3 control-label"> Type de demande <span class="asterisk"></span></label>
+                <div class="col-sm-9">
+                    <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.typeDemande.libelle }}" >
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-sm-3 control-label"> Element choisi <span class="asterisk"></span></label>
+                <div class="col-sm-9">
+                    <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.donnees }}" >
+                </div>
+            </div>   
+          
+                
+        </div><!-- panel-body -->
+        
+    </div><!-- panel -->
+        </div>
+        
+
+        
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent()}}
+  <script>
+
+    jQuery(document).ready(function(){
+      
+      // Date Picker
+
+        jQuery('#datepicker').datepicker({ dateFormat: "dd-mm-yy" });
+      });
+
+  </script>
+{% endblock %}

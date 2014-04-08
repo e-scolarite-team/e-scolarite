@@ -68,7 +68,7 @@ class ElemrefController extends Controller {
                  $etatDemandes->setDemande($entity);
                  $em->persist($etatDemandes);
                  $em->flush();
-                return $this->redirect($this->generateUrl('notification-etudiant'));
+                return $this->redirect($this->generateUrl('ElemRefEstEnvoye'));
             }
         }
 
@@ -135,15 +135,40 @@ class ElemrefController extends Controller {
                                 array('modules'             => $moduleElements,
                                       'err'                 => $err,
                                       'aucunElementDemande' => $aucunElementDemande,
-                                      //'ex'=>9
+                                      
                                     )
                             );
     }
 
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+       
+        $entity = $em->getRepository('AppBackOfficeBundle:Demande')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find reclamation entity.');
+        }
+        $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
+        $element = $elem->findOneByCode($entity->getDonnees()[0]);
+        $entity->setDonnees($element->getLib());
+        //$deleteForm = $this->createDeleteForm($id);
+        //return new Response(var_dump($entity->getStatus()));
+            
+        return $this->render('AppFrontOfficeBundle:ElemRef:ConsulterElemRef.html.twig', array(
+            'demande'      => $entity,
+            //'delete_form' => $deleteForm->createView(), 
+            
+                   ));
+    }
 
 
    
-    
+  public function estEnvoyeAction()
+    {
+        return $this->render('AppFrontOfficeBundle:ElemRef:estEnvoyer.html.twig');
+                   
+    }  
     
 }
 

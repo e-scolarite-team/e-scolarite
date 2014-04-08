@@ -154,7 +154,10 @@ class NotificationController extends Controller{
         $em->persist($demande);
         $em->flush();
         $id = trim($id);
-        return $this->redirect($this->get('router')->generate('showDemandeEtud',array('id' => $id)));
+        $route = "showDemandeEtud";
+        if($demande->getTypeDemande()->getCode() == 'ER')
+            $route = "consulterElemRef";
+        return $this->redirect($this->get('router')->generate($route,array('id' => $id)));
     }
 
 

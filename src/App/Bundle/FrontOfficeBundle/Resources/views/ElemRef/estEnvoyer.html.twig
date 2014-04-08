@@ -1,0 +1,54 @@
+{% extends "::frontend.html.twig" %}
+
+{% block title %} Elément à refaire {% endblock %}
+
+{% block pageTitle %}
+        <i class="glyphicon glyphicon-refresh"> </i>Demande Refaire un élement
+{% endblock %}
+{% block breadcrumb %}
+        <li><a class="active">demande</a></li>
+        <li class="active">liste élement à refaire</li>
+{% endblock %}
+
+{% block mainMenu %}
+<li class="nav-parent">
+  <a href="#"><i class="fa fa-maxcdn"></i> <span>Réclamations</span></a>
+  <ul class="children">
+    <li>
+      <a href="{{ path('listerReclamationEtud') }}"><i class="fa fa-caret-right"></i>Liste des réclamations</a>
+      <a href="{{ path('reclamationEtud') }}"><i class="fa fa-caret-right"></i>Envoyer une réclamation</a>
+    </li>
+  </ul>
+</li>
+<li class="nav-parent  active nav-active">
+  <a href="#"><i class="fa fa-home"></i> <span>Demandes</span></a>
+  <ul class="children" style="display: block;">
+    <li><a href="{{ path('rendezvous') }}"><i class="fa fa-caret-right"></i> Mes rendez-vous</a></li>
+    <li><a href="{{ path('demandepiece') }}"><i class="fa fa-caret-right"></i>Demander une pièce</a></li>
+    {% if app.session.get('serviceState') == 'yes' %}
+    <li><a href="{{ path('changer') }}"><i class="fa fa-caret-right"></i>Changement de Module</a></li>
+    <li><a href="{{ path('module_libre') }}"><i class="fa fa-caret-right"></i>Module libre</a></li>
+    <li><a href="{{ path('ElemRef') }}"><i class="fa fa-caret-right"></i>Elément à refaire</a></li>
+    {% endif %}
+  </ul>
+</li>
+{% endblock %}
+
+
+{% block content %}
+<div class="col-md-12">
+          <form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="panel-btns">
+                  <a href="#" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title"></h4>
+                <center><p>Votre demande a été envoyée</p></center>
+              </div>
+              
+        </div><!-- panel-body -->
+                       </div><!-- panel -->
+          </form>     
+        </div>
+  {% endblock %}

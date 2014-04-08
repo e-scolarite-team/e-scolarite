@@ -50,3 +50,10 @@ test:
     path: /test
     defaults: { _controller: AppFrontOfficeBundle:Demande:test }
 
+consulterElemRef:
+    pattern:  /consulter/{id}
+    defaults: { _controller: "AppFrontOfficeBundle:ElemRef:show" }
+
+ElemRefEstEnvoye:
+    pattern: /ElemRefEnvoye
+    defaults: { _controller: AppFrontOfficeBundle:ElemRef:estEnvoye }
