@@ -67,10 +67,17 @@ public function traiterelementrefaireAction($id) {
           $demande = $repDemande->findOneById($id);
           
           $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
-             
+          $donnees = $demande->getDonnees();
+        
+          $d = "";
+          //return new Response(var_dump($donnees));
+          foreach ($donnees as $donnee) {
+              $element = $elem->findOneByCode($donnee);
+              $d.= $element->getLib().",   ";
+          }
+          $demande->setDonnees($d);
             
-              $element = $elem->findOneByCode($demande->getDonnees()['0']);
-              $demande->setDonnees($element->getLib());
+              
             
             //var_dump($demande);
           if($this->get('request')->request->get('rejeter') == 'rejeter'){

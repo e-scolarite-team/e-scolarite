@@ -150,8 +150,16 @@ class ElemrefController extends Controller {
             throw $this->createNotFoundException('Unable to find reclamation entity.');
         }
         $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
-        $element = $elem->findOneByCode($entity->getDonnees()[0]);
-        $entity->setDonnees($element->getLib());
+
+        $donnees = $entity->getDonnees();
+        
+        $d = "";
+        //return new Response(var_dump($donnees));
+        foreach ($donnees as $donnee) {
+            $element = $elem->findOneByCode($donnee);
+            $d.= $element->getLib().",   ";
+        }
+        $entity->setDonnees($d);
         //$deleteForm = $this->createDeleteForm($id);
         //return new Response(var_dump($entity->getStatus()));
             
