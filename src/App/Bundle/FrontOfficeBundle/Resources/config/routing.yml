@@ -52,8 +52,8 @@ test:
 
 consulterElemRef:
     pattern:  /consulter/{id}
-    defaults: { _controller: "AppFrontOfficeBundle:ElemRef:show" }
+    defaults: { _controller: "AppFrontOfficeBundle:Elemref:show" }
 
 ElemRefEstEnvoye:
     pattern: /ElemRefEnvoye
-    defaults: { _controller: AppFrontOfficeBundle:ElemRef:estEnvoye }
+    defaults: { _controller: AppFrontOfficeBundle:Elemref:estEnvoye }
