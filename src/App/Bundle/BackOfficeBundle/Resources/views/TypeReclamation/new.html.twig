@@ -71,21 +71,21 @@
             {% endif %}
             
             <div class="form-group">
-              <label class="col-sm-3 control-label" for="{{ form.code.vars.id }}">Code</label>
+              <label class="col-sm-3 control-label" for="{{ form.code.vars.id }}">Code <span class="asterisk">*</span> :</label>
               <div class="col-sm-6">
                 {{ form_widget(form.code,{'attr' : {'class' : 'form-control'}})}}
               </div>
             </div>
        
            	<div class="form-group">
-              <label class="col-sm-3 control-label" for="{{ form.libelle.vars.id }}">Libelle</label>
+              <label class="col-sm-3 control-label" for="{{ form.libelle.vars.id }}">Libelle <span class="asterisk">*</span> :</label>
               <div class="col-sm-6">
                 {{ form_widget(form.libelle,{'attr' : {'class' : 'form-control'}})}}
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label" for="{{ form.maxAutorise.vars.id }}">max autorise</label>
+              <label class="col-sm-3 control-label" for="{{ form.maxAutorise.vars.id }}">max autorise <span class="asterisk">*</span> :</label>
               <div class="col-sm-6">
                 {{ form_widget(form.maxAutorise,{'attr' : {'class' : 'form-control'}})}}
               </div>
