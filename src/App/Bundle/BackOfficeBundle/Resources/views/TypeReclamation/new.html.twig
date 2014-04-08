@@ -40,6 +40,14 @@
 </li>
 {% endif %}
 {% endblock %}
+{% block pageTitle %}
+  <i class="fa fa-book"></i> Type de Reclamation<span>Nouveau</span>
+{% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('type-reclamation') }}">Type de Reclamation</a></li>
+<li class="active">Nouveau</li>
+{% endblock %}
 {% block content %}
 	<div class="panel panel-default">
         <form class="form-horizontal form-bordered" action="" method="post" novalidate="novalidate">

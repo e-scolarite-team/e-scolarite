@@ -16,12 +16,11 @@ class ModuleLibreController extends Controller
       $session =$this->container->get("esconfig_manager")->getCurrentSemester();
    
       $idUser=$this->getUser()->getId() ;
-    	 $rep= $this->getDoctrine()->getManager();  
+       $rep= $this->getDoctrine()->getManager();  
          
      $LastSemestreObjet=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //objet representant le dernier semestre
                      ->tousResultatEtudiant($idUser);
-             echo $LastSemestreObjet->getElement()->getCode().'<br/>';
-    
+
 //::::::::::::  Ce code permet de determiner le dernier semestre d'un étudiant ::::::::::::::::::::::::::::::::::::
        
                $codeSemetre = $LastSemestreObjet->getElement()->getCode() ;
@@ -49,7 +48,6 @@ class ModuleLibreController extends Controller
               $Modules=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //tableau de modules
                                -> ModuleDeSemestreEtud($codeSemetre,$idUser); 
                
-                       echo '<br/>';
                         //echo count($Modules);
                          // '<br/>';
                          
@@ -88,7 +86,6 @@ class ModuleLibreController extends Controller
                   
              
                          if($cptValider1==3 && $cptNonValide1==1){
-                             echo $ModNonvalide1->getElement()->getCode().' <br/>';
                          
                            if($semestre==1 || $semestre==3){
 ///////////// dans le code ci dessous on remplace le semestre1 par le semestre3  ou sem3 par sem6
@@ -179,7 +176,6 @@ class ModuleLibreController extends Controller
               $Modules=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //tableau de modules
                                -> ModuleDeSemestreEtud($codeSemetre,$idUser); 
                
-                       echo '<br/>';
                         //echo count($Modules);
                          // '<br/>';
                          
@@ -218,7 +214,6 @@ class ModuleLibreController extends Controller
                   
              
                          if($cptValider2==3 && $cptNonValide2==1){
-                             echo $ModNonvalide2->getElement()->getCode().' <br/>';
                          
                            if($semestre==2 || $semestre==4){
 ///////////// dans le code ci dessous on remplace le semestre1 par le semestre3  ou sem3 par sem6
@@ -296,15 +291,14 @@ class ModuleLibreController extends Controller
                }    
              }                  
      
-          public function EnvoyerDemandeModule5Action() {
+   public function EnvoyerDemandeModule5Action() {
 
            $em = $this->getDoctrine()->getEntityManager();
         
             if($this->get('request')->request->get('modulelibre') != ""){           
 
                     $em = $this->getDoctrine()->getEntityManager();
-
-
+                    $nommodulelibre=$this->get('request')->request->get('nommodulelibre');
                     $etudiant = $this->getUser();
                     
                     $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
@@ -341,18 +335,26 @@ class ModuleLibreController extends Controller
                     ->setParameter(3, $date_debut)
                     ->setParameter(4, $date_fin)
                     ->setParameter(5, 2);
+
                     $Demandes = $qb->getQuery()->getResult();
-                     $count = count($Demandes);
-                    if( $count >= $typedemande->getMaxAutorise() ){
-                     return $this->render(
+
+                    $count = count($Demandes);
+                   if( $count >= $typedemande->getMaxAutorise() ){
+                   return $this->render(
                                 'AppFrontOfficeBundle:ModuleLibre:nonautorise.html.twig', 
                                 array( 'count' => $typedemande->getMaxAutorise() )
                             );
-                      }
+            }
+                
+
                    
 
                     $demande->setStatus(0);
                     $demande->setNotified(0);
+                    $demande->setNotified(0);
+                    $demande->setRemarque($nommodulelibre);
+
+
                 
                     $em->persist($demande);
                     $etatDemandes = new EtatDemande();
@@ -369,6 +371,7 @@ class ModuleLibreController extends Controller
         
            
     }
+
 }
 
 

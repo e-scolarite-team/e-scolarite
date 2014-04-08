@@ -41,6 +41,14 @@
 </li>
 {% endif %}
 {% endblock %}
+{% block pageTitle %}
+  <i class="fa fa-book"></i> Type de Reclamation <span>Detail</span>
+{% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{{ path('type-reclamation') }}">Type de Reclamation</a></li>
+<li class="active">Detail</li>
+{% endblock %}
 {% block content %}
 
 <div class="row">
