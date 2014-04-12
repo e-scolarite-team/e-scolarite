@@ -13,10 +13,40 @@ use Symfony\Component\HttpFoundation\Request;
 class ModuleLibreController extends Controller
 {
     public function module5Action(){
+        
+       
       $session =$this->container->get("esconfig_manager")->getCurrentSemester();
-   
-      $idUser=$this->getUser()->getId() ;
-       $rep= $this->getDoctrine()->getManager();  
+      
+         $rep= $this->getDoctrine()->getManager();
+          $idUser=$this->getUser()->getId() ;
+          
+         $ObjmaxMod5= $rep->getRepository('AppBackOfficeBundle:TypeDemande')//recupere un objet typeDemande = module libre
+                      ->findByCode('5M'); 
+         $max5=$ObjmaxMod5[0]->getMaxAutorise();//recupere le maxAutorisé pour Module Libre 
+         
+         $DmdMod5=$rep->getRepository('AppBackOfficeBundle:Demande') //recupere les Demande de Module Libre d'un étudiant
+                     ->CountDemande($idUser);
+     
+         $trouver=0;
+         
+        foreach($DmdMod5 as $dmdlibre){//recupere chaque demmade de 5èMod
+          if($dmdlibre){
+             if ($dmdlibre->getStatus()==1) {//je verifie le  status de la demande 
+                   $trouver=1;
+                   $DmdAccep=$dmdlibre ;
+             } 
+             else{
+                  $trouver=0;
+                  $DmdRejet[]=$dmdlibre ;
+             }
+          }
+         else {
+              $trouver=0;
+           }
+        
+      }
+             
+     if($trouver==0){ 
          
      $LastSemestreObjet=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //objet representant le dernier semestre
                      ->tousResultatEtudiant($idUser);
@@ -284,13 +314,22 @@ class ModuleLibreController extends Controller
                           }
                     }
                     else{
-                  return $this->render('AppFrontOfficeBundle:ModuleLibre:refuser5em.html.twig');  
+                        
+                  return $this->render('AppFrontOfficeBundle:ModuleLibre:refuser5em.html.twig'); 
+                  
                     }
                     
                  }
                }    
-             }                  
+    }
+    
+     else {
+       return $this->render('AppFrontOfficeBundle:ModuleLibre:DejaAccorde5M.html.twig');    
+     }
+                    }                  
      
+  //fonction permettant de traiter les demande une fois confirmé par l'étudiant 
+             
    public function EnvoyerDemandeModule5Action() {
 
            $em = $this->getDoctrine()->getEntityManager();
@@ -307,8 +346,9 @@ class ModuleLibreController extends Controller
                     $demande = new Demande();
                     $demande->setEtudiant($etudiant);
                     $demande->setTypeDemande($typedemande);
-                    $demande->setCreatedAt(new \DateTime());
-                    $d =  $demande->getCreatedAt()->format('Y-m-d');
+                    
+                  /*   $demande->setCreatedAt(new \DateTime());
+                   $d =  $demande->getCreatedAt()->format('Y-m-d');
                     $year = substr($d, 0, 4);
                     $month = substr($d, 5, 2);
                     if($month == "09" || $month == "10" || $month == "11" || $month == "12"){
@@ -322,7 +362,7 @@ class ModuleLibreController extends Controller
                                 $fin = $year . "-08-30 00:00:00";
                                 $date_fin = new \DateTime($fin);
                     }
-
+               
                     $qb = $em->createQueryBuilder();
                     $qb->select('d')
                     ->from('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
@@ -345,18 +385,15 @@ class ModuleLibreController extends Controller
                                 array( 'count' => $typedemande->getMaxAutorise() )
                             );
             }
+              */
+                 
                 
-
-                   
-
                     $demande->setStatus(0);
                     $demande->setNotified(0);
-                    $demande->setNotified(0);
-                    $demande->setRemarque($nommodulelibre);
+                    //$demande->setRemarque($nommodulelibre);
 
-
-                
                     $em->persist($demande);
+                    
                     $etatDemandes = new EtatDemande();
                     $etatDemandes->setEtat("en attente");
                     $etatDemandes->setDemande($demande);

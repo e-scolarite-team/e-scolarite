@@ -55,6 +55,9 @@ class DemandeRepository extends EntityRepository
             return $Demandes;
 
         }
+   
+//créer par paul
+//compté le nombre de demande de module libre pour un étudiant donné 
         
            public function CountDemande($id){
             $qb = $this->_em->createQuery(
