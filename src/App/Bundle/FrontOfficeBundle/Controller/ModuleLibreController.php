@@ -24,29 +24,33 @@ class ModuleLibreController extends Controller
                       ->findByCode('5M'); 
          $max5=$ObjmaxMod5[0]->getMaxAutorise();//recupere le maxAutorisé pour Module Libre 
          
+   
          $DmdMod5=$rep->getRepository('AppBackOfficeBundle:Demande') //recupere les Demande de Module Libre d'un étudiant
                      ->CountDemande($idUser);
+ 
+    $trouver=0;
+    if(!empty($DmdMod5)){
      
-         $trouver=0;
-         
-        foreach($DmdMod5 as $dmdlibre){//recupere chaque demmade de 5èMod
-          if($dmdlibre){
-             if ($dmdlibre->getStatus()==1) {//je verifie le  status de la demande 
+    foreach($DmdMod5 as $dmdlibre){//recupere chaque demmade de 5èMod
+      
+             if (($dmdlibre->getStatus()==1 && $dmdlibre->getLastEtatDemande()->getEtat()=="Valider")) {//je verifie le  status de la demande 
                    $trouver=1;
-                   $DmdAccep=$dmdlibre ;
+                   $DmdAccep=$dmdlibre ; //on recupere la demande de module libre accepté 
              } 
-             else{
-                  $trouver=0;
-                  $DmdRejet[]=$dmdlibre ;
+             elseif($dmdlibre->getStatus()==0 && $dmdlibre->getLastEtatDemande()->getEtat()=="en attente"){
+                 
+                   $trouver=2;
              }
-          }
-         else {
-              $trouver=0;
-           }
-        
-      }
+             elseif($dmdlibre->getStatus()==2 && $dmdlibre->getLastEtatDemande()->getEtat()=="Rejeter"){
+                      $DmdRejet[]=$dmdlibre ;   
+                   }
              
-     if($trouver==0){ 
+          
+       }
+    }else{  $trouver=0;}
+     
+   
+     if($trouver==0 ){ 
          
      $LastSemestreObjet=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //objet representant le dernier semestre
                      ->tousResultatEtudiant($idUser);
@@ -323,8 +327,10 @@ class ModuleLibreController extends Controller
                }    
     }
     
-     else {
+     elseif($trouver ==1) {
        return $this->render('AppFrontOfficeBundle:ModuleLibre:DejaAccorde5M.html.twig');    
+     }elseif($trouver==2){
+       return $this->render('AppFrontOfficeBundle:ModuleLibre:DmdEnTraitement.html.twig'); 
      }
                     }                  
      
@@ -333,11 +339,11 @@ class ModuleLibreController extends Controller
    public function EnvoyerDemandeModule5Action() {
 
            $em = $this->getDoctrine()->getEntityManager();
-        
-            if($this->get('request')->request->get('modulelibre') != ""){           
+              $nomModlibre=$this->get('request')->request->get('modulelibre');
+              
+            if($nomModlibre!=""){           
 
                     $em = $this->getDoctrine()->getEntityManager();
-                    $nommodulelibre=$this->get('request')->request->get('nommodulelibre');
                     $etudiant = $this->getUser();
                     
                     $repTypeDemande = $this->getDoctrine()->getRepository('AppBackOfficeBundle:TypeDemande');
@@ -346,8 +352,12 @@ class ModuleLibreController extends Controller
                     $demande = new Demande();
                     $demande->setEtudiant($etudiant);
                     $demande->setTypeDemande($typedemande);
-                    
-                  /*   $demande->setCreatedAt(new \DateTime());
+                    $repElement = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
+                    $libelle=$repElement->findOneByCode($nomModlibre)->getLib();
+                    $aff= $nomModlibre.'--'.$libelle;
+                    $donnees=array($aff);
+               /*     
+                 $demande->setCreatedAt(new \DateTime());
                    $d =  $demande->getCreatedAt()->format('Y-m-d');
                     $year = substr($d, 0, 4);
                     $month = substr($d, 5, 2);
@@ -385,9 +395,9 @@ class ModuleLibreController extends Controller
                                 array( 'count' => $typedemande->getMaxAutorise() )
                             );
             }
-              */
+           */
                  
-                
+                    $demande->setDonnees($donnees);
                     $demande->setStatus(0);
                     $demande->setNotified(0);
                     //$demande->setRemarque($nommodulelibre);
@@ -407,6 +417,21 @@ class ModuleLibreController extends Controller
             }       
         
            
+    }
+    
+        public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+       
+        $entity = $em->getRepository('AppBackOfficeBundle:Demande')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Modulelibre entity.');
+        }
+  
+        return $this->render('AppFrontOfficeBundle:ModuleLibre:Consulter5Module.html.twig', array(
+            'demande'      => $entity,    
+                   ));
     }
 
 }

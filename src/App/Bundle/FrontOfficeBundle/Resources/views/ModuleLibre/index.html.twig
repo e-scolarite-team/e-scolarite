@@ -33,89 +33,73 @@
 </li>
 {% endblock %}
 {% block content %}
-
-
-<div class="col-md-12">
-  <div class="panel panel-default"> 
-    <div class="panel-heading">
-     <div class="panel-btns">
-      <a href="#" class="minimize">−</a>
-       </div>
-        <h4 class="panel-title">Vous trouverez ci-dessous le module libre (5eme module) que vous pouvez choisir.</h4>
-         
-          </div>
-           <div class="panel-body">
+  <div class="row">
+      
+              <div class="col-md-6">
+               <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <h3>les Modules normaux  au Semestre {{semestre}}  sont :</h3>
+                    </div><!--heading-->
+                    <p></p>
+                     <ul>
                     <form action="{{ path('demande-module-libre') }}" class="form-horizontal" novalidate="novalidate" method="POST">
                       
                       <div class="form-group">
-                      <label class="col-sm-4">les Modules normaux  au Semestre {{semestre}}  sont :</label>
-                      <p></p>  
+                         
                       <table>
                           {% for  module in moduleSemestre %}
-                          <tr><td>&nbsp;&nbsp;-{{module.lib}}</td></tr>
+                          <tr><td><li>&nbsp;&nbsp;{{module.lib}}</li></td></tr>
                           {% endfor %}    
-                          <tr><td>&nbsp;&nbsp;-{{nonValider.element.lib}}</td></tr>   
+                      <tr><td><li>&nbsp;&nbsp;{{nonValider.element.lib}}</li></td></tr>   
                        </table>
                       </div>
                       
                      
                       <div class="form-group">
-                        <br>
-                        <label class="col-sm-4">Le Module libre est : </label>
+                          <p> Module libre :</p>
                         <div class="col-sm-4">
-                          <div >
-                          <input type="checkbox" name="modulelibre" value="{{ moduleLibre.code}}" >
-                        <input type="hidden" name="nommodulelibre" value="{{ moduleLibre.lic}}" >
-
-                        &nbsp;{{ moduleLibre.lic}}
-
-                        
-
-                      </div>
-                        </div>
+                          <span> 
+                              <label class="col-sm-4">{{ moduleLibre.lic }} </label>
+                             <input type="checkbox" name="modulelibre" class="form-control"  readonly="true" required="" value="{{ moduleLibre.code}}" checked>
+                        </span>
+                            <br/>
                       </div>
                       
                       <div class="form-group">
                         <label class="col-sm-4"></label>
                         <div class="col-sm-6 col-sm-offset-3">
+                            <br/>
                           <center>   <button class="btn btn-primary">Envoyer</button></center>
-
+                          <p></p>
                         </div>
                       </div>
             
                     </form>
+                  </ul>
+               
+              </div><!---fin panel -->
+           </div>
+      
+            <div class="col-md-6">
+                 <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3>Liste des demandes de module libre</h3>
+                      </div><!--heading--->
+                       <p></p>
+                        <ul>
+                            <li> afficher tableau </li>
+                        </ul>
+                   
 
 
+                    <div class="panel-footer"> 
+                     <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> 
+                    </div> 
+                    </div>
+                     
+                 </div><!-- fin panel -->
+             </div>
+ </div><!-- row --> 
 
-</div><!-- panel-body --> <div class="panel-footer"> <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> </div> </div> </div><!-- panel --> </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
- </div>
 
 {% endblock %}

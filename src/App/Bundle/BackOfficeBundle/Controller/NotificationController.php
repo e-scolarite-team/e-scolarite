@@ -112,6 +112,8 @@ public function todemandeAction($id){
             $route = 'traiterdemandechangement';
         if($demande->getTypeDemande()->getCode() == 'ER')
             $route = 'traiterelementrefaire';
+         if($demande->getTypeDemande()->getCode() == '5M')
+            $route = 'traitermodulelibre';
 
         return $this->redirect($this->generateUrl($route,array('id' =>  trim($id) )));
     }

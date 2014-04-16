@@ -57,11 +57,11 @@ class DemandeRepository extends EntityRepository
         }
    
 //créer par paul
-//compté le nombre de demande de module libre pour un étudiant donné 
+//compté le nombre de demande de module libre traité pour un étudiant donné 
         
            public function CountDemande($id){
             $qb = $this->_em->createQuery(
-                    'SELECT d FROM AppBackOfficeBundle:Demande d '
+                    'SELECT d,etud,type FROM AppBackOfficeBundle:Demande d '
                     . 'JOIN d.etudiant etud '
                     . 'JOIN d.typeDemande type '
                     . 'Where etud.id =:etu '

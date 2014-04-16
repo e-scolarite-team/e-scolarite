@@ -81,7 +81,7 @@ class ModulelibreController extends Controller
                 return $this->redirect($this->get('router')->generate('listemodulelibre', array()));
                 
                 
-         } elseif ($this->get('request')->request->get('valider') == 'valider'){
+         } elseif ($this->get('request')->request->get('fixer') == 'fixer'){
                 $qb = $em->createQueryBuilder();
                 
                 $qb->update('App\Bundle\BackOfficeBundle\Entity\Demande', 'd')
@@ -94,9 +94,7 @@ class ModulelibreController extends Controller
                 ->setParameter(4, 0)
                 ->setParameter(3, new \DateTime());
                 $test = $qb->getQuery()->getResult();
-                
-                
-              
+       
                 $qq = $em->createQueryBuilder();
                 $qq->update('App\Bundle\BackOfficeBundle\Entity\EtatDemande', 'e')
                 ->set('e.etat', '?1')
