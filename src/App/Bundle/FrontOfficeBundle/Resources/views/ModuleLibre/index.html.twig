@@ -86,9 +86,32 @@
                         <h3>Liste des demandes de module libre</h3>
                       </div><!--heading--->
                        <p></p>
-                        <ul>
-                            <li> afficher tableau </li>
-                        </ul>
+                  <div class="tab-pane active" id="tab1">
+                    <table class="table  table-hidaction table-hover" id="list-demande">
+                      <thead>
+                        <tr>
+                           <th>Nom  &nbsp; etudiant</th>
+                           <th>Type demande</th>
+                           <th>Date de demande</th>
+                           <th>Reponse</th>
+                        
+                       </tr>
+                    </thead>
+                    <tbody>
+                     {% for dmd in DmdAccepOuRef %}
+
+                         <tr class="odd gradeX">
+                            <td>{{ dmd.etudiant.nom }}&nbsp;{{ dmd.etudiant.prenom}}</td>
+                            <td>{{ dmd.typeDemande.libelle }}</td>
+                            <td>{{ dmd.createdAt|date('d/m/Y') }}</td>
+                                {% for etatdmd in dmd.etatDemandes %}
+                                     <td>{{etatdmd.etat}} </td>
+                                {% endfor%}
+                        </tr>
+                      {% endfor %}
+                     </tbody>
+                   </table>
+                 </div>
                    
 
 

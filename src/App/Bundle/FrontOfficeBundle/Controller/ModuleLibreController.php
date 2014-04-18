@@ -29,27 +29,27 @@ class ModuleLibreController extends Controller
                      ->CountDemande($idUser);
  
     $trouver=0;
+    $DmdAcOuRef= null;
     if(!empty($DmdMod5)){
      
     foreach($DmdMod5 as $dmdlibre){//recupere chaque demmade de 5èMod
       
              if (($dmdlibre->getStatus()==1 && $dmdlibre->getLastEtatDemande()->getEtat()=="Valider")) {//je verifie le  status de la demande 
                    $trouver=1;
-                   $DmdAccep=$dmdlibre ; //on recupere la demande de module libre accepté 
+                   $DmdAcOuRef[]=$dmdlibre ; //on recupere la demande de module libre accepté 
              } 
              elseif($dmdlibre->getStatus()==0 && $dmdlibre->getLastEtatDemande()->getEtat()=="en attente"){
                  
                    $trouver=2;
              }
              elseif($dmdlibre->getStatus()==2 && $dmdlibre->getLastEtatDemande()->getEtat()=="Rejeter"){
-                      $DmdRejet[]=$dmdlibre ;   
+                       $DmdAcOuRef[]=$dmdlibre ;   
                    }
              
           
        }
     }else{  $trouver=0;}
      
-   
      if($trouver==0 ){ 
          
      $LastSemestreObjet=$rep->getRepository('AppBackOfficeBundle:ResultatElp') //objet representant le dernier semestre
@@ -181,7 +181,9 @@ class ModuleLibreController extends Controller
                       array('moduleLibre'=>$libre,
                              'semestre'=>$semprochain,
                              'nonValider'=> $ModNonvalide1,
-                             'moduleSemestre'=>$sementreARendre));
+                             'moduleSemestre'=>$sementreARendre,
+                              'DmdAccepOuRef'=> $DmdAcOuRef
+                             ));
                                 /* foreach($ModSemLibre as $libre){
                                     echo $libre->getCode().'<br/>';
                                  }*/
@@ -311,7 +313,9 @@ class ModuleLibreController extends Controller
                       array('moduleLibre'=>$libre,
                             'nonValider'=> $ModNonvalide2,
                              'semestre'=> $semprochain2,
-                             'moduleSemestre'=>$sementreARendre));
+                             'moduleSemestre'=>$sementreARendre,
+                             'DmdAccepOuRef'=> $DmdAcOuRef
+                          ));
                                 /* foreach($ModSemLibre as $libre){
                                     echo $libre->getCode().'<br/>';
                                  }*/
@@ -328,7 +332,9 @@ class ModuleLibreController extends Controller
     }
     
      elseif($trouver ==1) {
-       return $this->render('AppFrontOfficeBundle:ModuleLibre:DejaAccorde5M.html.twig');    
+       return $this->render('AppFrontOfficeBundle:ModuleLibre:DejaAccorde5M.html.twig',array( 
+           'DmdAccepOuRef'=> $DmdAcOuRef,
+           ));    
      }elseif($trouver==2){
        return $this->render('AppFrontOfficeBundle:ModuleLibre:DmdEnTraitement.html.twig'); 
      }

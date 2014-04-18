@@ -34,29 +34,64 @@
 {% endblock %}
 {% block content %}
   
-  <div class="panel panel-default">
-  
-<form id="basicForm" action="http://themepixels.com/demo/webpage/bracket/form-validation.html" class="form-horizontal" novalidate="novalidate"> 
-  <div class="panel panel-default"> 
-    <div class="panel-heading">
-     <div class="panel-btns">
-      <a href="#" class="minimize">−</a>
-       </div>
-        <h4 class="panel-title">Module libre (5eme module)</h4>
+ <div class="row">
+      
+              <div class="col-md-6">
+               <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <h3>Status :</h3>
+                    </div><!--heading-->
+                    <h4 class="text-danger"><center> Impossible d'accorder le Module Libre une 2 ème fois  !!!</center></h4> 
+                    <p>&nbsp; </p>
+                    <p> &nbsp; </p>
+                    <p><center>contactez l'administration pour plus d'explications</center> </p>
+               
+              </div><!---fin panel -->
+           </div>
+      
+            <div class="col-md-6">
+                 <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3>Liste des demandes de module libre</h3>
+                      </div><!--heading--->
+                       <p></p>
+                  <div class="tab-pane active" id="tab1">
+                    <table class="table  table-hidaction table-hover" id="list-demande">
+                      <thead>
+                        <tr>
+                           <th>Nom  &nbsp; etudiant</th>
+                           <th>Type demande</th>
+                           <th>Date de demande</th>
+                           <th>Reponse</th>
+                        
+                       </tr>
+                    </thead>
+                    <tbody>
+                     {% for dmd in DmdAccepOuRef %}
 
-          </div>
-           <div class="panel-body">
-              <h4 class="text-danger"> Impossible d'accorder la demande une 2 ème fois!!!</h4>
-                  <p> veillez contacter l'administration !!!</p>
+                        <tr class="odd gradeX">
+                            <td>{{ dmd.etudiant.nom }}&nbsp;{{ dmd.etudiant.prenom}}</td>
+                            <td>{{ dmd.typeDemande.libelle }}</td>
+                            <td>{{ dmd.createdAt|date('d/m/Y') }}</td>
+                                {% for etatdmd in dmd.etatDemandes %}
+                                     <td>{{etatdmd.etat}} </td>
+                                {% endfor%}
+                        </tr>
+                      {% endfor %}
+                     </tbody>
+                   </table>
+                 </div>
+                   
 
 
-
-
-</div><!-- panel-body --> <div class="panel-footer"> <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> </div> </div> </div><!-- panel --> 
-</form> </div>
-
-				
-  </div>
+                    <div class="panel-footer"> 
+                     <div class="row"> <div class="col-sm-9 col-sm-offset-3">  </div> 
+                    </div> 
+                    </div>
+                     
+                 </div><!-- fin panel -->
+             </div>
+ </div><!-- row --> 
   
 {% endblock %}
 
