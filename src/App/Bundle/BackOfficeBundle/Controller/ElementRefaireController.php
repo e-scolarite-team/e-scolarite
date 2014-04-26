@@ -32,10 +32,10 @@ class ElementRefaireController extends Controller
                         // var_dump($demande);
               $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
              
-            for($i=0;$i<count($demande);$i++){
+            /*for($i=0;$i<count($demande);$i++){
               $element = $elem->findOneByCode($demande[$i]->getDonnees()['0']);
               $demande[$i]->setDonnees($element->getLib());
-            }
+            }*/
              
 
             /* $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
@@ -69,14 +69,14 @@ public function traiterelementrefaireAction($id) {
           $elem = $this->getDoctrine()->getRepository('AppBackOfficeBundle:ElementPedagogi');
           $donnees = $demande->getDonnees();
         
-          $d = "";
+          //$d = "";
           //return new Response(var_dump($donnees));
-          foreach ($donnees as $donnee) {
+          /*foreach ($donnees as $donnee) {
               $element = $elem->findOneByCode($donnee);
               $d.= $element->getLib().",   ";
           }
-          $demande->setDonnees($d);
-            
+          $demande->setDonnees($d);*/
+            //return new Response(var_dump($demande->getDonnees()));
               
             
             //var_dump($demande);

@@ -57,7 +57,7 @@
       <div class="panel-btns">
         <a href="#" class="minimize">&minus;</a>
       </div>
-      <h4 class="panel-title">Liste de réclamation</h4>
+      <h4 class="panel-title">Liste des réclamations</h4>
       <p></p>
     </div>
 
@@ -68,6 +68,7 @@
             <thead>
               <tr>
                 <th>CNE</th>
+                <th>Code Appogee</th>
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Date de réclamation</th>
@@ -79,6 +80,7 @@
             {% for reclamation in entities %}
              <tr class="gradeA odd">
                     <td class=" sorting_1">{{ reclamation.etudiant.cne }}</td>
+                    <td class=" sorting_1">{{ reclamation.etudiant.codeAppogee }}</td>
                     <td class=" ">{{ reclamation.etudiant.nom }}</td>
                     <td class=" ">{{ reclamation.etudiant.prenom }}</td>
                     <td class="center ">{{ reclamation.createdAt|date('d-m-Y h:m') }}</td>

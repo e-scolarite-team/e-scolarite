@@ -51,11 +51,25 @@ class ElemrefController extends Controller {
                        
             else{
 
+                $elementsDemandes = array();
+                $pere = "";
+                foreach ($elementsARef as $elem) {
+                    $entity = $em->getRepository("AppBackOfficeBundle:ElementPedagogi")->find($elem);
+                    if($entity){
+                        if($pere != $entity->getParent()->getLib()){
+                            $elementsDemandes[$entity->getParent()->getLib()][] = $entity->getLib();
+                            $pere = $entity->getParent()->getLib();
+                        }else{
+                            $elementsDemandes[$pere][] = $entity->getLib();
+                        }
+                    }
+                }
+                //return new Response("<pre>".var_dump($elementsDemandes)."</pre>");
                 $entity = new Demande();
                 $typeDem = $em->getRepository("AppBackOfficeBundle:TypeDemande")->findBy(array('code'=>'ER'));
                 //return new Response(get_class($typeDem[0]));
                 $entity->setEtudiant($etudiant);
-                $entity->setDonnees($elementsARef);
+                $entity->setDonnees($elementsDemandes);
                 $entity->setTypeDemande($typeDem[0]);
                 $entity->setNotified(0);
                 //$entity->setReponse($reponse);
@@ -96,7 +110,7 @@ class ElemrefController extends Controller {
                         //return new Response(var_dump($element->getElement()->getNote()));
                         if($note >= 10) {
 
-                            $d = $em->getRepository("AppBackOfficeBundle:Demande")->getDemandes( $etudiant, $em, $element[0]->getElement()->getCode());
+                            $d = $em->getRepository("AppBackOfficeBundle:Demande")->getDemandes( $etudiant, $em, $element[0]->getElement()->getLib());
 
                             if(count($d) != 0){
 

@@ -92,7 +92,20 @@
              <div class="form-group">
                 <label class="col-sm-3 control-label"> Element choisi <span class="asterisk"></span></label>
                 <div class="col-sm-9">
-                    <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.donnees }}" >
+                    <label class="form-control">
+                    {% for key, elements in demande.donnees %}
+                      <ul>  
+                        <li>{{ key }}</li>
+                        <ul>
+                          {% for element in elements %}
+                            <li>{{ element }}</li>
+                          {% endfor %}
+                        </ul>
+                           
+                      </ul>
+
+                    {% endfor %}
+                    </label>
                 </div>
             </div>   
           
