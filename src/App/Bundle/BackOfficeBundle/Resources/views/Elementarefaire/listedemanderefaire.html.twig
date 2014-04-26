@@ -63,6 +63,7 @@
           <table class="table  table-hidaction table-hover" id="list-type">
             <thead>
               <tr>
+                <th>Code Appogge</th>
                 <th>CNE</th>
                 <th>Nom</th>
                 <th>Prénom</th>
@@ -75,10 +76,25 @@
 
               {% for etatdemande in etatdemandes %}  
                     <tr>
+                      <td>{{ etatdemande.demande.etudiant.codeAppogee }}</td>
                       <td>{{ etatdemande.demande.etudiant.cne }}</td>
                       <td>{{ etatdemande.demande.etudiant.nom }}</td>
                       <td>{{ etatdemande.demande.etudiant.prenom }}</td>
-                      <td>{{ etatdemande.demande.donnees }}</td>
+                      <td>
+                       
+                        {% for key, elements in etatdemande.demande.donnees %}
+                      <ul>  
+                        <li>{{ key }}</li>
+                        <ul>
+                          {% for element in elements %}
+                            <li>{{ element }}</li>
+                          {% endfor %}
+                        </ul>
+                           
+                      </ul>
+
+                    {% endfor %}
+                      </td>
                       <td>{{ etatdemande.etat }}</td>  
                       {% if etatdemande.etat == 'en attente' %}
                       <td class="table-action">
