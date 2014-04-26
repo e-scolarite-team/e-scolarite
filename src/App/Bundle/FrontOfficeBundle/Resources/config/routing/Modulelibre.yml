@@ -5,3 +5,7 @@ module_libre:
 demande-module-libre:
     pattern:  /demandemodulelibre
     defaults: { _controller: AppFrontOfficeBundle:ModuleLibre:EnvoyerDemandeModule5 }
+
+consulter5Module:
+    pattern:  /consulterMod5/{id}
+    defaults: { _controller: AppFrontOfficeBundle:ModuleLibre:show }

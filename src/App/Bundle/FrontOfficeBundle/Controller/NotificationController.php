@@ -157,6 +157,8 @@ class NotificationController extends Controller{
         $route = "showDemandeEtud";
         if($demande->getTypeDemande()->getCode() == 'ER')
             $route = "consulterElemRef";
+        if($demande->getTypeDemande()->getCode() == '5M')
+            $route = "consulter5Module";
         return $this->redirect($this->get('router')->generate($route,array('id' => $id)));
     }
 

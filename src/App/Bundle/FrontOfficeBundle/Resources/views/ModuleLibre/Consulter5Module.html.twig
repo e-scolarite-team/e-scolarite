@@ -1,14 +1,14 @@
 {% extends "::frontend.html.twig" %}
 
-{% block title %} la demande de refaire un élement {% endblock %}
+{% block title %} Demande de Module Libre {% endblock %}
 
 
 {% block pageTitle %}
-        <i class="glyphicon glyphicon-refresh"> </i>Demande Refaire un élément
+        <i class="glyphicon glyphicon-refresh"> </i>Demande 5ème Module 
       {% endblock %}
        {% block breadcrumb %}
           <li><a class="active">demande</a></li>
-          <li class="active">traitement élément à refaire</li>
+          <li class="active"> Module libre</li>
           {% endblock %}
 {% block mainMenu %}
 <li class="nav-parent">
@@ -41,14 +41,14 @@
             <div class="panel-btns">
                 <a href="#" class="minimize">−</a>
             </div>
-            <h4 class="panel-title">Consulter une demande de refaire un élément</h4>
+            <h4 class="panel-title">Consulter Reponse Module libre</h4>
             {% if demande.getLastEtatDemande().etat == "Valider" %}
               <div class="alert alert-success">
-                Votre demande a été validée
+                  <center><h3> Votre demande a été Acceptée !!</h3></center>
               </div>
             {% elseif demande.getLastEtatDemande().etat == "Rejeter" %}
             <div class="alert alert-danger">
-                Votre demande a été refusée
+                <center><h3> Votre demande a été Refusée!!</h3></center>
               </div>
             {% else %}
            
@@ -65,25 +65,17 @@
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-sm-3 control-label"> Elements choisis <span class="asterisk"></span></label>
+                <label class="col-sm-3 control-label"> Module demandé <span class="asterisk"></span></label>
                 <div class="col-sm-9">
-                    <label class="form-control">
-                    {% for key, elements in demande.donnees %}
-                      <ul>  
-                        <li>{{ key }}</li>
-                        <ul>
-                          {% for element in elements %}
-                            <li>{{ element }}</li>
-                          {% endfor %}
-                        </ul>
-                           
-                      </ul>
-
-                    {% endfor %}
-                    </label>
-
+                    <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.donnees[0] }}" >
                 </div>
-            </div>   
+            </div> 
+             <div class="form-group">
+                <label class="col-sm-3 control-label">Date de demande <span class="asterisk"></span></label>
+                <div class="col-sm-9">
+                    <input type="email" name="type" class="form-control"  readonly="true" required="" value="{{ demande.createdAt|date('d/m/Y') }}" >
+                </div>
+            </div>  
           
                 
         </div><!-- panel-body -->
