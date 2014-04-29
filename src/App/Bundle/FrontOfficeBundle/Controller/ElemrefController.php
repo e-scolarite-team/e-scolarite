@@ -167,13 +167,13 @@ class ElemrefController extends Controller {
 
         $donnees = $entity->getDonnees();
         
-        $d = "";
+        /*$d = "";
         //return new Response(var_dump($donnees));
         foreach ($donnees as $donnee) {
             $element = $elem->findOneByCode($donnee);
             $d.= $element->getLib().",   ";
         }
-        $entity->setDonnees($d);
+        $entity->setDonnees($d);*/
         //$deleteForm = $this->createDeleteForm($id);
         //return new Response(var_dump($entity->getStatus()));
             
